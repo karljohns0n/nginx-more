@@ -1,0 +1,8 @@
+###########################################################
+##
+## IPs are automatically updated with rpm update
+##
+allow 24.37.95.230;  ## Aeris Network - MTL Ste-Catherine office
+allow 24.37.152.18;  ## Aeris Network - K office
+allow 69.70.207.14;  ## Aeris Network - P office
+allow 192.99.69.140; ## Aeris Network - Monitoring
