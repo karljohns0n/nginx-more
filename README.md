@@ -48,4 +48,4 @@ Number of installations
 [root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.2|awk '{print $1}'|sort -u|wc -l
 489
 [root@build ~]# 
-```bash
+```
