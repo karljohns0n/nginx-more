@@ -7,14 +7,14 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global ps_version			1.12.34.3-stable
+%global ps_version			1.13.35.2-stable
 %global openssl_version		1.1.0g
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
 Version:					1.12.2
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -52,7 +52,7 @@ Source101:					ngx_pagespeed-%{ps_version}.tar.gz
 Source102:					psol-%{ps_version}.tar.gz
 Source103:					ngx_more-headers-0.32.tar.gz
 Source104:					ngx_cache_purge-2.3.tar.gz
-Source105:					ngx_brotli-snap20171110.tar.gz
+Source105:					ngx_brotli-snap20180222.tar.gz
 Source106:					ngx_module-vts-0.1.15.tar.gz
 
 Patch0:						nginx-version.patch
@@ -65,6 +65,7 @@ BuildRequires:				zlib-devel
 BuildRequires:				pcre
 BuildRequires:				gd-devel
 BuildRequires:				httpd-devel
+BuildRequires:				libuuid-devel
 %{?el7:BuildRequires:		GeoIP-devel}
 
 Requires:					gd
@@ -169,7 +170,7 @@ export DESTDIR=%{buildroot}
 	--add-module=modules/ngx_cache_purge-2.3 \
 	--add-module=modules/ngx_module-vts-0.1.15 \
 	--add-module=modules/ngx_pagespeed-%{ps_version} \
-	--add-module=modules/ngx_brotli-snap20171110
+	--add-module=modules/ngx_brotli-snap20180222
 
 make
 
@@ -331,6 +332,9 @@ fi
 
 
 %changelog
+* Fri Feb 23 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-3
+- Bump Pagespeed to 1.13.35.2, Brotli snapshot 20180222
+
 * Fri Nov 17 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-2
 - Add module ngx_brotli from Github master snapshot, bump Pagespeed to 1.12.34.3
 

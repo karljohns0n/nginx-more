@@ -7,7 +7,7 @@ Nginx-more is a rebuild of Nginx with additional open source modules such as Pag
 Here's the procedure to build nginx-more rpm for CentOS 6 and 7:
 
 ```bash
-NGINXV=1.12.2-2
+NGINXV=1.12.2-3
 GKEY=$(cat /home/karl/.gnupg/pkey)
 pushd /home/karl/pkg-nginx-more
 rm -rf RPMS/*
@@ -38,3 +38,14 @@ sudo createrepo_c /var/www/html/repo/testing/centos/6/x86_64/
 sudo repoview /var/www/html/repo/testing/centos/6/x86_64/
 sudo chown -R apache:apache /var/www/html/repo
 ```
+
+## Statistics
+
+Number of installations
+```bash
+[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.1|awk '{print $1}'|sort -u|wc -l
+299
+[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.2|awk '{print $1}'|sort -u|wc -l
+489
+[root@build ~]# 
+```bash
