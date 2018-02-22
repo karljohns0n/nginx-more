@@ -39,6 +39,19 @@ sudo repoview /var/www/html/repo/testing/centos/6/x86_64/
 sudo chown -R apache:apache /var/www/html/repo
 ```
 
+## Modules
+
+### Brotli
+
+Packaging:
+```bash
+DATE=$(date +"20%y%m%d")
+git clone --recursive https://github.com/google/ngx_brotli.git
+mv ngx_brotli ngx_brotli-snap$DATE
+tar -czvf ngx_brotli-snap$DATE.tar.gz ngx_brotli-snap$DATE
+rm -rf ngx_brotli-snap$DATE
+```
+
 ## Statistics
 
 Number of installations
