@@ -56,9 +56,9 @@ rm -rf ngx_brotli-snap$DATE
 
 Number of installations
 ```bash
-[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.1|awk '{print $1}'|sort -u|wc -l
+[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.1-1|awk '{print $1}'|sort -u|wc -l
 299
-[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.2|awk '{print $1}'|sort -u|wc -l
-489
-[root@build ~]# 
+[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.2-2|awk '{print $1}'|sort -u|wc -l
+460
+[root@build ~]#
 ```
