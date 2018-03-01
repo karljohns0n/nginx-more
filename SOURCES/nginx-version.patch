@@ -1,11 +1,11 @@
---- src/core/nginx.c	2017-04-12 10:46:01.000000000 -0400
-+++ src/core/nginx.c	2017-04-18 13:29:04.033141437 -0400
-@@ -382,7 +382,7 @@
- static void
- ngx_show_version_info(void)
- {
--    ngx_write_stderr("nginx version: " NGINX_VER_BUILD NGX_LINEFEED);
-+    ngx_write_stderr("nginx version: " NGINX_VER_BUILD NGX_LINEFEED "custom build maintained by karljohnson.it@gmail.com" NGX_LINEFEED);
+--- src/core/nginx.c	2017-10-17 09:16:38.000000000 -0400
++++ src/core/nginx.c	2018-03-01 15:42:23.285678083 -0500
+@@ -416,6 +416,8 @@
  
-     if (ngx_show_help) {
-         ngx_write_stderr(
+     if (ngx_show_configure) {
+ 
++	ngx_write_stderr("custom build maintained by karljohnson.it@gmail.com" NGX_LINEFEED);
++
+ #ifdef NGX_COMPILER
+         ngx_write_stderr("built by " NGX_COMPILER NGX_LINEFEED);
+ #endif

@@ -14,7 +14,7 @@
 
 Name:						nginx-more
 Version:					1.12.2
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -57,7 +57,7 @@ Source106:					ngx_module-vts-0.1.15.tar.gz
 
 Patch0:						nginx-version.patch
 
-BuildRequires:				devtoolset-4-gcc-c++ devtoolset-4-binutils
+BuildRequires:				devtoolset-7-gcc-c++ devtoolset-7-binutils
 BuildRequires:				libxslt-devel
 BuildRequires:				openssl-devel
 BuildRequires:				pcre-devel
@@ -163,8 +163,8 @@ export DESTDIR=%{buildroot}
 	--with-http_slice_module \
 	--with-stream_ssl_preread_module \
 	--with-debug \
-	--with-cc-opt="%{optflags} $(pcre-config --cflags)" \
-	--with-cc="/opt/rh/devtoolset-4/root/usr/bin/gcc" \
+	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
+	--with-cc="/opt/rh/devtoolset-7/root/usr/bin/gcc" \
 	--with-openssl=modules/openssl-%{openssl_version} \
 	--add-module=modules/headers-more-nginx-module-0.32 \
 	--add-module=modules/ngx_cache_purge-2.3 \
@@ -332,6 +332,9 @@ fi
 
 
 %changelog
+* Fri Mar 2 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-4
+- Move nginx-more version in ngx_show_configure. Enable TCP_FASTOPEN. Bump GCC to 7.2.
+
 * Fri Feb 23 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-3
 - Bump Pagespeed to 1.13.35.2, Brotli snapshot 20180222
 
