@@ -20,7 +20,8 @@ All configurations will be installed in default directory which is /etc/nginx/. 
 
 Clean vhost exemple for WordPress:
 
-    server {
+```text
+server {
     listen 80;
     listen 127.0.0.1:443 ssl http2;
     server_name exemple.com;
@@ -29,12 +30,13 @@ Clean vhost exemple for WordPress:
     error_log /var/log/nginx/exemple.com-access_log warn;
 
     if ($bad_bot) { return 444; }
-    
+
     include conf.d/custom/ssl-exemple.com.conf;
     include conf.d/custom/restrictions.conf;
     include conf.d/custom/pagespeed.conf;
     include conf.d/custom/fpm-wordpress.conf;
-    }
+}
+```
 
 All nginx-more builds are kept in the repository. If you upgrade to a newest version and it has any issues that you don't have time to troubleshoot by looking at the nginx error_log, you can downgrade to an older version with yum:
 
