@@ -1,64 +1,58 @@
 ## Synopsis
 
-Nginx-more is a rebuild of Nginx with additional open source modules such as PageSpeed, Brotli, More Headers, Cache Purge, VTS. It's compiled using GCC 5.3 with the latest OpenSSL stable sources. It also includes a lot of built-in configurations such as WordPress and Laravel php-fpm setup.
+Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information can be found on this package [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however it can be a bit outdated at this time.
 
-## BUILD
+## Easy installation for CentOS
 
-Here's the procedure to build nginx-more rpm for CentOS 6 and 7:
+There's currently packages available for CentOS 6 and 7. The easiest way to install it is to use Aeris Network yum repository
 
 ```bash
-NGINXV=1.12.2-3
-GKEY=$(cat /home/karl/.gnupg/pkey)
-pushd /home/karl/pkg-nginx-more
-rm -rf RPMS/*
-rm -rf SRPMS/*
+CentOS 6 > yum install https://repo.aerisnetwork.com/stable/centos/6/x86_64/aeris-release-1.0-4.el6.noarch.rpm
+CentOS 7 > yum install https://repo.aerisnetwork.com/stable/centos/7/x86_64/aeris-release-1.0-4.el7.noarch.rpm
+```
+Once the repository is configured, you can proceed with installing nginx-more.
 
-mock --old-chroot -r aeris-6-x86_64 --spec=/home/karl/pkg-nginx-more/SPECS/nginx-more.spec --sources=SOURCES --resultdir=SRPMS --buildsrpm && mock --old-chroot --clean -D 'dist .el6' -r aeris-6-x86_64 --resultdir=RPMS --rebuild SRPMS/nginx-more-$NGINXV.el6.src.rpm && echo $GKEY && rpm --addsign RPMS/nginx-more-$NGINXV.el6.x86_64.rpm
+```bash
+#> yum install nginx-more
+```
 
-mock --old-chroot -r aeris-7-x86_64 --spec=/home/karl/pkg-nginx-more/SPECS/nginx-more.spec --sources=SOURCES --resultdir=SRPMS --buildsrpm && mv SRPMS/nginx-more-$NGINXV.el7.centos.src.rpm SRPMS/nginx-more-$NGINXV.el7.src.rpm && mock --old-chroot --clean -D 'dist .el7' -r aeris-7-x86_64 --resultdir=RPMS --rebuild SRPMS/nginx-more-$NGINXV.el7.src.rpm && echo $GKEY && rpm --addsign RPMS/nginx-more-$NGINXV.el7.x86_64.rpm
+All configurations will be installed in default directory which is /etc/nginx/. The package already includes a bunch of PHP-FPM configurations in conf.d/custom/ for WordPress, Laravel, Drupal, OpenCart and PrestaShop, so you can get started in few seconds with your website hosting.
 
-sudo \cp -uf /home/karl/pkg-nginx-more/RPMS/nginx-more-$NGINXV.el6.x86_64.rpm /var/www/html/repo/testing/centos/6/x86_64/
-sudo \cp -uf /home/karl/pkg-nginx-more/RPMS/nginx-more-$NGINXV.el7.x86_64.rpm /var/www/html/repo/testing/centos/7/x86_64/
+Clean vhost exemple for WordPress:
 
-sudo createrepo_c /var/www/html/repo/testing/centos/7/x86_64/
-sudo repoview /var/www/html/repo/testing/centos/7/x86_64/
-sudo createrepo_c /var/www/html/repo/testing/centos/6/x86_64/
-sudo repoview /var/www/html/repo/testing/centos/6/x86_64/
-sudo chown -R apache:apache /var/www/html/repo
+    server {
+    listen 80;
+    listen 127.0.0.1:443 ssl http2;
+    server_name exemple.com;
+    root /home/www/exemple.com/public_html;
+    access_log /var/log/nginx/exemple.com-access_log main;
+    error_log /var/log/nginx/exemple.com-access_log warn;
 
-sudo mv /var/www/html/repo/testing/centos/6/x86_64/nginx-more-$NGINXV.el6.x86_64.rpm /var/www/html/repo/stable/centos/6/x86_64/
-sudo mv /var/www/html/repo/testing/centos/7/x86_64/nginx-more-$NGINXV.el7.x86_64.rpm /var/www/html/repo/stable/centos/7/x86_64/
-sudo createrepo_c /var/www/html/repo/stable/centos/7/x86_64/
-sudo repoview /var/www/html/repo/stable/centos/7/x86_64/
-sudo createrepo_c /var/www/html/repo/stable/centos/6/x86_64/
-sudo repoview /var/www/html/repo/stable/centos/6/x86_64/
-sudo createrepo_c /var/www/html/repo/testing/centos/7/x86_64/
-sudo repoview /var/www/html/repo/testing/centos/7/x86_64/
-sudo createrepo_c /var/www/html/repo/testing/centos/6/x86_64/
-sudo repoview /var/www/html/repo/testing/centos/6/x86_64/
-sudo chown -R apache:apache /var/www/html/repo
+    if ($bad_bot) { return 444; }
+    
+    include conf.d/custom/ssl-exemple.com.conf;
+    include conf.d/custom/restrictions.conf;
+    include conf.d/custom/pagespeed.conf;
+    include conf.d/custom/fpm-wordpress.conf;
+    }
+
+All nginx-more builds are kept in the repository. If you upgrade to a newest version and it has any issues that you don't have time to troubleshoot by looking at the nginx error_log, you can downgrade to an older version with yum:
+
+```bash
+#> yum downgrade nginx-more
+```
+
+You can also switch to nginx package from EPEL or Nginx with a simple yum command:
+
+```bash
+#> yum swap nginx-more nginx
 ```
 
 ## Modules
 
-### Brotli
-
-Packaging:
-```bash
-DATE=$(date +"20%y%m%d")
-git clone --recursive https://github.com/google/ngx_brotli.git
-mv ngx_brotli ngx_brotli-snap$DATE
-tar -czvf ngx_brotli-snap$DATE.tar.gz ngx_brotli-snap$DATE
-rm -rf ngx_brotli-snap$DATE
-```
-
-## Statistics
-
-Number of installations
-```bash
-[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.1-1|awk '{print $1}'|sort -u|wc -l
-299
-[root@build ~]# grep yum /var/log/httpd/repo.aerisnetwork.com-access_log |grep nginx-more-1.12.2-2|awk '{print $1}'|sort -u|wc -l
-460
-[root@build ~]#
-```
+* [OpenSSL](https://github.com/openssl/openssl)
+* [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx)
+* [Brotli](https://github.com/google/ngx_brotli)
+* [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
+* [Headers more](https://github.com/openresty/headers-more-nginx-module)
+* [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)
