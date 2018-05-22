@@ -7,18 +7,18 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.0g
+%global openssl_version		1.1.0h
 %global module_ps			1.13.35.2-stable
-%global module_headers_more	0.32
+%global module_headers_more	0.33
 %global module_cache_purge	2.3
-%global module_vts			0.1.15
+%global module_vts			0.1.16
 %global module_brotli		snap20180222
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
 Version:					1.12.2
-Release:					4%{?dist}
+Release:					5%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -336,6 +336,9 @@ fi
 
 
 %changelog
+* Tue May 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-5
+- Bump OpenSSL 1.1.0h, module VTS 0.1.16, module More Headers 0.33. Allow .well-known access.
+
 * Fri Mar 2 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-4
 - Move nginx-more version in ngx_show_configure. Enable TCP_FASTOPEN. Bump GCC to 7.2.
 
