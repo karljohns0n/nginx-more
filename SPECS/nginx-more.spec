@@ -7,8 +7,12 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global ps_version			1.13.35.2-stable
 %global openssl_version		1.1.0g
+%global module_ps			1.13.35.2-stable
+%global module_headers_more	0.32
+%global module_cache_purge	2.3
+%global module_vts			0.1.15
+%global module_brotli		snap20180222
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
@@ -47,13 +51,13 @@ Source23:					fpm-opencart.conf
 Source24:					fpm-drupal.conf
 Source25:					blacklist.conf
 
-Source100:					openssl-1.1.0g.tar.gz
-Source101:					ngx_pagespeed-%{ps_version}.tar.gz
-Source102:					psol-%{ps_version}.tar.gz
-Source103:					ngx_more-headers-0.32.tar.gz
-Source104:					ngx_cache_purge-2.3.tar.gz
-Source105:					ngx_brotli-snap20180222.tar.gz
-Source106:					ngx_module-vts-0.1.15.tar.gz
+Source100:					openssl-%{openssl_version}.tar.gz
+Source101:					ngx_pagespeed-%{module_ps}.tar.gz
+Source102:					psol-%{module_ps}.tar.gz
+Source103:					ngx_headers_more-%{module_headers_more}.tar.gz
+Source104:					ngx_cache_purge-%{module_cache_purge}.tar.gz
+Source105:					ngx_brotli-%{module_brotli}.tar.gz
+Source106:					ngx_module_vts-%{module_vts}.tar.gz
 
 Patch0:						nginx-version.patch
 
@@ -89,9 +93,9 @@ Provides:					webserver
 Provides:					nginx
 
 %description
-Nginx-more is a rebuild of Nginx with additional open source modules
+Nginx-more is a build of Nginx with additional open source modules
 such as PageSpeed, More Headers, Cache Purge, VTS. It's compiled
-using GCC 5.3 with the latest OpenSSL stable sources. It also includes a lot of
+using recent GCC version and latest OpenSSL sources. It also includes
 built-in configurations such as WordPress and Laravel php-fpm setup.
 
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
@@ -107,7 +111,7 @@ memory usage.
 mkdir modules
 tar -zxvf %{SOURCE100} -C modules/
 tar -zxvf %{SOURCE101} -C modules/
-tar -zxvf %{SOURCE102} -C modules/ngx_pagespeed-%{ps_version}/
+tar -zxvf %{SOURCE102} -C modules/ngx_pagespeed-%{module_ps}/
 tar -zxvf %{SOURCE103} -C modules/
 tar -zxvf %{SOURCE104} -C modules/
 tar -zxvf %{SOURCE105} -C modules/
@@ -166,11 +170,11 @@ export DESTDIR=%{buildroot}
 	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
 	--with-cc="/opt/rh/devtoolset-7/root/usr/bin/gcc" \
 	--with-openssl=modules/openssl-%{openssl_version} \
-	--add-module=modules/headers-more-nginx-module-0.32 \
-	--add-module=modules/ngx_cache_purge-2.3 \
-	--add-module=modules/ngx_module-vts-0.1.15 \
-	--add-module=modules/ngx_pagespeed-%{ps_version} \
-	--add-module=modules/ngx_brotli-snap20180222
+	--add-module=modules/ngx_headers_more-%{module_headers_more} \
+	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
+	--add-module=modules/ngx_module_vts-%{module_vts} \
+	--add-module=modules/ngx_pagespeed-%{module_ps} \
+	--add-module=modules/ngx_brotli-%{module_brotli}
 
 make
 
@@ -249,7 +253,7 @@ if [ $1 -eq 1 ]; then
 ----------------------------------------------------------------------
 
 Thanks for using nginx-more! Feel free to send any feature request 
-or suggestion to: karljohnson.it@gmail.com
+with a Pull Request on github.com/karljohns0n/nginx-more
 
 Installing memcached is highly recommended to let PageSpeed cache in 
 memory instead of disk.
