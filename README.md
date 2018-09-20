@@ -44,7 +44,7 @@ All nginx-more builds are kept in the repository. If you upgrade to a newest ver
 #> yum downgrade nginx-more
 ```
 
-You can also switch to nginx package from EPEL or Nginx with a simple yum command:
+You can also switch back to nginx package from EPEL or Nginx repo with a simple yum command:
 
 ```bash
 #> yum swap nginx-more nginx

@@ -7,7 +7,7 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.0h
+%global openssl_version		1.1.1
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -17,12 +17,12 @@
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
-Version:					1.12.2
-Release:					5%{?dist}
+Version:					1.14.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
-License:					BSD
+License:					2-clause BSD-like license
 URL:						http://nginx.org/
 BuildRoot:					%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -336,6 +336,10 @@ fi
 
 
 %changelog
+* Thu Sep 20 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-1
+- Bump to Nginx 1.14.0, OpenSSL 1.1.1
+  Rolled in TLS 1.3 configuration
+
 * Tue May 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-5
 - Bump OpenSSL 1.1.0h, module VTS 0.1.16, module More Headers 0.33. Allow .well-known access.
 
