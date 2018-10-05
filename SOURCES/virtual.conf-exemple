@@ -1,15 +1,7 @@
 server {
 	listen 80;
 	server_name exemple.com www.exemple.com;
-	root /home/www/exemple.com/public_html;
-	access_log /var/log/nginx/www.exemple.com-access_log main;
-	error_log /var/log/nginx/www.exemple.com-error_log warn;
-
-	if ($bad_bot) { return 444; }
-
-	include conf.d/custom/restrictions.conf;
-	#include conf.d/custom/pagespeed.conf;
-	include conf.d/custom/fpm-default.conf;
+	return 301 https://exemple.com$request_uri;
 }
 
 server {
@@ -20,6 +12,8 @@ server {
 	error_log /var/log/nginx/www.exemple.com-error_log warn;
 
 	if ($bad_bot) { return 444; }
+
+	set $fpmuser www;
 
 	include conf.d/custom/ssl.conf;
 	include conf.d/custom/restrictions.conf;
