@@ -18,7 +18,7 @@
 
 Name:						nginx-more
 Version:					1.14.0
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -336,6 +336,9 @@ fi
 
 
 %changelog
+* Mon Oct 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-2
+- Restrictions cleanup and more FCGI params added by default
+
 * Thu Sep 20 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-1
 - Bump to Nginx 1.14.0, OpenSSL 1.1.1
   Rolled in TLS 1.3 configuration
