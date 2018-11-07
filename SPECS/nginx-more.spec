@@ -11,14 +11,14 @@
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
-%global module_vts			0.1.16
+%global module_vts			0.1.18
 %global module_brotli		snap20180222
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
-Version:					1.14.0
-Release:					2%{?dist}
+Version:					1.14.1
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -50,6 +50,9 @@ Source22:					fpm-prestashop.conf
 Source23:					fpm-opencart.conf
 Source24:					fpm-drupal.conf
 Source25:					blacklist.conf
+Source26:					fpm-default-users.conf
+Source27:					fpm-laravel-users.conf
+Source28:					fpm-wordpress-users.conf
 
 Source100:					openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
@@ -213,7 +216,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -336,6 +339,9 @@ fi
 
 
 %changelog
+* Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-1
+- Bump to Nginx 1.14.1, module VTS 0.1.18
+
 * Mon Oct 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-2
 - Restrictions cleanup and more FCGI params added by default
 
