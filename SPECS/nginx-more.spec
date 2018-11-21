@@ -7,7 +7,7 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.1
+%global openssl_version		1.1.1a
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -18,7 +18,7 @@
 
 Name:						nginx-more
 Version:					1.14.1
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -339,6 +339,11 @@ fi
 
 
 %changelog
+* Wed Nov 21 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-2
+- Bump OpenSSL 1.1.1a
+- Increase ciphers strength per default, disable TLS 1.0 and 1.1. 
+- Switch RapidSSL to Lets Encrypt in SSL exemple configuration
+
 * Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-1
 - Bump to Nginx 1.14.1, module VTS 0.1.18
 
