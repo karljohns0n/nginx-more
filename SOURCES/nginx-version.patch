@@ -4,7 +4,7 @@
  
      if (ngx_show_configure) {
  
-+	ngx_write_stderr("custom build maintained by karljohnson.it@gmail.com" NGX_LINEFEED);
++	ngx_write_stderr("custom build maintained on github.com/karljohns0n/nginx-more" NGX_LINEFEED);
 +
  #ifdef NGX_COMPILER
          ngx_write_stderr("built by " NGX_COMPILER NGX_LINEFEED);

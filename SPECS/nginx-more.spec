@@ -17,8 +17,8 @@
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
-Version:					1.14.1
-Release:					2%{?dist}
+Version:					1.14.2
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -256,7 +256,7 @@ if [ $1 -eq 1 ]; then
 ----------------------------------------------------------------------
 
 Thanks for using nginx-more! Feel free to send any feature request 
-with a Pull Request on github.com/karljohns0n/nginx-more
+with an Issue or Pull Request on github.com/karljohns0n/nginx-more
 
 Installing memcached is highly recommended to let PageSpeed cache in 
 memory instead of disk.
@@ -339,6 +339,9 @@ fi
 
 
 %changelog
+* Tue Dec 4 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
+- Bump to Nginx 1.14.2
+
 * Wed Nov 21 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-2
 - Bump OpenSSL 1.1.1a
 - Increase ciphers strength per default, disable TLS 1.0 and 1.1. 
