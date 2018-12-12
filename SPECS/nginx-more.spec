@@ -339,11 +339,8 @@ fi
 
 
 %changelog
-* Tue Dec 4 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
-- Bump to Nginx 1.14.2
-
-* Wed Nov 21 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-2
-- Bump OpenSSL 1.1.1a
+* Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
+- Bump to Nginx 1.14.2, Bump OpenSSL 1.1.1a
 - Increase ciphers strength per default, disable TLS 1.0 and 1.1. 
 - Switch RapidSSL to Lets Encrypt in SSL exemple configuration
 
