@@ -13,12 +13,13 @@
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
 %global module_brotli		snap20180222
+%global module_geoip2		3.2
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
 Version:					1.14.2
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -61,6 +62,7 @@ Source103:					ngx_headers_more-%{module_headers_more}.tar.gz
 Source104:					ngx_cache_purge-%{module_cache_purge}.tar.gz
 Source105:					ngx_brotli-%{module_brotli}.tar.gz
 Source106:					ngx_module_vts-%{module_vts}.tar.gz
+Source107:					ngx_http_geoip2_module-%{module_geoip2}.tar.gz
 
 Patch0:						nginx-version.patch
 
@@ -73,6 +75,7 @@ BuildRequires:				pcre
 BuildRequires:				gd-devel
 BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
+BuildRequires:				libmaxminddb-devel
 %{?el7:BuildRequires:		GeoIP-devel}
 
 Requires:					gd
@@ -119,6 +122,7 @@ tar -zxvf %{SOURCE103} -C modules/
 tar -zxvf %{SOURCE104} -C modules/
 tar -zxvf %{SOURCE105} -C modules/
 tar -zxvf %{SOURCE106} -C modules/
+tar -zxvf %{SOURCE107} -C modules/
 
 %build
 export DESTDIR=%{buildroot}
@@ -177,7 +181,8 @@ export DESTDIR=%{buildroot}
 	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
 	--add-module=modules/ngx_module_vts-%{module_vts} \
 	--add-module=modules/ngx_pagespeed-%{module_ps} \
-	--add-module=modules/ngx_brotli-%{module_brotli}
+	--add-module=modules/ngx_brotli-%{module_brotli} \
+	--add-module=modules/ngx_http_geoip2_module-%{module_geoip2}
 
 make
 
@@ -339,8 +344,11 @@ fi
 
 
 %changelog
+* Fri Dec 14 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-2
+- Add module geoip2 3.2 with latest libmaxminddb 1.3.2
+
 * Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
-- Bump to Nginx 1.14.2, Bump OpenSSL 1.1.1a
+- Bump to Nginx 1.14.2, OpenSSL 1.1.1a
 - Increase ciphers strength per default, disable TLS 1.0 and 1.1. 
 - Switch RapidSSL to Lets Encrypt in SSL exemple configuration
 
