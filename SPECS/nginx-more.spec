@@ -349,7 +349,7 @@ fi
 
 * Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
 - Bump to Nginx 1.14.2, OpenSSL 1.1.1a
-- Increase ciphers strength per default, disable TLS 1.0 and 1.1. 
+- Increase ciphers strength per default, disable TLS 1.0 and 1.1
 - Switch RapidSSL to Lets Encrypt in SSL exemple configuration
 
 * Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-1
@@ -360,13 +360,16 @@ fi
 
 * Thu Sep 20 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-1
 - Bump to Nginx 1.14.0, OpenSSL 1.1.1
-  Rolled in TLS 1.3 configuration
+- Rolled in TLS 1.3 configuration
 
 * Tue May 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-5
-- Bump OpenSSL 1.1.0h, module VTS 0.1.16, module More Headers 0.33. Allow .well-known access.
+- Bump OpenSSL 1.1.0h, module VTS 0.1.16, module More Headers 0.33
+- Allow .well-known access
 
 * Fri Mar 2 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-4
-- Move nginx-more version in ngx_show_configure. Enable TCP_FASTOPEN. Bump GCC to 7.2.
+- Move nginx-more version in ngx_show_configure
+- Enable TCP_FASTOPEN
+- Bump GCC to 7.2
 
 * Fri Feb 23 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-3
 - Bump Pagespeed to 1.13.35.2, Brotli snapshot 20180222
@@ -382,10 +385,11 @@ fi
 
 * Tue Apr 18 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.0-1
 - Bump to Nginx 1.12.0, OpenSSL 1.1.0e, nginx vts 0.1.14, user agents blacklist updated
-  Important: Removal of old ModSecurity nginx add-on. Might be replaced by ModSecurity-nginx
+- Important: Removal of old ModSecurity nginx add-on, might be replaced later by ModSecurity-nginx
 
 * Wed Mar 1 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.10.3-1
-- Bump to Nginx 1.10.3, OpenSSL 1.0.2k, nginx vts 0.1.12, user agents blacklist added
+- Bump to Nginx 1.10.3, OpenSSL 1.0.2k, nginx vts 0.1.12
+- Add user agents blacklist
 
 * Mon Nov 7 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.2-1
 - Bump to Nginx 1.10.2, More Headers 0.32
@@ -397,43 +401,51 @@ fi
 - Bump to Nginx 1.10.1 (CVE-2016-4450)
 
 * Fri May 20 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.0-1
-- Bump to Nginx 1.10.0 with threads pools. Important: SPDY replaced by HTTP2
+- Bump to Nginx 1.10.0 with threads pools
+- Important: SPDY replaced by HTTP2
 
 * Tue May 17 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-6
-- Switch to GCC 5.2.1. Remove EPEL dep. Bump PageSpeed 1.11.33.2, More Headers 0.30.
+- Switch to GCC 5.2.1
+- Remove EPEL dep
+- Bump PageSpeed 1.11.33.2, More Headers 0.30
 
 * Fri Apr 29 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-5
-- Bump OpenSSL 1.0.2h, PageSpeed 1.11.33.1, ModSecurity 2.9.1, nginx-module-vts 0.1.9 added
+- Bump OpenSSL 1.0.2h, PageSpeed 1.11.33.1, ModSecurity 2.9.1
+- Add nginx vts 0.1.9
 
 * Mon Mar 7 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-4
 - Bump PageSpeed 1.10.33.6, OpenSSL 1.0.2g
 
 * Thu Feb 18 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-3
-- Build with GCC 4.8 on el6, Bump PageSpeed 1.10.33.5
+- Build with GCC 4.8 on el6
+- Bump PageSpeed 1.10.33.5
 
 * Fri Jan 29 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-1
 - Bump Nginx 1.8.1, PageSpeed 1.9.32.10, OpenSSL 1.0.2f, More-Headers 0.29
 
 * Fri Aug 14 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-4
-- Bump PageSpeed to 1.9.32.6. Increase fcgi buffer for php-fpm
+- Bump PageSpeed to 1.9.32.6
+- Increase fcgi buffer for php-fpm
 
 * Fri Jul 17 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-3
-- Change in rpm upgrade process. Add install banner.
+- Changes in rpm upgrade process 
+- Add install banner
 
 * Wed Jul 15 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-2
-- Upgrade module OpenSSL 1.0.2d and PageSpeed 1.9.32.4. Few configurations updates
+- Bump module OpenSSL 1.0.2d and PageSpeed 1.9.32.4
+- Few configurations updates
 
 * Tue May 12 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.8.0-1
-- Upgrade Nginx to 1.8.0 and module More Headers 0.26
+- Bump Nginx to 1.8.0 and module More Headers 0.26
 
 * Wed Apr 8 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.3-1
-- Upgrade Nginx to 1.6.3 and module OpenSSL 1.0.2a
+- Bump Nginx to 1.6.3 and module OpenSSL 1.0.2a
 
 * Fri Mar 6 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-3
 - El7 support added
 
 * Tue Feb 17 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-2
-- Upgrade modules ModSecurity 2.9.0, PageSpeed 1.9.32.3, Cache Purge 2.3, OpenSSL 1.0.1l
+- Bump modules ModSecurity 2.9.0, PageSpeed 1.9.32.3, Cache Purge 2.3, OpenSSL 1.0.1l
 
 * Wed Nov 12 2014 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-1
 - First build based on Nginx 1.6.2, OpenSSL 1.0.1j, Pagespeed 1.9.32.2, Cache Purge 2.1, More Headers 0.25
