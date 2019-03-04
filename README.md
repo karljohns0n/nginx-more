@@ -7,9 +7,10 @@ Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed,
 There's packages available for CentOS 6 and 7. The easiest way to install it is using Aeris Network yum repository:
 
 ```bash
-CentOS 6 > yum install https://repo.aerisnetwork.com/stable/centos/6/x86_64/aeris-release-1.0-4.el6.noarch.rpm
-CentOS 7 > yum install https://repo.aerisnetwork.com/stable/centos/7/x86_64/aeris-release-1.0-4.el7.noarch.rpm
+CentOS 6 > yum install https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
+CentOS 7 > yum install https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
 ```
+
 Once the repository is configured, you can proceed with installing nginx-more:
 
 ```bash
@@ -71,6 +72,16 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 * [Headers more](https://github.com/openresty/headers-more-nginx-module)
 * [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)
 * [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
+
+## Ansible playbook
+
+A simple [Ansible role](https://galaxy.ansible.com/karljohns0n/nginx-more) is available to install nginx-more and keep it updated on CentOS.
+
+Example of playbook:
+
+    - hosts: servers
+      roles:
+         - { role: karljohns0n.nginx-more }
 
 ## Changelog
 
