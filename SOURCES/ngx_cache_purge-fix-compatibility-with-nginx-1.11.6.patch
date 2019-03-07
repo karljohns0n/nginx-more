@@ -1,0 +1,18 @@
+From c7345057ad5429617fc0823e92e3fa8043840cef Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Su=C5=82owicz=20Pawe=C5=82?= <Pawel.Sulowicz@grupaonet.pl>
+Date: Thu, 2 Feb 2017 09:39:37 +0100
+Subject: [PATCH] Fix compatibility with nginx-1.11.6+
+
+--- modules/ngx_cache_purge-@CACHEPVER@/ngx_cache_purge_module.c
++++ modules/ngx_cache_purge-@CACHEPVER@/ngx_cache_purge_module.c
+@@ -492,7 +492,11 @@ typedef struct {
+     ngx_str_t                      body_source;
+ #  endif /* nginx_version < 1007008 */
+ 
++#  if (nginx_version >= 1011006)
++    ngx_http_complex_value_t      *method;
++#  else
+     ngx_str_t                      method;
++#  endif /* nginx_version >= 1011006 */
+     ngx_str_t                      location;
+     ngx_str_t                      url;

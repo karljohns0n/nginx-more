@@ -7,19 +7,20 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.1a
+%global openssl_version		1.1.1b
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20180222
+%global module_brotli		snap20190307
 %global module_geoip2		3.2
+%global module_echo			0.61
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
 Version:					1.14.2
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -63,8 +64,10 @@ Source104:					ngx_cache_purge-%{module_cache_purge}.tar.gz
 Source105:					ngx_brotli-%{module_brotli}.tar.gz
 Source106:					ngx_module_vts-%{module_vts}.tar.gz
 Source107:					ngx_http_geoip2_module-%{module_geoip2}.tar.gz
+Source108:					ngx_echo-%{module_echo}.tar.gz
 
 Patch0:						nginx-version.patch
+Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
 
 BuildRequires:				devtoolset-7-gcc-c++ devtoolset-7-binutils
 BuildRequires:				libxslt-devel
@@ -111,8 +114,6 @@ memory usage.
 
 %prep
 %setup -q -n %{packagename}-%{version}
-%patch0 -p0
-
 
 mkdir modules
 tar -zxvf %{SOURCE100} -C modules/
@@ -123,6 +124,12 @@ tar -zxvf %{SOURCE104} -C modules/
 tar -zxvf %{SOURCE105} -C modules/
 tar -zxvf %{SOURCE106} -C modules/
 tar -zxvf %{SOURCE107} -C modules/
+tar -zxvf %{SOURCE108} -C modules/
+
+%{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH1}
+
+%patch0 -p0
+%patch1 -p0
 
 %build
 export DESTDIR=%{buildroot}
@@ -182,7 +189,8 @@ export DESTDIR=%{buildroot}
 	--add-module=modules/ngx_module_vts-%{module_vts} \
 	--add-module=modules/ngx_pagespeed-%{module_ps} \
 	--add-module=modules/ngx_brotli-%{module_brotli} \
-	--add-module=modules/ngx_http_geoip2_module-%{module_geoip2}
+	--add-module=modules/ngx_http_geoip2_module-%{module_geoip2} \
+	--add-module=modules/ngx_echo-%{module_echo}
 
 make
 
@@ -344,6 +352,11 @@ fi
 
 
 %changelog
+* Thu Mar 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-3
+- Bump OpenSSL 1.1.1b, Brotli 1.0.4
+- Add new module ngx_echo
+- Add patch1 to fix module ngx_cache_purge on recent nginx
+
 * Fri Dec 14 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-2
 - Add module geoip2 3.2 with latest libmaxminddb 1.3.2
 
