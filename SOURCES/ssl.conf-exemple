@@ -1,4 +1,3 @@
-ssl on;
 ssl_certificate /etc/letsencrypt/live/domain/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/domain/privkey.pem;
 ssl_dhparam /etc/ssl/certs/dhparam.pem;
