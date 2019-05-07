@@ -19,8 +19,8 @@
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
-Version:					1.14.2
-Release:					3%{?dist}
+Version:					1.16.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -55,6 +55,8 @@ Source25:					blacklist.conf
 Source26:					fpm-default-users.conf
 Source27:					fpm-laravel-users.conf
 Source28:					fpm-wordpress-users.conf
+Source29:					fpm-sendy.conf
+Source30:					fpm-sendy-users.conf
 
 Source100:					openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
@@ -79,7 +81,10 @@ BuildRequires:				gd-devel
 BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
-%{?el7:BuildRequires:		GeoIP-devel}
+
+%if 0%{?rhel} == 7
+BuildRequires:				GeoIP-devel
+%endif
 
 Requires:					gd
 Requires:					pcre
@@ -103,9 +108,10 @@ Provides:					nginx
 
 %description
 Nginx-more is a build of Nginx with additional open source modules
-such as PageSpeed, More Headers, Cache Purge, VTS. It's compiled
-using recent GCC version and latest OpenSSL sources. It also includes
-built-in configurations such as WordPress and Laravel php-fpm setup.
+such as PageSpeed, More Headers, Cache Purge, virtual host traffic status,
+GeoIP2. It's compiled using recent GCC version and latest OpenSSL sources.
+It also includes built-in configurations such as WordPress/Laravel php-fpm
+setup, bad user-agents blocking, TCP_FASTOPEN, Cloudflare IPs, and more.
 
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
 IMAP protocols, with a strong focus on high concurrency, performance and low
@@ -151,7 +157,6 @@ export DESTDIR=%{buildroot}
 	--group=%{nginx_group} \
 	--with-compat \
 	--with-file-aio \
-	--with-ipv6 \
 	--with-http_ssl_module \
 	--with-http_realip_module \
 	--with-http_addition_module \
@@ -162,7 +167,7 @@ export DESTDIR=%{buildroot}
 	--with-http_mp4_module \
 	--with-http_gunzip_module \
 	--with-http_gzip_static_module \
-	%if 0%{?rhel} >= 7
+	%if 0%{?rhel} == 7
 		--with-http_geoip_module \
 	%endif
 	--with-http_random_index_module \
@@ -229,7 +234,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -352,6 +357,12 @@ fi
 
 
 %changelog
+* Tue May 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-1
+- Bump to Nginx 1.16.0
+- Remove obsolete "--with-ipv6" and "ssl on"
+- Refresh bad user-agents list
+- Add 1.1.1.1 as resolver
+
 * Thu Mar 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-3
 - Bump OpenSSL 1.1.1b, Brotli 1.0.4
 - Add new module ngx_echo
