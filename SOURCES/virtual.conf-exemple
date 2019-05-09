@@ -1,3 +1,8 @@
+#################################################################
+#
+# Example of WordPress vhost running on user "www" with php-fpm
+#
+
 server {
 	listen 80;
 	server_name exemple.com www.exemple.com;
@@ -16,7 +21,7 @@ server {
 	set $fpmuser www;
 
 	include conf.d/custom/ssl.conf;
-	include conf.d/custom/restrictions.conf;
+	include conf.d/custom/restrictions-users.conf;
 	#include conf.d/custom/pagespeed.conf;
-	include conf.d/custom/fpm-default.conf;
+	include conf.d/custom/fpm-wordpress-users.conf;
 }
