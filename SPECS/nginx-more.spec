@@ -20,7 +20,7 @@
 
 Name:						nginx-more
 Version:					1.16.0
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -57,6 +57,7 @@ Source27:					fpm-laravel-users.conf
 Source28:					fpm-wordpress-users.conf
 Source29:					fpm-sendy.conf
 Source30:					fpm-sendy-users.conf
+Source31:					restrictions-users.conf
 
 Source100:					openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
@@ -234,7 +235,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -357,11 +358,12 @@ fi
 
 
 %changelog
-* Tue May 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-1
+* Wed May 15 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-2
 - Bump to Nginx 1.16.0
 - Remove obsolete "--with-ipv6" and "ssl on"
 - Refresh bad user-agents list
 - Add 1.1.1.1 as resolver
+- Make restrictions.conf compatible with multiple fpm users
 
 * Thu Mar 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-3
 - Bump OpenSSL 1.1.1b, Brotli 1.0.4
