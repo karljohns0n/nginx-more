@@ -7,7 +7,7 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.1b
+%global openssl_version		1.1.1c
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -20,7 +20,7 @@
 
 Name:						nginx-more
 Version:					1.16.0
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -358,6 +358,9 @@ fi
 
 
 %changelog
+* XX XX XX 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-3
+- Bump OpenSSL to 1.1.1c
+
 * Wed May 15 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-2
 - Bump to Nginx 1.16.0
 - Remove obsolete "--with-ipv6" and "ssl on"
