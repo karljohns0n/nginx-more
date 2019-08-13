@@ -12,15 +12,15 @@
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20190307
+%global module_brotli		snap20190813
 %global module_geoip2		3.2
 %global module_echo			0.61
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 Name:						nginx-more
-Version:					1.16.0
-Release:					3%{?dist}
+Version:					1.16.1
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -58,6 +58,7 @@ Source28:					fpm-wordpress-users.conf
 Source29:					fpm-sendy.conf
 Source30:					fpm-sendy-users.conf
 Source31:					restrictions-users.conf
+Source32:					fpm-wordpress-mu-users.conf
 
 Source100:					openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
@@ -235,7 +236,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -358,8 +359,10 @@ fi
 
 
 %changelog
-* XX XX XX 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-3
+* Tue Aug 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-1
+- Bump Nginx to 1.16.1
 - Bump OpenSSL to 1.1.1c
+- Bump Brotli to 1.0.7
 
 * Wed May 15 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-2
 - Bump to Nginx 1.16.0
