@@ -74,6 +74,27 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 * [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
 * [Echo](https://github.com/openresty/echo-nginx-module)
 
+## SELinux
+
+Third-party modules such as PageSpeed will cause trouble with SELinux when enforced. To get nginx-more works with SELinux, you need to at least turn on `httpd_execmem` policy:
+
+```bash
+#> yum -y install policycoreutils && setsebool -P httpd_execmem 1
+#> systemctl start nginx
+```
+
+It's possible to temporarily disable SELinux for Nginx to get started quickly:
+
+```bash
+#> semanage permissive -a httpd_t
+```
+
+Here's two nice blogs to help you troubleshoot SELinux with Nginx:
+
+* [selinux-making-it-a-little-easier-for-web](https://medium.com/@ChristopherShaffer/selinux-making-it-a-little-easier-for-web-b8fad76e2d97)
+* [using-nginx-plus-with-selinux](https://www.nginx.com/blog/using-nginx-plus-with-selinux/)
+
+
 ## Ansible playbook
 
 A simple [Ansible role](https://galaxy.ansible.com/karljohns0n/nginx-more) is available to install nginx-more and keep it updated on CentOS.
