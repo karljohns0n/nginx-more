@@ -67,7 +67,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 
 * [OpenSSL](https://github.com/openssl/openssl)
 * [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx)
-* [Brotli](https://github.com/eustas/ngx_brotli)
+* [Brotli](https://github.com/google/ngx_brotli)
 * [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
 * [Headers more](https://github.com/openresty/headers-more-nginx-module)
 * [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)

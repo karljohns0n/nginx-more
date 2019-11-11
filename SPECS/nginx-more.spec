@@ -7,7 +7,7 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
-%global openssl_version		1.1.1c
+%global openssl_version		1.1.1d
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -20,7 +20,7 @@
 
 Name:						nginx-more
 Version:					1.16.1
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -359,6 +359,10 @@ fi
 
 
 %changelog
+* Fri Sep 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
+- Bump OpenSSL to 1.1.1d
+- Set expire on woff2 files
+
 * Tue Aug 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-1
 - Bump Nginx to 1.16.1
 - Bump OpenSSL to 1.1.1c
