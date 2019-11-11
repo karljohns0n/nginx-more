@@ -45,10 +45,10 @@ All nginx-more builds are kept in the repository. If you upgrade to a newest ver
 #> yum downgrade nginx-more
 ```
 
-You can also switch back to nginx package from EPEL or Nginx repo with a simple yum command:
+Note that you cannot install nginx-more if nginx package is already installed on your system because both package provides nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL/ Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
 
 ```bash
-#> yum swap nginx-more nginx
+#> yum swap nginx nginx-more
 ```
 
 Full output of nginx configure:
