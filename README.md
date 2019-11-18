@@ -24,7 +24,7 @@ Clean vhost exemple for WordPress:
 ```text
 server {
     listen 80;
-    listen 127.0.0.1:443 ssl http2;
+    listen 443 ssl http2;
     server_name exemple.com;
     root /home/www/exemple.com/public_html;
     access_log /var/log/nginx/exemple.com-access_log main;
@@ -32,7 +32,7 @@ server {
 
     if ($bad_bot) { return 444; }
 
-    include conf.d/custom/ssl-exemple.com.conf;
+    include conf.d/custom/ssl.global.conf;
     include conf.d/custom/restrictions.conf;
     include conf.d/custom/pagespeed.conf;
     include conf.d/custom/fpm-wordpress.conf;
@@ -45,7 +45,7 @@ All nginx-more builds are kept in the repository. If you upgrade to a newest ver
 #> yum downgrade nginx-more
 ```
 
-Note that you cannot install nginx-more if nginx package is already installed on your system because both package provides nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL/ Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
+Note that you cannot install nginx-more if nginx package is already installed on your system because both packages provide nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL/ Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
 
 ```bash
 #> yum swap nginx nginx-more

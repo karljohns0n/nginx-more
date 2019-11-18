@@ -59,6 +59,14 @@ Source29:					fpm-sendy.conf
 Source30:					fpm-sendy-users.conf
 Source31:					restrictions-users.conf
 Source32:					fpm-wordpress-mu-users.conf
+Source33:					fpm-wordpress-cache-users.conf
+Source34:					fpm-wordpress-mu-cache-users.conf
+Source35:					fpm-wordpress-mu-cache.conf
+Source36:					fpm-wordpress-sub.conf
+Source37:					fpm-wordpress-sub-users.conf
+Source38:					fpm-wordpress-sub-cache.conf
+Source39:					fpm-wordpress-sub-cache-users.conf
+
 
 Source100:					openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
@@ -236,7 +244,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33} %{SOURCE34} %{SOURCE35} %{SOURCE36} %{SOURCE37} %{SOURCE38} %{SOURCE39} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -359,9 +367,10 @@ fi
 
 
 %changelog
-* Fri Sep 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
+* Thu Nov 14 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
 - Bump OpenSSL to 1.1.1d
 - Set expire on woff2 files
+- Add caching php-fpm option (20 minutes) for all WordPress configs
 
 * Tue Aug 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-1
 - Bump Nginx to 1.16.1
