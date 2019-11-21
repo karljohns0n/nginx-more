@@ -12,8 +12,8 @@
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20190813
-%global module_geoip2		3.2
+%global module_brotli		snap20191118
+%global module_geoip2		3.3
 %global module_echo			0.61
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
@@ -367,8 +367,10 @@ fi
 
 
 %changelog
-* Thu Nov 14 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
+* Mon Nov 18 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
 - Bump OpenSSL to 1.1.1d
+- Bump GeoIP2 to 3.3
+- Bump Brotli to git snapshot 2019-11-18
 - Set expire on woff2 files
 - Add caching php-fpm option (20 minutes) for all WordPress configs
 

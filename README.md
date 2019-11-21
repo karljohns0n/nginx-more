@@ -17,7 +17,7 @@ Once the repository is configured, you can proceed with installing nginx-more:
 #> yum install nginx-more
 ```
 
-All configurations will be installed in default directory which is `/etc/nginx/`. The package already includes a bunch of PHP-FPM configurations in `conf.d/custom/` for WordPress, Laravel, Drupal, OpenCart and PrestaShop, so you can get started in few seconds with your website hosting.
+All configurations will be installed in default directory which is `/etc/nginx/`. The package already includes a bunch of PHP-FPM configurations in `conf.d/custom/` for WordPress, Laravel, Drupal, OpenCart, PrestaShop and Sendy, so you can get started in few seconds with your website hosting.
 
 Clean vhost exemple for WordPress:
 
@@ -28,7 +28,7 @@ server {
     server_name exemple.com;
     root /home/www/exemple.com/public_html;
     access_log /var/log/nginx/exemple.com-access_log main;
-    error_log /var/log/nginx/exemple.com-access_log warn;
+    error_log /var/log/nginx/exemple.com-error_log warn;
 
     if ($bad_bot) { return 444; }
 
@@ -76,7 +76,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 
 ## SELinux
 
-Third-party modules such as PageSpeed will cause trouble with SELinux when enforced. To get nginx-more works with SELinux, you need to at least turn on `httpd_execmem` policy:
+Third-party modules such as PageSpeed will cause trouble while SELinux enforced. To get nginx-more works with SELinux, you need at least to turn on `httpd_execmem` policy:
 
 ```bash
 #> yum -y install policycoreutils && setsebool -P httpd_execmem 1
@@ -89,11 +89,10 @@ It's possible to temporarily disable SELinux for Nginx to get started quickly:
 #> semanage permissive -a httpd_t
 ```
 
-Here's two nice blogs to help you troubleshoot SELinux with Nginx:
+Here's two nice external blogs to help you troubleshoot SELinux with Nginx:
 
 * [selinux-making-it-a-little-easier-for-web](https://medium.com/@ChristopherShaffer/selinux-making-it-a-little-easier-for-web-b8fad76e2d97)
 * [using-nginx-plus-with-selinux](https://www.nginx.com/blog/using-nginx-plus-with-selinux/)
-
 
 ## Ansible playbook
 
@@ -115,3 +114,55 @@ The changelog for all packages is available from the RepoView:
 ## Package dependencies
 
 As of writing, only one package outside CentOS default repositories is required to build nginx-more RPM, which is [libmaxminddb-devel](https://github.com/karljohns0n/pkg-libmaxminddb) for module GeoIP2. It's available in EPEL however a newer version is available in Aeris repository so it's recommended to add Aeris repository in your mock configuration. We try to avoid packages that aren't available in CentOS but if it's the case we will build and include them in Aeris repository therefore no other third-party repository is required to build nginx-more.
+
+## Built-in PHP-FPM configurations
+
+As said in synopsis, nginx-more package includes a lot of built-in PHP-FPM configurations for popular CMS / Frameworks / Webapps including WordPress and Laravel. These configurations get you started quickly with hosting your CMS and makes nginx vhosts look clean with short blocks. Here's a few example.
+
+### WordPress multi-user environment (php-fpm socket per user)
+
+Default configuration assume that PHP-FPM is configured as default, therefore listening on TCP port 9000. If you want to host multiple vhosts on a server with multiple users for enchanced security, you can setup php-fpm pool with socket (username.sock), add `-users` to the php-fpm include file and pass the username as $fpmuser variable. Here's an example of a WordPress running under user `myuser` (myuser.sock):
+
+```text
+server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name wordpress.com;
+    root /home/myuser/wordpress/public_html;
+    access_log /var/log/nginx/wordpress-access_log main;
+    error_log /var/log/nginx/wordpress-error_log warn;
+
+    if ($bad_bot) { return 444; }
+
+    set $fpmuser myuser;
+
+    include conf.d/custom/ssl.global.conf;
+    include conf.d/custom/restrictions.conf;
+    include conf.d/custom/pagespeed.conf;
+    include conf.d/custom/fpm-wordpress-users.conf;
+}
+```
+
+### Speeding up WordPress with Nginx
+
+Nginx FastCGI cache improves WordPress performance by a lot instead of using all kinds of heavy plugins. It can easily be implemented by adding `-cache` to the php-fpm include file. With this configuation, Nginx wont pass PHP requests to PHP-FPM if it's in cache (20 minutes), but only if the visitor isn't logged into the WordPress, or if there's a query string or a POST to avoid caching dynamic queries. X-Cache header is added to track if the cache is HIT/MISS/BYPASS/EXPIRED. Here's an example of a WordPress running under user `myuser` with FastCGI caching:
+
+```text
+server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name wordpress.com;
+    root /home/myuser/wordpress/public_html;
+    access_log /var/log/nginx/wordpress-access_log main;
+    error_log /var/log/nginx/wordpress-error_log warn;
+
+    if ($bad_bot) { return 444; }
+
+    set $fpmuser myuser;
+
+    include conf.d/custom/ssl.global.conf;
+    include conf.d/custom/restrictions.conf;
+    include conf.d/custom/pagespeed.conf;
+    include conf.d/custom/fpm-wordpress-cache-users.conf;
+}
+```
