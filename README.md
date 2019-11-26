@@ -1,7 +1,8 @@
 # Nginx-more
 
 [![ProjectStatus](http://opensource.box.com/badges/active.svg)](#)
-[![Version 1.16.1-1](https://img.shields.io/badge/release-1.16.1--1-success.svg)](#)
+[![Release 1.16.1-1](https://img.shields.io/badge/release-1.16.1--1-success.svg)](#)
+[![Change Log](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
 
 
 ## Synopsis
@@ -123,11 +124,11 @@ As of writing, only one package outside CentOS default repositories is required 
 
 ## Built-in PHP-FPM configurations
 
-As said in synopsis, nginx-more package includes a lot of built-in PHP-FPM configurations for popular CMS / Frameworks / Webapps including WordPress and Laravel. These configurations get you started quickly with hosting your CMS and makes nginx vhosts look clean with short blocks. Here's a few example.
+As said in synopsis, nginx-more includes a lot of built-in PHP-FPM configurations for popular CMS / Frameworks / Webapps including WordPress and Laravel. These configurations get you started quickly with hosting your CMS and makes nginx vhosts look cleaner with short blocks. Here's a few example.
 
-### WordPress multi-user environment (php-fpm socket per user)
+### WordPress multi-user (pools) environment
 
-Default configuration assume that PHP-FPM is configured as default, therefore listening on TCP port 9000. If you want to host multiple vhosts on a server with multiple users for enchanced security, you can setup php-fpm pool with socket (username.sock), add `-users` to the php-fpm include file and pass the username as $fpmuser variable. Here's an example of a WordPress running under user `myuser` (myuser.sock):
+Default configuration assume that PHP-FPM is configured as default, therefore listening on TCP port 9000. If you want to host multiple vhosts on a server with multiple users for enchanced security, you can setup php-fpm pools with socket (username.sock), add `-users` to the php-fpm include file and pass the username as $fpmuser variable. Here's an example of a WordPress running under user `myuser` (myuser.sock):
 
 ```text
 server {
@@ -151,7 +152,7 @@ server {
 
 ### Speeding up WordPress with Nginx
 
-Nginx FastCGI cache improves WordPress performance by a lot instead of using all kinds of heavy plugins. It can easily be implemented by adding `-cache` to the php-fpm include file. With this configuation, Nginx wont pass PHP requests to PHP-FPM if it's in cache (20 minutes), but only if the visitor isn't logged into the WordPress, or if there's a query string or a POST to avoid caching dynamic queries. X-Cache header is added to track if the cache is HIT/MISS/BYPASS/EXPIRED. Here's an example of a WordPress running under user `myuser` with FastCGI caching:
+Nginx FastCGI cache improves WordPress performance by a lot instead of using all kinds of heavy WP plugins. It can easily be implemented by adding `-cache` to the php-fpm include file. With this configuation, Nginx wont pass PHP requests to PHP-FPM if it's in cache (20 minutes), but only if the visitor isn't logged into the WordPress, or if there's a query string or a POST to avoid caching dynamic queries. X-Cache header is added to track if the cache is HIT/MISS/BYPASS/EXPIRED. Here's an example of a WordPress running under user `myuser` with FastCGI caching:
 
 ```text
 server {
