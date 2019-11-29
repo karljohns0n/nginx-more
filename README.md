@@ -1,13 +1,14 @@
 # Nginx-more
 
-[![ProjectStatus](http://opensource.box.com/badges/active.svg)](#)
+[![ProjectStatus](https://opensource.box.com/badges/active.svg)](#)
+[![Build](https://img.shields.io/travis/karljohns0n/ansible-role-nginx-more/master.svg)](https://travis-ci.org/karljohns0n/ansible-role-nginx-more)
 [![Release 1.16.1-1](https://img.shields.io/badge/release-1.16.1--1-success.svg)](#)
 [![Change Log](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
 
 
 ## Synopsis
 
-Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information can be found on this package [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however it can be a bit outdated at this time. Nginx-more package is supported since 2014.
+Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousands of servers.
 
 ## Easy installation for CentOS
 
@@ -52,7 +53,7 @@ All nginx-more builds are kept in the repository. If you upgrade to a newest ver
 #> yum downgrade nginx-more
 ```
 
-Note that you cannot install nginx-more if nginx package is already installed on your system because both packages provide nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL/ Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
+Note that you cannot install nginx-more if nginx package is already installed on your system because both packages provide nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL / Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
 
 ```bash
 #> yum swap nginx nginx-more
