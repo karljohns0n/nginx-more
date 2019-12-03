@@ -28,7 +28,7 @@ License:					2-clause BSD-like license
 URL:						http://nginx.org/
 BuildRoot:					%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Source0:					http://nginx.org/download/nginx-%{version}.tar.gz
+Source0:					https://nginx.org/download/nginx-%{version}.tar.gz
 Source1:					nginx.service
 Source2:					nginx.init
 Source3:					nginx.logrotate
@@ -68,7 +68,7 @@ Source38:					fpm-wordpress-sub-cache.conf
 Source39:					fpm-wordpress-sub-cache-users.conf
 
 
-Source100:					openssl-%{openssl_version}.tar.gz
+Source100:					https://www.openssl.org/source/openssl-%{openssl_version}.tar.gz
 Source101:					ngx_pagespeed-%{module_ps}.tar.gz
 Source102:					psol-%{module_ps}.tar.gz
 Source103:					ngx_headers_more-%{module_headers_more}.tar.gz

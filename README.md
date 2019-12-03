@@ -1,6 +1,6 @@
 # Nginx-more
 
-[![ProjectStatus](https://opensource.box.com/badges/active.svg)](#)
+[![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
 [![Build](https://img.shields.io/travis/karljohns0n/ansible-role-nginx-more/master.svg)](https://travis-ci.org/karljohns0n/ansible-role-nginx-more)
 [![Release 1.16.1-1](https://img.shields.io/badge/release-1.16.1--1-success.svg)](#)
 [![Change Log](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
