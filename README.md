@@ -1,14 +1,14 @@
 # Nginx-more
 
 [![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
-[![Build](https://img.shields.io/travis/karljohns0n/ansible-role-nginx-more/master.svg)](https://travis-ci.org/karljohns0n/ansible-role-nginx-more)
+[![Build](https://img.shields.io/travis/karljohns0n/nginx-more/master.svg)](https://travis-ci.org/karljohns0n/nginx-more)
 [![Release 1.16.1-1](https://img.shields.io/badge/release-1.16.1--1-success.svg)](#)
 [![Change Log](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
 
 
 ## Synopsis
 
-Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousands of servers.
+Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousand of servers.
 
 ## Easy installation for CentOS
 
