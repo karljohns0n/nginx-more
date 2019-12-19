@@ -20,7 +20,7 @@
 
 Name:						nginx-more
 Version:					1.16.1
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -80,6 +80,8 @@ Source108:					ngx_echo-%{module_echo}.tar.gz
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
+Patch2:						ngx_cloudflare_dynamic_tls_records_1015008.patch
+Patch3:						ngx_cloudflare_http2_hpack_1015003.patch
 
 BuildRequires:				devtoolset-7-gcc-c++ devtoolset-7-binutils
 BuildRequires:				libxslt-devel
@@ -146,6 +148,8 @@ tar -zxvf %{SOURCE108} -C modules/
 
 %patch0 -p0
 %patch1 -p0
+%patch2 -p1
+%patch3 -p1
 
 %build
 export DESTDIR=%{buildroot}
@@ -199,6 +203,7 @@ export DESTDIR=%{buildroot}
 	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
 	--with-cc="/opt/rh/devtoolset-7/root/usr/bin/gcc" \
 	--with-openssl=modules/openssl-%{openssl_version} \
+	--with-http_v2_hpack_enc \
 	--add-module=modules/ngx_headers_more-%{module_headers_more} \
 	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
 	--add-module=modules/ngx_module_vts-%{module_vts} \
@@ -367,6 +372,10 @@ fi
 
 
 %changelog
+* Tue Dec 17 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+- Roll in Cloudflare full HPACK patch
+- Roll in Cloudflare dynamic tls records patch
+
 * Mon Nov 18 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
 - Bump OpenSSL to 1.1.1d
 - Bump GeoIP2 to 3.3

@@ -82,6 +82,11 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 * [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
 * [Echo](https://github.com/openresty/echo-nginx-module)
 
+## Patches
+
+* [Cloudflare TLS Dynamic Record](https://blog.cloudflare.com/optimizing-tls-over-tcp-to-reduce-latency/)
+* [Cloudflare full HPACK implementation](https://blog.cloudflare.com/hpack-the-silent-killer-feature-of-http-2/)
+
 ## SELinux
 
 Third-party modules such as PageSpeed will cause trouble while SELinux enforced. To get nginx-more works with SELinux, you need at least to turn on `httpd_execmem` policy:
