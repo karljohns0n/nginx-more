@@ -15,6 +15,7 @@
 %global module_brotli		snap20191118
 %global module_geoip2		3.3
 %global module_echo			0.61
+%global module_modsecurity	1.0.1
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
@@ -77,6 +78,7 @@ Source105:					ngx_brotli-%{module_brotli}.tar.gz
 Source106:					ngx_module_vts-%{module_vts}.tar.gz
 Source107:					ngx_http_geoip2_module-%{module_geoip2}.tar.gz
 Source108:					ngx_echo-%{module_echo}.tar.gz
+Source109:					ngx_modsecurity-%{module_modsecurity}.tar.gz
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
@@ -96,6 +98,7 @@ BuildRequires:				libmaxminddb-devel
 
 %if 0%{?rhel} == 7
 BuildRequires:				GeoIP-devel
+BuildRequires:				libmodsecurity-devel
 %endif
 
 Requires:					gd
@@ -143,6 +146,9 @@ tar -zxvf %{SOURCE105} -C modules/
 tar -zxvf %{SOURCE106} -C modules/
 tar -zxvf %{SOURCE107} -C modules/
 tar -zxvf %{SOURCE108} -C modules/
+%if 0%{?rhel} == 7
+	tar -zxvf %{SOURCE109} -C modules/
+%endif
 
 %{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH1}
 
@@ -204,6 +210,9 @@ export DESTDIR=%{buildroot}
 	--with-cc="/opt/rh/devtoolset-7/root/usr/bin/gcc" \
 	--with-openssl=modules/openssl-%{openssl_version} \
 	--with-http_v2_hpack_enc \
+	%if 0%{?rhel} == 7
+		--add-module=modules/ngx_modsecurity-%{module_modsecurity} \
+	%endif
 	--add-module=modules/ngx_headers_more-%{module_headers_more} \
 	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
 	--add-module=modules/ngx_module_vts-%{module_vts} \
@@ -372,7 +381,8 @@ fi
 
 
 %changelog
-* Tue Dec 17 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+* Thu Jan 2 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+- Add module ModSecurity Nginx connector 1.0.1 (el7 only)
 - Roll in Cloudflare full HPACK patch
 - Roll in Cloudflare dynamic tls records patch
 
