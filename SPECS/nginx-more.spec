@@ -85,7 +85,7 @@ Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
 Patch2:						ngx_cloudflare_dynamic_tls_records_1015008.patch
 Patch3:						ngx_cloudflare_http2_hpack_1015003.patch
 
-BuildRequires:				devtoolset-7-gcc-c++ devtoolset-7-binutils
+BuildRequires:				devtoolset-8-gcc-c++ devtoolset-8-binutils
 BuildRequires:				libxslt-devel
 BuildRequires:				openssl-devel
 BuildRequires:				pcre-devel
@@ -207,7 +207,7 @@ export DESTDIR=%{buildroot}
 	--with-stream_ssl_preread_module \
 	--with-debug \
 	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
-	--with-cc="/opt/rh/devtoolset-7/root/usr/bin/gcc" \
+	--with-cc="/opt/rh/devtoolset-8/root/usr/bin/gcc" \
 	--with-openssl=modules/openssl-%{openssl_version} \
 	--with-http_v2_hpack_enc \
 	%if 0%{?rhel} == 7
@@ -381,7 +381,8 @@ fi
 
 
 %changelog
-* Thu Jan 2 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+* Mon Jan 6 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+- Switch GCC version from 7 to 8.
 - Add module ModSecurity Nginx connector 1.0.1 (el7 only)
 - Roll in Cloudflare full HPACK patch
 - Roll in Cloudflare dynamic tls records patch
