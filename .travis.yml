@@ -1,4 +1,6 @@
 ---
+language: shell
+
 env:
   - distribution: centos
     version: 6
@@ -10,17 +12,30 @@ services:
 
 before_install:
   - docker pull karljohns0n/rpmbuild:7
+  - docker pull karljohns0n/centos:"${version}"
 
 script:
   - pkg_name=nginx-more
+  - pkg_arch=x86_64
   - pkg_version=$(grep "Version:" SPECS/${pkg_name}.spec|awk '{print $2}' )
   - pkg_release=$(grep "Release:" SPECS/${pkg_name}.spec|awk '{print $2}'| tr -d "%{?dist}")
-  - container_id=$(mktemp)
+  - container_id=$(cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 20 | head -n 1)
 
-  - docker run --detach --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" karljohns0n/rpmbuild:7 > "${container_id}"
-  - docker exec "$(cat ${container_id})" mkdir -p /tmp/"${pkg_name}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
-  - docker exec "$(cat ${container_id})" sh /tmp/"${pkg_name}"/.travis/fetch_sources.sh "${CDNURL}"
-  - docker exec "$(cat ${container_id})" mock --old-chroot -r aeris-"${version}"-x86_64 --spec=/tmp/"${pkg_name}"/SPECS/"${pkg_name}".spec --sources=/tmp/"${pkg_name}"/SOURCES --resultdir=/tmp/"${pkg_name}"/SRPMS --buildsrpm
-  - docker exec "$(cat ${container_id})" mock --old-chroot --clean -D "dist .el${version}" -r aeris-"${version}"-x86_64 --resultdir=/tmp/"${pkg_name}"/RPMS --rebuild /tmp/"${pkg_name}"/SRPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}".src.rpm
-  - docker exec "$(cat ${container_id})" rpm -q -l -p /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}".x86_64.rpm
-  - docker rm -f "$(cat ${container_id})"
+  # Build package
+  - docker run --name "${container_id}" --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" karljohns0n/rpmbuild:8
+  - docker exec "${container_id}" mkdir -p /tmp/"${pkg_name}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
+  - docker exec "${container_id}" sh /tmp/"${pkg_name}"/.travis/fetch_sources.sh "${CDNURL}"
+  - docker exec "${container_id}" mock --old-chroot -r aeris-"${version}"-x86_64 --spec=/tmp/"${pkg_name}"/SPECS/"${pkg_name}".spec --sources=/tmp/"${pkg_name}"/SOURCES --resultdir=/tmp/"${pkg_name}"/SRPMS --buildsrpm
+  - docker exec "${container_id}" mock --old-chroot --clean -D "dist .el${version}" -r aeris-"${version}"-x86_64 --resultdir=/tmp/"${pkg_name}"/RPMS --rebuild /tmp/"${pkg_name}"/SRPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}".src.rpm
+  - docker exec "${container_id}" rpm -q -l -p /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}"."${pkg_arch}".rpm
+  - docker rm -f "${container_id}"
+
+  # Test package
+  - docker run --name "${container_id}" --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" karljohns0n/centos:"${version}"
+  - docker exec "${container_id}" yum install --enablerepo="aeris,aeris-testing" -y /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}"."${pkg_arch}".rpm
+  - docker exec "${container_id}" nginx -V
+  - docker exec "${container_id}" /usr/sbin/nginx -t
+  - docker exec "${container_id}" /usr/sbin/nginx && sleep 5
+  - docker exec "${container_id}" curl -s -I http://127.0.0.1
+  - docker exec "${container_id}" cat /var/log/nginx/error.log
+  - docker rm -f "${container_id}"
