@@ -11,7 +11,7 @@ services:
   - docker
 
 before_install:
-  - docker pull karljohns0n/rpmbuild:7
+  - docker pull karljohns0n/rpmbuild:8
   - docker pull karljohns0n/centos:"${version}"
 
 script:
