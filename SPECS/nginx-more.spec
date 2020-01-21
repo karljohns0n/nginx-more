@@ -67,6 +67,7 @@ Source36:					fpm-wordpress-sub.conf
 Source37:					fpm-wordpress-sub-users.conf
 Source38:					fpm-wordpress-sub-cache.conf
 Source39:					fpm-wordpress-sub-cache-users.conf
+Source40:					mailgun-tracking.conf
 
 
 Source100:					https://www.openssl.org/source/openssl-%{openssl_version}.tar.gz
@@ -258,7 +259,7 @@ install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33} %{SOURCE34} %{SOURCE35} %{SOURCE36} %{SOURCE37} %{SOURCE38} %{SOURCE39} \
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33} %{SOURCE34} %{SOURCE35} %{SOURCE36} %{SOURCE37} %{SOURCE38} %{SOURCE39} %{SOURCE40} \
 	%{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -m 0644 %{SOURCE17} \
 	%{buildroot}%{nginx_confdir}/conf.d/vhosts
@@ -381,11 +382,12 @@ fi
 
 
 %changelog
-* Mon Jan 6 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
+* Tue Jan 21 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
 - Switch GCC version from 7 to 8.
 - Add module ModSecurity Nginx connector 1.0.1 (el7 only)
 - Roll in Cloudflare full HPACK patch
 - Roll in Cloudflare dynamic tls records patch
+- Add Mailgun link tracking proxypass
 
 * Mon Nov 18 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
 - Bump OpenSSL to 1.1.1d
