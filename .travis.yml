@@ -29,7 +29,7 @@ script:
   # Build package
   - docker run --name "${container_id}" --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" karljohns0n/rpmbuild:8
   - docker exec "${container_id}" mkdir -p /tmp/"${pkg_name}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
-  - docker exec "${container_id}" sh /tmp/"${pkg_name}"/.travis/fetch_sources.sh "${CDNURL}"
+  - docker exec "${container_id}" bash /tmp/"${pkg_name}"/.travis/fetch_sources.sh "${CDNURL}"
   - docker exec "${container_id}" mock --old-chroot -r aeris-"${version}"-x86_64 --spec=/tmp/"${pkg_name}"/SPECS/"${pkg_name}".spec --sources=/tmp/"${pkg_name}"/SOURCES --resultdir=/tmp/"${pkg_name}"/SRPMS --buildsrpm "${ngx_modules}"
   - docker exec "${container_id}" mock --old-chroot --clean -D "dist .el${version}" -r aeris-"${version}"-x86_64 --resultdir=/tmp/"${pkg_name}"/RPMS --rebuild /tmp/"${pkg_name}"/SRPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}".src.rpm "${ngx_modules}"
   - docker exec "${container_id}" rpm -q -l -p /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}"."${pkg_arch}".rpm --noartifact
