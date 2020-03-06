@@ -15,9 +15,9 @@ Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed,
 There's packages available for CentOS 6, 7 and 8. The easiest way to install it is using Aeris Network yum repository:
 
 ```bash
-CentOS 6 > yum install https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
-CentOS 7 > yum install https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
-CentOS 8 > yum install https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
+CentOS 6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
+CentOS 7 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
+CentOS 8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
 ```
 
 Once the repository is configured, you can proceed with installing nginx-more:
