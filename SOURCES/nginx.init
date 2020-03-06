@@ -32,13 +32,14 @@ if [ -f /etc/sysconfig/$sysconfig ]; then
     . /etc/sysconfig/$sysconfig
 fi
 
-nginx=${NGINX-/usr/sbin/nginx}
+nginx=${NGINX:-/usr/sbin/nginx}
 prog=`/bin/basename $nginx`
-conffile=${CONFFILE-/etc/nginx/nginx.conf}
-lockfile=${LOCKFILE-/var/lock/subsys/nginx}
-pidfile=${PIDFILE-/var/run/nginx.pid}
-SLEEPMSEC=${SLEEPMSEC-200000}
-UPGRADEWAITLOOPS=${UPGRADEWAITLOOPS-5}
+conffile=${CONFFILE:-/etc/nginx/nginx.conf}
+lockfile=${LOCKFILE:-/var/lock/subsys/nginx}
+pidfile=${PIDFILE:-/var/run/nginx.pid}
+SLEEPSEC=${SLEEPSEC:-1}
+UPGRADEWAITLOOPS=${UPGRADEWAITLOOPS:-5}
+CHECKSLEEP=${CHECKSLEEP:-3}
 RETVAL=0
 
 start() {
@@ -75,7 +76,7 @@ upgrade() {
     echo
 
     for i in `/usr/bin/seq $UPGRADEWAITLOOPS`; do
-        /bin/usleep $SLEEPMSEC
+        /bin/sleep $SLEEPSEC
         if [ -f ${oldbinpidfile} -a -f ${pidfile} ]; then
             echo -n $"Graceful shutdown of old $prog: "
             killproc -p ${oldbinpidfile} ${prog} -QUIT
@@ -106,7 +107,19 @@ configtest() {
 }
 
 rh_status() {
-    status -p ${pidfile} ${nginx}
+    status -p ${pidfile} -b ${nginx} ${nginx}
+}
+
+check_reload() {
+    templog=`/bin/mktemp --tmpdir nginx-check-reload-XXXXXX.log`
+    trap '/bin/rm -f $templog' 0
+    /usr/bin/tail --pid=$$ -n 0 --follow=name /var/log/nginx/error.log > $templog &
+    /bin/sleep 1
+    /bin/echo -n $"Sending reload signal to $prog: "
+    killproc -p ${pidfile} ${prog} -HUP
+    /bin/echo
+    /bin/sleep $CHECKSLEEP
+    /bin/grep -E "\[emerg\]|\[alert\]" $templog
 }
 
 # See how we were called.
@@ -143,8 +156,12 @@ case "$1" in
     configtest)
         configtest
         ;;
+    check-reload)
+        check_reload
+        RETVAL=0
+        ;;
     *)
-        echo $"Usage: $prog {start|stop|restart|condrestart|try-restart|force-reload|upgrade|reload|status|help|configtest}"
+        echo $"Usage: $prog {start|stop|restart|condrestart|try-restart|force-reload|upgrade|reload|status|help|configtest|check-reload}"
         RETVAL=2
 esac
 

@@ -1,5 +1,15 @@
 # Nginx-more User Guide
 
+## ModSecurity
+
+ModSecurity for nginx is built as dynamic module. You can quickly enable it using yum:
+
+```bash
+#> yum install nginx-more-module-modsecurity
+#> nginx -t
+#> grep -i modsec /var/log/nginx/error.log
+```
+
 ## Built-in PHP-FPM configurations
 
 As said in synopsis, nginx-more includes a lot of built-in PHP-FPM configurations for popular CMS / Frameworks / Webapps including WordPress and Laravel. These configurations get you started quickly with hosting your CMS and makes nginx vhosts look cleaner with short blocks. Here's a few example.

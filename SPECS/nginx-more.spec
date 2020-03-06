@@ -7,21 +7,24 @@
 %global nginx_confdir		%{_sysconfdir}/nginx
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
+%global gcc_version			8
 %global openssl_version		1.1.1d
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20191118
+%global module_brotli		snap20200305
 %global module_geoip2		3.3
 %global module_echo			0.61
 %global module_modsecurity	1.0.1
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
+%bcond_with					modsecurity
+
 Name:						nginx-more
 Version:					1.16.1
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -34,8 +37,9 @@ Source1:					nginx.service
 Source2:					nginx.init
 Source3:					nginx.logrotate
 Source4:					nginx.conf
-Source5:					nginx-upgrade
-Source6:					nginx-upgrade.8
+Source5:					nginx.upgrade.sh
+Source6:					nginx.check-reload.sh
+
 
 Source10:					fpm-default.conf
 Source11:					fpm-wordpress-cache.conf
@@ -86,7 +90,6 @@ Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
 Patch2:						ngx_cloudflare_dynamic_tls_records_1015008.patch
 Patch3:						ngx_cloudflare_http2_hpack_1015003.patch
 
-BuildRequires:				devtoolset-8-gcc-c++ devtoolset-8-binutils
 BuildRequires:				libxslt-devel
 BuildRequires:				openssl-devel
 BuildRequires:				pcre-devel
@@ -97,9 +100,18 @@ BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
 
+%if 0%{?rhel} == 6
+BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
+%endif
+
 %if 0%{?rhel} == 7
+BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
 BuildRequires:				GeoIP-devel
-BuildRequires:				libmodsecurity-devel
+
+%endif
+
+%if 0%{?rhel} == 8
+BuildRequires:				GeoIP-devel perl-Getopt-Long
 %endif
 
 Requires:					gd
@@ -117,6 +129,16 @@ Requires(preun):			chkconfig, initscripts
 Requires(postun):			initscripts
 %endif
 
+%if %{with modsecurity}
+%package module-modsecurity
+Summary:					Nginx ModSecurity module
+BuildRequires:				libmodsecurity-devel
+Requires:					nginx-more == 1.16.1-4%{?dist}
+
+%description module-modsecurity
+%{summary}.
+%endif
+
 Conflicts:					nginx
 
 Provides:					webserver
@@ -131,7 +153,7 @@ setup, bad user-agents blocking, TCP_FASTOPEN, Cloudflare IPs, and more.
 
 Nginx is a web server and a reverse proxy server for HTTP, SMTP, POP3 and
 IMAP protocols, with a strong focus on high concurrency, performance and low
-memory usage. 
+memory usage.
 
 
 %prep
@@ -147,7 +169,7 @@ tar -zxvf %{SOURCE105} -C modules/
 tar -zxvf %{SOURCE106} -C modules/
 tar -zxvf %{SOURCE107} -C modules/
 tar -zxvf %{SOURCE108} -C modules/
-%if 0%{?rhel} == 7
+%if %{with modsecurity}
 	tar -zxvf %{SOURCE109} -C modules/
 %endif
 
@@ -188,7 +210,7 @@ export DESTDIR=%{buildroot}
 	--with-http_mp4_module \
 	--with-http_gunzip_module \
 	--with-http_gzip_static_module \
-	%if 0%{?rhel} == 7
+	%if 0%{?rhel} >= 7
 		--with-http_geoip_module \
 	%endif
 	--with-http_random_index_module \
@@ -208,11 +230,13 @@ export DESTDIR=%{buildroot}
 	--with-stream_ssl_preread_module \
 	--with-debug \
 	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
-	--with-cc="/opt/rh/devtoolset-8/root/usr/bin/gcc" \
+	%if 0%{?rhel} <= 7
+		--with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
+	%endif
 	--with-openssl=modules/openssl-%{openssl_version} \
 	--with-http_v2_hpack_enc \
-	%if 0%{?rhel} == 7
-		--add-module=modules/ngx_modsecurity-%{module_modsecurity} \
+	%if %{with modsecurity}
+		--add-dynamic-module=modules/ngx_modsecurity-%{module_modsecurity} \
 	%endif
 	--add-module=modules/ngx_headers_more-%{module_headers_more} \
 	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
@@ -256,6 +280,7 @@ install -p -d -m 0700 %{buildroot}%{nginx_home_cache}
 install -p -d -m 0700 %{buildroot}%{nginx_home_cache}/pagespeed
 install -p -d -m 0700 %{buildroot}%{nginx_logdir}
 install -p -d -m 0755 %{buildroot}%{nginx_webroot}
+install -p -d -m 0755 %{buildroot}%{_datadir}/nginx/modules
 
 install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
 
@@ -268,10 +293,17 @@ install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 \
 	%{buildroot}%{_mandir}/man8/nginx.8
 
 %if %{use_systemd}
-	install -p -D -m 0755 %{SOURCE5} %{buildroot}%{_bindir}/nginx-upgrade
-	install -p -D -m 0644 %{SOURCE6} %{buildroot}%{_mandir}/man8/nginx-upgrade.8
+	%{__mkdir} -p $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx
+%{__install} -m755 %SOURCE5 \
+    $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx/upgrade
+%{__install} -m755 %SOURCE6 \
+    $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx/check-reload
 %endif
 
+%if %{with modsecurity}
+echo 'load_module "%{_libdir}/nginx/modules/ngx_http_modsecurity_module.so";' \
+    > %{buildroot}%{_datadir}/nginx/modules/module-modsecurity.conf
+%endif
 
 %pre
 getent group %{nginx_group} > /dev/null || groupadd -r %{nginx_group}
@@ -282,13 +314,13 @@ exit 0
 
 
 %post
-%if %{use_systemd}
-%systemd_post %{packagename}.service
-%else
 if [ $1 -eq 1 ]; then
-	/sbin/chkconfig --add %{packagename}
-fi
+%if %{use_systemd}
+	/usr/bin/systemctl preset nginx.service >/dev/null 2>&1 || :
+%else
+	/sbin/chkconfig --add nginx
 %endif
+fi
 if [ $1 -eq 2 ]; then
 	chmod 700 %{nginx_home}
 	chmod 700 %{nginx_home_cache}
@@ -308,41 +340,47 @@ memory instead of disk.
 BANNER
 fi
 
-
-%preun
-%if %use_systemd
-%systemd_preun %{packagename}.service
-%else
-if [ $1 -eq 0 ] ; then
-	/sbin/service %{packagename} stop > /dev/null 2>&1
-	/sbin/chkconfig --del %{packagename} > /dev/null 2>&1
+%if %{with modsecurity}
+%post module-modsecurity
+if [ $1 -eq 1 ]; then
+    /usr/bin/systemctl reload nginx.service >/dev/null 2>&1 || :
 fi
 %endif
+
+%preun
+if [ $1 -eq 0 ]; then
+%if %use_systemd
+	/usr/bin/systemctl --no-reload disable nginx.service >/dev/null 2>&1 || :
+	/usr/bin/systemctl stop nginx.service >/dev/null 2>&1 || :
+%else
+	/sbin/service nginx stop > /dev/null 2>&1
+	/sbin/chkconfig --del nginx
+%endif
+fi
 
 
 %postun
 %if %use_systemd
-%systemd_postun_with_restart %{packagename}.service
-%else
-if [ "$1" -ge "1" ] ; then
-	/sbin/service %{packagename} status  >/dev/null 2>&1 || exit 0
-	/sbin/service %{packagename} upgrade >/dev/null 2>&1 || echo \
+	/usr/bin/systemctl daemon-reload >/dev/null 2>&1 ||:
+%endif
+if [ $1 -ge 1 ]; then
+	/sbin/service nginx status  >/dev/null 2>&1 || exit 0
+	/sbin/service nginx upgrade >/dev/null 2>&1 || echo \
 		"Binary upgrade failed, please check nginx's error.log"
 fi
-%endif
 
 
 %files
 %doc LICENSE CHANGES README
-%{nginx_datadir}/
-%if %{use_systemd}
-%{_bindir}/nginx-upgrade
-%endif
+%dir %{_datadir}/nginx
+%dir %{_datadir}/nginx/html
+%{_datadir}/nginx/html/*
 %{_sbindir}/nginx
 %{_mandir}/man8/nginx.8*
 %if %{use_systemd}
-%{_mandir}/man8/nginx-upgrade.8*
 %{_unitdir}/nginx.service
+%dir %{_libexecdir}/initscripts/legacy-actions/nginx
+%{_libexecdir}/initscripts/legacy-actions/nginx/*
 %else
 %{_initrddir}/nginx
 %endif
@@ -376,15 +414,23 @@ fi
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
 %attr(0755,root,root) %dir %{_libdir}/nginx
 %attr(0755,root,root) %dir %{_libdir}/nginx/modules
+%attr(0755,root,root) %dir %{_datadir}/nginx/modules
 /etc/nginx/conf.d/vhosts/*-exemple
 /etc/nginx/conf.d/custom/*-exemple
 /etc/nginx/conf.d/custom/aerisnetwork-ips
 
+%if %{with modsecurity}
+%files module-modsecurity
+%{_datadir}/nginx/modules/module-modsecurity.conf
+%{_libdir}/nginx/modules/ngx_http_modsecurity_module.so
+%endif
 
 %changelog
-* Tue Jan 21 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-3
-- Switch GCC version from 7 to 8.
-- Add module ModSecurity Nginx connector 1.0.1 (el7 only)
+* Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-4
+- Add CentOS 8 support
+- Bump GCC version from 7 to 8.
+- Add dynamic module ModSecurity Nginx connector 1.0.1 (el7 and el8)
+- Bump Brotli to git snapshot 20200305
 - Roll in Cloudflare full HPACK patch
 - Roll in Cloudflare dynamic tls records patch
 - Add Mailgun link tracking proxypass
