@@ -1,14 +1,43 @@
 # Nginx-more User Guide
 
+## PageSpeed
+
+Module PageSpeed for nginx is built-in in nginx-more. It's already configured and it uses Memcached if available. To enable Pagespeed on a vhost, simply add `;include conf.d/custom/pagespeed.conf`. Here's an example of a WordPress configuration with Pagespeed enabled:
+
+```text
+server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name wordpress.com;
+    root /home/myuser/wordpress/public_html;
+
+    include conf.d/custom/restrictions.conf;
+    include conf.d/custom/pagespeed.conf;
+    include conf.d/custom/fpm-wordpress.conf;
+}
+```
+
+Once enabled on a vhost, let's say example.com, Pagespeed logs, statistics and configurations can be accessed by these URLs if your IP is whitelisted in `/etc/nginx/conf.d/custom/admin-ips.conf`:
+
+*   https://example.com/ngx_pagespeed_message
+*   https://example.com/ngx_pagespeed_statistics
+*   https://example.com/pagespeed_admin
+
 ## ModSecurity
 
-ModSecurity for nginx is built as dynamic module. You can quickly enable it using yum:
+ModSecurity for nginx is built as dynamic module. It can quickly be installed using yum:
 
 ```bash
 #> yum install nginx-more-module-modsecurity
 #> nginx -t
 #> grep -i modsec /var/log/nginx/error.log
 ```
+
+An update of nginx-more-module-modsecurity package will follow every new release of nginx-more. 
+
+## Virtual Host Traffic Status
+
+Module VTS for nginx is built-in in nginx-more and so useful. It can be accessed on any website followed by `/traffic_status` if your IP is whitelisted in `/etc/nginx/conf.d/custom/admin-ips.conf`. This module display a live dashboard of all connections on nginx, on every server zones and upstreams, with responses code, bandwidth, cache status (hit/miss/bypass/expired) and more.
 
 ## Built-in PHP-FPM configurations
 

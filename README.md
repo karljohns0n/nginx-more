@@ -2,9 +2,9 @@
 
 [![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
 [![Build](https://img.shields.io/travis/karljohns0n/nginx-more/master.svg)](https://travis-ci.org/karljohns0n/nginx-more)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6a3f08f40fe84392afbf12e1d3f55de6)](https://www.codacy.com/manual/karljohns0n/nginx-more?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=karljohns0n/nginx-more&amp;utm_campaign=Badge_Grade)
 [![Release 1.16.1-4](https://img.shields.io/badge/release-1.16.1--4-success.svg)](#)
 [![Change Log](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
-
 
 ## Synopsis
 
@@ -74,15 +74,15 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 
 ## Modules
 
-* [OpenSSL](https://github.com/openssl/openssl)
-* [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx)
-* [Brotli](https://github.com/google/ngx_brotli)
-* [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
-* [Headers more](https://github.com/openresty/headers-more-nginx-module)
-* [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)
-* [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
-* [Echo](https://github.com/openresty/echo-nginx-module)
-* [ModSecurity](https://github.com/SpiderLabs/ModSecurity-nginx) (dynamic)
+*   [OpenSSL](https://github.com/openssl/openssl)
+*   [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx)
+*   [Brotli](https://github.com/google/ngx_brotli)
+*   [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
+*   [Headers more](https://github.com/openresty/headers-more-nginx-module)
+*   [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)
+*   [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
+*   [Echo](https://github.com/openresty/echo-nginx-module)
+*   [ModSecurity](https://github.com/SpiderLabs/ModSecurity-nginx) (dynamic)
 
 ## Patches
 
@@ -115,17 +115,19 @@ A simple [Ansible role](https://galaxy.ansible.com/karljohns0n/nginx-more) is av
 
 Example of playbook:
 
-    - hosts: servers
-      roles:
-         - { role: karljohns0n.nginx-more }
+```yaml
+- hosts: servers
+    roles:
+      - { role: karljohns0n.nginx-more }
+```
 
 ## Changelog
 
 The changelog for all packages is available from the RepoView:
 
-* [CentOS 6](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
-* [CentOS 7](https://repo.aerisnetwork.com/stable/centos/7/x86_64/repoview/nginx-more.html)
-* [CentOS 8](https://repo.aerisnetwork.com/stable/centos/8/x86_64/repoview/nginx-more.html)
+*   [CentOS 6](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
+*   [CentOS 7](https://repo.aerisnetwork.com/stable/centos/7/x86_64/repoview/nginx-more.html)
+*   [CentOS 8](https://repo.aerisnetwork.com/stable/centos/8/x86_64/repoview/nginx-more.html)
 
 ## Package dependencies
 
