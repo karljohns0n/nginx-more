@@ -23,7 +23,7 @@ CentOS 8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
 Once the repository is configured, you can proceed with installing nginx-more:
 
 ```bash
-#> yum install nginx-more
+> yum install nginx-more
 ```
 
 All configurations will be installed in default directory which is `/etc/nginx/`. The package already includes a bunch of PHP-FPM configurations in `conf.d/custom/` for WordPress, Laravel, Drupal, OpenCart, PrestaShop and Sendy, so you can get started in few seconds with your website hosting.
@@ -51,19 +51,19 @@ server {
 All nginx-more builds are kept in the repository. If you upgrade to a newest version and it has any issues that you don't have time to troubleshoot by looking at the nginx `error_log`, you can downgrade to an older version with yum:
 
 ```bash
-#> yum downgrade nginx-more
+> yum downgrade nginx-more
 ```
 
 Note that you cannot install nginx-more if nginx package is already installed on your system because both packages provide nginx binary and configurations. You need to choose between nginx-more OR nginx from CentOS / EPEL / Nginx repository. Nginx-more is compiled using a more recent GCC version than the others and it provides lots of ready-to-go WordPress / Laravel configurations. If nginx is already installed, it's possible to swap from nginx to nginx-more with a simple yum command, although be careful with your inplace configurations. A new install is recommended.
 
 ```bash
-#> yum swap nginx nginx-more
+> yum swap nginx nginx-more
 ```
 
 Full output of nginx configure:
 
 ```bash
-#> nginx -V
+> nginx -V
 nginx version: nginx/1.16.1
 custom build maintained on github.com/karljohns0n/nginx-more
 built by gcc 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC) 
@@ -86,28 +86,28 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 
 ## Patches
 
-* [Cloudflare TLS Dynamic Record](https://blog.cloudflare.com/optimizing-tls-over-tcp-to-reduce-latency/)
-* [Cloudflare full HPACK implementation](https://blog.cloudflare.com/hpack-the-silent-killer-feature-of-http-2/)
+*   [Cloudflare TLS Dynamic Record](https://blog.cloudflare.com/optimizing-tls-over-tcp-to-reduce-latency/)
+*   [Cloudflare full HPACK implementation](https://blog.cloudflare.com/hpack-the-silent-killer-feature-of-http-2/)
 
 ## SELinux
 
 Third-party modules such as PageSpeed will cause trouble while SELinux enforced. To get nginx-more works with SELinux, you need at least to turn on `httpd_execmem` policy:
 
 ```bash
-#> yum -y install policycoreutils && setsebool -P httpd_execmem 1
-#> systemctl start nginx
+> yum -y install policycoreutils && setsebool -P httpd_execmem 1
+> systemctl start nginx
 ```
 
 It's possible to temporarily disable SELinux for Nginx to get started quickly:
 
 ```bash
-#> semanage permissive -a httpd_t
+> semanage permissive -a httpd_t
 ```
 
 Here's two nice external blogs to help you troubleshoot SELinux with Nginx:
 
-* [selinux-making-it-a-little-easier-for-web](https://medium.com/@ChristopherShaffer/selinux-making-it-a-little-easier-for-web-b8fad76e2d97)
-* [using-nginx-plus-with-selinux](https://www.nginx.com/blog/using-nginx-plus-with-selinux/)
+*   [selinux-making-it-a-little-easier-for-web](https://medium.com/@ChristopherShaffer/selinux-making-it-a-little-easier-for-web-b8fad76e2d97)
+*   [using-nginx-plus-with-selinux](https://www.nginx.com/blog/using-nginx-plus-with-selinux/)
 
 ## Ansible playbook
 
