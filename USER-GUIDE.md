@@ -82,7 +82,7 @@ wget -P /usr/share/GeoIP2 https://geolite.maxmind.com/download/geoip/database/Ge
 gunzip /usr/share/GeoIP2/*.mmdb.gz
 ```
 *   Load GeoIP2 databases in nginx, preferably in the http section:
-```
+```text
 geoip2 /usr/share/GeoIP2/GeoLite2-Country.mmdb {
     auto_reload 60m;
     $geoip2_metadata_country_build metadata build_epoch;
@@ -96,13 +96,13 @@ geoip2 /usr/share/GeoIP2/GeoLite2-City.mmdb {
 }
 ```
 *   Test GeoIP2 using headers:
-```
+```text
 add_header X-GeoCountry $geoip2_data_country_name;
 add_header X-GeoCode $geoip2_data_country_code;
 add_header X-GeoCity $geoip2_data_city_name;
 ```
 *   Allow only specific countries on a website:
-```
+```text
 map $geoip2_data_country_code $allowed_country {
     default no;
     CA yes;
