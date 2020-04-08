@@ -8,7 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1d
+%global openssl_version		1.1.1f
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.16.1
-Release:					4%{?dist}
+Release:					5%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -426,9 +426,12 @@ fi
 %endif
 
 %changelog
+* Wed Apr 8 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-5
+- Bump OpenSSL to 1.1.1f
+
 * Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-4
 - Add CentOS 8 support
-- Bump GCC version from 7 to 8.
+- Bump GCC version from 7 to 8
 - Add dynamic module ModSecurity Nginx connector 1.0.1 (el7 and el8)
 - Bump Brotli to git snapshot 20200305
 - Roll in Cloudflare full HPACK patch
