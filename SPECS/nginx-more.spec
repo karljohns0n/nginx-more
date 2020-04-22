@@ -8,7 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1f
+%global openssl_version		1.1.1g
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -426,8 +426,8 @@ fi
 %endif
 
 %changelog
-* Wed Apr 8 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-5
-- Bump OpenSSL to 1.1.1f
+* Wed Apr 22 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-5
+- Bump OpenSSL to 1.1.1g
 
 * Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-4
 - Add CentOS 8 support
