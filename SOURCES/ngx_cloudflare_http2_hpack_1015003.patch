@@ -17,14 +17,14 @@ diff --git a/auto/options b/auto/options
 index d8b421b0..55b339e6 100644
 --- a/auto/options
 +++ b/auto/options
-@@ -59,6 +59,7 @@ HTTP_CHARSET=YES
+@@ -59,6 +59,7 @@
  HTTP_GZIP=YES
  HTTP_SSL=NO
  HTTP_V2=NO
 +HTTP_V2_HPACK_ENC=NO
  HTTP_SSI=YES
- HTTP_POSTPONE=NO
  HTTP_REALIP=NO
+ HTTP_XSLT=NO
 @@ -225,6 +226,7 @@ $0: warning: the \"--with-ipv6\" option is deprecated"
  
          --with-http_ssl_module)          HTTP_SSL=YES               ;;

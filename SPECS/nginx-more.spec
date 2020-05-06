@@ -13,7 +13,7 @@
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20200305
+%global module_brotli		snap20200506
 %global module_geoip2		3.3
 %global module_echo			0.61
 %global module_modsecurity	1.0.1
@@ -23,8 +23,8 @@
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.16.1
-Release:					5%{?dist}
+Version:					1.18.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -133,7 +133,7 @@ Requires(postun):			initscripts
 %package module-modsecurity
 Summary:					Nginx ModSecurity module
 BuildRequires:				libmodsecurity-devel
-Requires:					nginx-more == 1.16.1-4%{?dist}
+Requires:					nginx-more == %{version}-{%release}
 
 %description module-modsecurity
 %{summary}.
@@ -426,8 +426,10 @@ fi
 %endif
 
 %changelog
-* Wed Apr 22 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-5
+* Wed May 6 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-1
+- Bump Nginx to 1.18.0
 - Bump OpenSSL to 1.1.1g
+- Bump Brotli to git snapshot 2020-05-06
 
 * Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-4
 - Add CentOS 8 support
