@@ -30,16 +30,16 @@ Once the repository is configured, you can proceed with installing nginx-more:
 
 All configurations will be installed in default directory which is `/etc/nginx/`. The package already includes a bunch of PHP-FPM configurations in `conf.d/custom/` for WordPress, Laravel, Drupal, OpenCart, PrestaShop and Sendy, so you can get started in few seconds with your website hosting.
 
-Clean vhost exemple for WordPress:
+Clean vhost example for WordPress:
 
 ```text
 server {
     listen 80;
     listen 443 ssl http2;
-    server_name exemple.com;
-    root /home/www/exemple.com/public_html;
-    access_log /var/log/nginx/exemple.com-access_log main;
-    error_log /var/log/nginx/exemple.com-error_log warn;
+    server_name example.com;
+    root /home/www/example.com/public_html;
+    access_log /var/log/nginx/example.com-access_log main;
+    error_log /var/log/nginx/example.com-error_log warn;
 
     if ($bad_bot) { return 444; }
 
@@ -66,12 +66,12 @@ Full output of nginx configure:
 
 ```bash
 > nginx -V
-nginx version: nginx/1.16.1
+nginx version: nginx/1.18.0
 custom build maintained on github.com/karljohns0n/nginx-more
 built by gcc 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC) 
-built with OpenSSL 1.1.1d  10 Sep 2019
+built with OpenSSL 1.1.1g  21 Apr 2020
 TLS SNI support enabled
-configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -DTCP_FASTOPEN=23' --with-cc=/opt/rh/devtoolset-8/root/usr/bin/gcc --with-openssl=modules/openssl-1.1.1d --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.1 --add-module=modules/ngx_headers_more-0.33 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20200305 --add-module=modules/ngx_http_geoip2_module-3.3 --add-module=modules/ngx_echo-0.61
+configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -DTCP_FASTOPEN=23' --with-cc=/opt/rh/devtoolset-8/root/usr/bin/gcc --with-openssl=modules/openssl-1.1.1g --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.1 --add-module=modules/ngx_headers_more-0.33 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20200506 --add-module=modules/ngx_http_geoip2_module-3.3 --add-module=modules/ngx_echo-0.61
 ```
 
 ## Modules

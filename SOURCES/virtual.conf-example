@@ -5,16 +5,16 @@
 
 server {
 	listen 80;
-	server_name exemple.com www.exemple.com;
-	return 301 https://exemple.com$request_uri;
+	server_name example.com www.example.com;
+	return 301 https://example.com$request_uri;
 }
 
 server {
 	listen 443 ssl http2;
-	server_name exemple.com www.exemple.com;
-	root /home/www/exemple.com/public_html;
-	access_log /var/log/nginx/www.exemple.com-access_log main;
-	error_log /var/log/nginx/www.exemple.com-error_log warn;
+	server_name example.com www.example.com;
+	root /home/www/example.com/public_html;
+	access_log /var/log/nginx/www.example.com-access_log main;
+	error_log /var/log/nginx/www.example.com-error_log warn;
 
 	if ($bad_bot) { return 444; }
 

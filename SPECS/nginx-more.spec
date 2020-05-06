@@ -48,8 +48,8 @@ Source13:					fpm-wordpress-mu.conf
 Source14:					fpm-laravel.conf
 Source15:					restrictions.conf
 Source16:					admin-ips.conf
-Source17:					virtual.conf-exemple
-Source18:					ssl.conf-exemple
+Source17:					virtual.conf-example
+Source18:					ssl.conf-example
 Source19:					aerisnetwork-ips
 Source20:					cloudflare.conf
 Source21:					pagespeed.conf
@@ -415,8 +415,8 @@ fi
 %attr(0755,root,root) %dir %{_libdir}/nginx
 %attr(0755,root,root) %dir %{_libdir}/nginx/modules
 %attr(0755,root,root) %dir %{_datadir}/nginx/modules
-/etc/nginx/conf.d/vhosts/*-exemple
-/etc/nginx/conf.d/custom/*-exemple
+/etc/nginx/conf.d/vhosts/*-example
+/etc/nginx/conf.d/custom/*-example
 /etc/nginx/conf.d/custom/aerisnetwork-ips
 
 %if %{with modsecurity}
@@ -470,7 +470,7 @@ fi
 * Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
 - Bump to Nginx 1.14.2, OpenSSL 1.1.1a
 - Increase ciphers strength per default, disable TLS 1.0 and 1.1
-- Switch RapidSSL to Lets Encrypt in SSL exemple configuration
+- Switch RapidSSL to Lets Encrypt in SSL example configuration
 
 * Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-1
 - Bump to Nginx 1.14.1, module VTS 0.1.18
