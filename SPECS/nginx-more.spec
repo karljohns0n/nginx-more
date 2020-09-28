@@ -428,6 +428,7 @@ fi
 %changelog
 * Mon Sep 28 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-2
 - Bump OpenSSL to 1.1.1h
+- Skip cache on WooCommerce pages
 
 * Wed May 6 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-1
 - Bump Nginx to 1.18.0

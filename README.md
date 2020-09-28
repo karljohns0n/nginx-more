@@ -1,9 +1,9 @@
 # Nginx-more
 
 [![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
-[![Build](https://img.shields.io/travis/karljohns0n/nginx-more/master.svg)](https://travis-ci.org/karljohns0n/nginx-more)
+[![Build](https://img.shields.io/travis/com/karljohns0n/nginx-more/master.svg)](https://travis-ci.com/github/karljohns0n/nginx-more)
 [![Codacy](https://api.codacy.com/project/badge/Grade/6a3f08f40fe84392afbf12e1d3f55de6)](https://www.codacy.com/manual/karljohns0n/nginx-more?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=karljohns0n/nginx-more&amp;utm_campaign=Badge_Grade)
-[![Release](https://img.shields.io/badge/release-1.18.0--1-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.18.0--2-success.svg)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![ChangeLog](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
