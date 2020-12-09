@@ -8,12 +8,12 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1h
+%global openssl_version		1.1.1i
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20200506
+%global module_brotli		snap20201209
 %global module_geoip2		3.3
 %global module_echo			0.61
 %global module_modsecurity	1.0.1
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.18.0
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -426,6 +426,10 @@ fi
 %endif
 
 %changelog
+* Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-3
+- Bump OpenSSL to 1.1.1i
+- Bump Brotli to 1.0.9
+
 * Mon Sep 28 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-2
 - Bump OpenSSL to 1.1.1h
 - Skip cache on WooCommerce pages
