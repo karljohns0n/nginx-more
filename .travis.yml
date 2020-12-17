@@ -2,9 +2,9 @@
 language: shell
 
 env:
-  - dist: centos
-    version: 6
-    ngx_modules: "--without=modsecurity"
+#  - dist: centos
+#    version: 6
+#    ngx_modules: "--without=modsecurity"
   - dist: centos
     version: 7
     ngx_modules: "--with=modsecurity"
