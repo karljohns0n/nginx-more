@@ -429,6 +429,7 @@ fi
 * Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-3
 - Bump OpenSSL to 1.1.1i
 - Bump Brotli to 1.0.9
+- Add xmlrpc.php to brute force protection and relax r/m
 
 * Mon Sep 28 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-2
 - Bump OpenSSL to 1.1.1h
