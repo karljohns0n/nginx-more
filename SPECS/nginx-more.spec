@@ -8,7 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1i
+%global openssl_version		1.1.1j
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.18.0
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -426,6 +426,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 24 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-4
+- Bump OpenSSL to 1.1.1j
+
 * Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-3
 - Bump OpenSSL to 1.1.1i
 - Bump Brotli to 1.0.9
