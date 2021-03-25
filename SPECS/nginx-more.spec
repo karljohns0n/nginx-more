@@ -8,7 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1j
+%global openssl_version		1.1.1k
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -426,8 +426,8 @@ fi
 %endif
 
 %changelog
-* Wed Feb 24 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-4
-- Bump OpenSSL to 1.1.1j
+* Thu Mar 25 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-4
+- Bump OpenSSL to 1.1.1k
 
 * Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-3
 - Bump OpenSSL to 1.1.1i
