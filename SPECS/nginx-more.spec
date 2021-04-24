@@ -23,8 +23,8 @@
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.18.0
-Release:					4%{?dist}
+Version:					1.20.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -87,8 +87,9 @@ Source109:					ngx_modsecurity-%{module_modsecurity}.tar.gz
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
-Patch2:						ngx_cloudflare_dynamic_tls_records_1015008.patch
-Patch3:						ngx_cloudflare_http2_hpack_1015003.patch
+Patch2:						ngx_cloudflare_http2_hpack_1015003.patch
+Patch3:						ngx_cloudflare_dynamic_tls_records_1015008.patch
+
 
 BuildRequires:				libxslt-devel
 BuildRequires:				openssl-devel
@@ -426,6 +427,11 @@ fi
 %endif
 
 %changelog
+* Fri Apr 23 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.0-1
+- Bump Nginx to 1.20.0
+- Update Cloudflare IPs
+- Fix Cloudflare dynamic tls patch with fuzz=0
+
 * Thu Mar 25 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-4
 - Bump OpenSSL to 1.1.1k
 

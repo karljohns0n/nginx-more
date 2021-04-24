@@ -131,6 +131,7 @@ The changelog for all packages is available from the RepoView:
 *   [CentOS 7](https://repo.aerisnetwork.com/stable/centos/7/x86_64/repoview/nginx-more.html)
 *   [CentOS 8](https://repo.aerisnetwork.com/stable/centos/8/x86_64/repoview/nginx-more.html)
 *   CentOS Stream 8 (Coming soon)
+*   AlmaLinux OS 8 (Coming soon)
 
 ## Package dependencies
 
