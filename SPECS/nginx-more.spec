@@ -23,7 +23,7 @@
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.20.0
+Version:					1.20.1
 Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
@@ -427,6 +427,9 @@ fi
 %endif
 
 %changelog
+* Wed May 26 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-1
+- Bump Nginx to 1.20.1
+
 * Fri Apr 23 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.0-1
 - Bump Nginx to 1.20.0
 - Update Cloudflare IPs
