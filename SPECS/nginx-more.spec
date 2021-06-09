@@ -16,7 +16,7 @@
 %global module_brotli		snap20201209
 %global module_geoip2		3.3
 %global module_echo			0.61
-%global module_modsecurity	1.0.1
+%global module_modsecurity	1.0.2
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.20.1
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -427,6 +427,10 @@ fi
 %endif
 
 %changelog
+* Wed Jun 9 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-2
+- Bump ModSecurity module to 1.0.2
+- Enhance WordPress caching with Woocommerce
+
 * Wed May 26 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-1
 - Bump Nginx to 1.20.1
 
