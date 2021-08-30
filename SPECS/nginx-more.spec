@@ -8,7 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1k
+%global openssl_version		1.1.1l
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.20.1
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -427,6 +427,9 @@ fi
 %endif
 
 %changelog
+* Sun Aug 29 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-3
+- Bump OpenSSL to 1.1.1l
+
 * Wed Jun 9 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-2
 - Bump ModSecurity module to 1.0.2
 - Enhance WordPress caching with Woocommerce
