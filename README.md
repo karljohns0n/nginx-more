@@ -1,25 +1,25 @@
 # Nginx-more
 
 [![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
-[![Build](https://img.shields.io/travis/com/karljohns0n/nginx-more/master.svg)](https://travis-ci.com/github/karljohns0n/nginx-more)
+[![Build](https://img.shields.io/travis/com/karljohns0n/nginx-more/master.svg)](https://app.travis-ci.com/github/karljohns0n/nginx-more)
 [![Codacy](https://api.codacy.com/project/badge/Grade/6a3f08f40fe84392afbf12e1d3f55de6)](https://www.codacy.com/manual/karljohns0n/nginx-more?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=karljohns0n/nginx-more&amp;utm_campaign=Badge_Grade)
-[![Release](https://img.shields.io/badge/release-1.20.1--1-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.20.1--4-success.svg)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
-[![ChangeLog](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
+[![ChangeLog](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
 
 ## Synopsis
 
 Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousand of servers.
 
-## Easy installation for CentOS
+## Easy installation for RHEL / CentOS / AlmaLinux / Rocky Linux
 
-There's packages available for CentOS 6, 7 and 8. The easiest way to install it is using Aeris Network yum repository:
+There's packages available for EL 6, 7 and 8. The easiest way to install it is using Aeris yum repository:
 
 ```bash
-CentOS 6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
-CentOS 7 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
-CentOS 8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
+EL 6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
+EL 7 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
+EL 8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
 ```
 
 Once the repository is configured, you can proceed with installing nginx-more:
@@ -68,10 +68,11 @@ Full output of nginx configure:
 > nginx -V
 nginx version: nginx/1.20.1
 custom build maintained on github.com/karljohns0n/nginx-more
-built by gcc 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC) 
-built with OpenSSL 1.1.1k  25 Mar 2021
+built by gcc 8.5.0 20210514 (Red Hat 8.5.0-3) (GCC) 
+built with OpenSSL 1.1.1l  24 Aug 2021
 TLS SNI support enabled
-configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -DTCP_FASTOPEN=23' --with-cc=/opt/rh/devtoolset-8/root/usr/bin/gcc --with-openssl=modules/openssl-1.1.1k --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.1 --add-module=modules/ngx_headers_more-0.33 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20201209 --add-module=modules/ngx_http_geoip2_module-3.3 --add-module=modules/ngx_echo-0.61
+configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-1.1.1l --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.2 --add-module=modules/ngx_headers_more-0.33 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20201209 --add-module=modules/ngx_http_geoip2_module-3.3 --add-module=modules/ngx_echo-0.62
+
 ```
 
 ## Modules
@@ -113,7 +114,7 @@ Here's two nice external blogs to help you troubleshoot SELinux with Nginx:
 
 ## Ansible playbook
 
-A simple [Ansible role](https://galaxy.ansible.com/karljohns0n/nginx-more) is available to install nginx-more and keep it updated on CentOS.
+A simple [Ansible role](https://galaxy.ansible.com/karljohns0n/nginx-more) is available to install nginx-more and keep it updated.
 
 Example of playbook:
 
@@ -127,12 +128,10 @@ Example of playbook:
 
 The changelog for all packages is available from the RepoView:
 
-*   [CentOS 6](https://repo.aerisnetwork.com/stable/centos/6/x86_64/repoview/nginx-more.html)
-*   [CentOS 7](https://repo.aerisnetwork.com/stable/centos/7/x86_64/repoview/nginx-more.html)
-*   [CentOS 8](https://repo.aerisnetwork.com/stable/centos/8/x86_64/repoview/nginx-more.html)
-*   CentOS Stream 8 (Coming soon)
-*   AlmaLinux OS 8 (Coming soon)
+*   [EL 6](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
+*   [EL 7](https://repo.aerisnetwork.com/stable/el/7/x86_64/repoview/nginx-more.html)
+*   [EL 8](https://repo.aerisnetwork.com/stable/el/8/x86_64/repoview/nginx-more.html)
 
 ## Package dependencies
 
-As of writing, only one package outside CentOS default repositories is required to build nginx-more RPM, which is [libmaxminddb-devel](https://github.com/karljohns0n/pkg-libmaxminddb) for module GeoIP2. It's available in EPEL however a newer version is available in Aeris repository so it's recommended to add Aeris repository in your mock configuration. We try to avoid packages that aren't available in CentOS but if it's the case we will build and include them in Aeris repository therefore no other third-party repository is required to build nginx-more.
+As of writing, only one package outside EL default repositories is required to build nginx-more RPM, which is [libmaxminddb-devel](https://github.com/karljohns0n/pkg-libmaxminddb) for module GeoIP2. It's available in EPEL however a newer version is available in Aeris repository so it's recommended to add Aeris repository in your mock configuration. We try to avoid packages that aren't available in EL but if it's the case we will build and include them in Aeris repository therefore no other third-party repository is required to build nginx-more.

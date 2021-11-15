@@ -15,7 +15,7 @@
 %global module_vts			0.1.18
 %global module_brotli		snap20201209
 %global module_geoip2		3.3
-%global module_echo			0.61
+%global module_echo			0.62
 %global module_modsecurity	1.0.2
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.20.1
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -427,6 +427,11 @@ fi
 %endif
 
 %changelog
+* Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-4
+- Support AlmaLinux 8 and Rocky Linux 8
+- Rebuild nginx-more on latest libs
+- Bump modudle Echo to 0.62
+
 * Sun Aug 29 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-3
 - Bump OpenSSL to 1.1.1l
 
