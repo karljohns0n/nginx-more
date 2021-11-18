@@ -23,8 +23,8 @@
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.20.1
-Release:					4%{?dist}
+Version:					1.20.2
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -134,7 +134,7 @@ Requires(postun):			initscripts
 %package module-modsecurity
 Summary:					Nginx ModSecurity module
 BuildRequires:				libmodsecurity-devel
-Requires:					nginx-more == %{version}-{%release}
+Requires:					nginx-more = %{version}-%{release}
 
 %description module-modsecurity
 %{summary}.
@@ -427,6 +427,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 17 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-1
+- Bump nginx to 1.20.2
+
 * Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-4
 - Support AlmaLinux 8 and Rocky Linux 8
 - Rebuild nginx-more on latest libs
