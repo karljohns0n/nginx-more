@@ -2,10 +2,10 @@
 language: shell
 
 env:
-  - dist: karljohns0n/centos
-    version: 6
-    pkg_arch: x86_64
-    ngx_modules: "--without=modsecurity"
+#  - dist: karljohns0n/centos
+#    version: 6
+#    pkg_arch: x86_64
+#    ngx_modules: "--without=modsecurity"
   - dist: centos
     version: 7
     pkg_arch: x86_64

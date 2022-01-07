@@ -1,8 +1,10 @@
 ###########################################################
 ##
-## IPs are automatically updated with rpm update
+## Monitoring IPs are automatically updated with rpm update
 ##
 allow 24.37.95.230;
 allow 24.37.152.18;
 allow 69.70.207.14;
 allow 15.222.179.26;
+allow 15.223.109.199;
+allow 54.39.218.40;
