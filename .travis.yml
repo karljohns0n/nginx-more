@@ -14,7 +14,7 @@ env:
     version: 8
     pkg_arch: x86_64
     ngx_modules: "--with=modsecurity"
-  - dist: rockylinux/rockylinux
+  - dist: rockylinux
     version: 8
     pkg_arch: x86_64
     ngx_modules: "--with=modsecurity"
