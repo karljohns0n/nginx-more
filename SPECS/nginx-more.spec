@@ -8,12 +8,12 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
-%global openssl_version		1.1.1n
+%global openssl_version		1.1.1o
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
-%global module_brotli		snap20201209
+%global module_brotli		snap20220505
 %global module_geoip2		3.3
 %global module_echo			0.62
 %global module_modsecurity	1.0.2
@@ -24,7 +24,7 @@
 
 Name:						nginx-more
 Version:					1.20.2
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -427,6 +427,10 @@ fi
 %endif
 
 %changelog
+* Fri May 6 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-4
+- Bump OpenSSL to 1.1.1o
+- Bump Brotli to dev-f4153a0
+
 * Wed Mar 16 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-3
 - Bump OpenSSL to 1.1.1n
 
