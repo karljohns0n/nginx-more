@@ -427,7 +427,7 @@ fi
 %endif
 
 %changelog
-* Fri May 6 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-4
+* Thu May 19 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-4
 - Bump OpenSSL to 1.1.1o
 - Bump Brotli to dev-f4153a0
 
