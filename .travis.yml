@@ -2,16 +2,12 @@
 language: shell
 
 env:
-#  - dist: karljohns0n/centos
-#    version: 6
-#    pkg_arch: x86_64
-#    ngx_modules: "--without=modsecurity"
+  - dist: karljohns0n/centos
+    version: 6
+    pkg_arch: x86_64
+    ngx_modules: "--without=modsecurity"
   - dist: centos
     version: 7
-    pkg_arch: x86_64
-    ngx_modules: "--with=modsecurity"
-  - dist: almalinux
-    version: 8
     pkg_arch: x86_64
     ngx_modules: "--with=modsecurity"
   - dist: rockylinux
@@ -43,6 +39,7 @@ script:
 
   # Test package
   - docker run --name "${container_id}" -t --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" "${dist}":"${version}"
+  - docker exec "${container_id}" yum clean all
   - docker exec "${container_id}" yum -y install https://repo.aerisnetwork.com/pub/aeris-release-"${version}".rpm
   - docker exec "${container_id}" yum install -y --enablerepo="aeris,aeris-testing" /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}"."${pkg_arch}".rpm
   - docker exec "${container_id}" nginx -V
