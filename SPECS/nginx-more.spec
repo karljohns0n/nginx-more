@@ -8,6 +8,7 @@
 %global nginx_datadir		%{_datadir}/nginx
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
+%global pcre_version		pcre2
 %global openssl_version		1.1.1o
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
@@ -16,15 +17,15 @@
 %global module_brotli		snap20220505
 %global module_geoip2		3.3
 %global module_echo			0.62
-%global module_modsecurity	1.0.2
+%global module_modsecurity	1.0.3
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.20.2
-Release:					4%{?dist}
+Version:					1.22.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -92,14 +93,14 @@ Patch3:						ngx_cloudflare_dynamic_tls_records_1015008.patch
 
 
 BuildRequires:				libxslt-devel
-BuildRequires:				openssl-devel
-BuildRequires:				pcre-devel
+BuildRequires:				%{pcre_version}
+BuildRequires:				%{pcre_version}-devel
 BuildRequires:				zlib-devel
-BuildRequires:				pcre
 BuildRequires:				gd-devel
 BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
+BuildRequires:				perl-IPC-Cmd
 
 %if 0%{?rhel} == 6
 BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
@@ -116,7 +117,7 @@ BuildRequires:				GeoIP-devel perl-Getopt-Long
 %endif
 
 Requires:					gd
-Requires:					pcre
+Requires:					%{pcre_version}
 Requires(pre):				shadow-utils
 
 %if %{use_systemd}
@@ -230,7 +231,7 @@ export DESTDIR=%{buildroot}
 	--with-http_slice_module \
 	--with-stream_ssl_preread_module \
 	--with-debug \
-	--with-cc-opt="%{optflags} $(pcre-config --cflags) -DTCP_FASTOPEN=23" \
+	--with-cc-opt="%{optflags} $(%{pcre_version}-config --cflags) -DTCP_FASTOPEN=23" \
 	%if 0%{?rhel} <= 7
 		--with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
 	%endif
@@ -427,6 +428,11 @@ fi
 %endif
 
 %changelog
+* Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-1
+- Rebase on nginx 1.22.0
+- Use PCRE2
+- Bump ModSecurity connector to 1.0.3
+
 * Thu May 19 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-4
 - Bump OpenSSL to 1.1.1o
 - Bump Brotli to dev-f4153a0
