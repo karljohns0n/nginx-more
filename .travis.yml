@@ -40,7 +40,7 @@ script:
   # Test package
   - docker run --name "${container_id}" -t --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --volume="${PWD}":/tmp/"${pkg_name}" "${dist}":"${version}"
   - docker exec "${container_id}" yum clean all
-  - docker exec "${container_id}" bash -c '[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm'
+  - docker exec "${container_id}" bash -c '[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm || echo continue'
   - docker exec "${container_id}" yum install -y --enablerepo="aeris,aeris-testing" /tmp/"${pkg_name}"/RPMS/"${pkg_name}"-"${pkg_version}"-"${pkg_release}".el"${version}"."${pkg_arch}".rpm
   - docker exec "${container_id}" nginx -V
   - docker exec "${container_id}" /usr/sbin/nginx -t
