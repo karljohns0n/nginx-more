@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		1.1.1o
+%global openssl_version		3.0.3
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -25,7 +25,7 @@
 
 Name:						nginx-more
 Version:					1.22.0
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -101,6 +101,7 @@ BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
 BuildRequires:				perl-IPC-Cmd
+BuildRequires:				perl-Data-Dumper
 
 %if 0%{?rhel} == 6
 BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
@@ -109,7 +110,6 @@ BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-bi
 %if 0%{?rhel} == 7
 BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
 BuildRequires:				GeoIP-devel
-
 %endif
 
 %if 0%{?rhel} == 8
@@ -428,6 +428,9 @@ fi
 %endif
 
 %changelog
+* Sun Jun 19 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-2
+- Bump OpenSSL to 3.0.3
+
 * Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-1
 - Rebase on nginx 1.22.0
 - Use PCRE2
