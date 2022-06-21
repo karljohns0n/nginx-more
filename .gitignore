@@ -1,5 +1,5 @@
 BUILD
 RPMS
-SOURCES/*.tar.gz
-SOURCES/*.tar.bz2
+SOURCES/*.tar.gz*
+SOURCES/*.tar.bz2*
 SRPMS
