@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.0.3
+%global openssl_version		3.0.4
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
@@ -428,8 +428,8 @@ fi
 %endif
 
 %changelog
-* Sun Jun 19 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-2
-- Bump OpenSSL to 3.0.3
+* Tue Jun 21 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-2
+- Bump OpenSSL to 3.0.4
 
 * Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-1
 - Rebase on nginx 1.22.0
