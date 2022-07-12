@@ -9,13 +9,13 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.0.4
+%global openssl_version		3.0.5
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.33
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
 %global module_brotli		snap20220505
-%global module_geoip2		3.3
+%global module_geoip2		3.4
 %global module_echo			0.62
 %global module_modsecurity	1.0.3
 
@@ -25,7 +25,7 @@
 
 Name:						nginx-more
 Version:					1.22.0
-Release:					2%{?dist}
+Release:					3%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -428,6 +428,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 6 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-3
+- Bump OpenSSL to 3.0.5
+- Bump GeoIP2 to 3.4
+
 * Tue Jun 21 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-2
 - Bump OpenSSL to 3.0.4
 
