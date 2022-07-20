@@ -11,7 +11,7 @@
 %global pcre_version		pcre2
 %global openssl_version		3.0.5
 %global module_ps			1.13.35.2-stable
-%global module_headers_more	0.33
+%global module_headers_more	0.34
 %global module_cache_purge	2.3
 %global module_vts			0.1.18
 %global module_brotli		snap20220505
@@ -25,7 +25,7 @@
 
 Name:						nginx-more
 Version:					1.22.0
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -85,6 +85,7 @@ Source106:					ngx_module_vts-%{module_vts}.tar.gz
 Source107:					ngx_http_geoip2_module-%{module_geoip2}.tar.gz
 Source108:					ngx_echo-%{module_echo}.tar.gz
 Source109:					ngx_modsecurity-%{module_modsecurity}.tar.gz
+
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
@@ -184,6 +185,7 @@ tar -zxvf %{SOURCE108} -C modules/
 
 %build
 export DESTDIR=%{buildroot}
+
 ./configure \
 	--prefix=%{nginx_datadir} \
 	--sbin-path=%{_sbindir}/nginx \
@@ -212,7 +214,7 @@ export DESTDIR=%{buildroot}
 	--with-http_mp4_module \
 	--with-http_gunzip_module \
 	--with-http_gzip_static_module \
-	%if 0%{?rhel} >= 7
+	%if 0%{?rhel} == 7 || 0%{?rhel} == 8
 		--with-http_geoip_module \
 	%endif
 	--with-http_random_index_module \
@@ -236,6 +238,9 @@ export DESTDIR=%{buildroot}
 		--with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
 	%endif
 	--with-openssl=modules/openssl-%{openssl_version} \
+	%if 0%{?rhel} >= 8
+		--with-openssl-opt=enable-ktls \
+	%endif
 	--with-http_v2_hpack_enc \
 	%if %{with modsecurity}
 		--add-dynamic-module=modules/ngx_modsecurity-%{module_modsecurity} \
@@ -428,6 +433,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 20 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.0-4
+- Enable kTLS starting with el8
+- Bump module More Headers 0.34
+
 * Wed Jul 6 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-3
 - Bump OpenSSL to 3.0.5
 - Bump GeoIP2 to 3.4

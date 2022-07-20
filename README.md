@@ -3,7 +3,7 @@
 [![ProjectStatus](https://img.shields.io/badge/status-active-brightgreen.svg)](#)
 [![Build](https://img.shields.io/travis/com/karljohns0n/nginx-more/master.svg)](https://app.travis-ci.com/github/karljohns0n/nginx-more)
 [![Codacy](https://api.codacy.com/project/badge/Grade/6a3f08f40fe84392afbf12e1d3f55de6)](https://www.codacy.com/manual/karljohns0n/nginx-more?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=karljohns0n/nginx-more&amp;utm_campaign=Badge_Grade)
-[![Release](https://img.shields.io/badge/release-1.20.2--4-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.22.0--4-success.svg)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![ChangeLog](https://img.shields.io/badge/change-log-blue.svg?style=flat)](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
@@ -17,10 +17,10 @@ Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed,
 There's packages available for EL 6, 7, 8 and 9. The easiest way to install it is using Aeris yum repository:
 
 ```bash
-EL 6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
-EL 7 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
-EL 8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
-EL 9 > soon!
+EL6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
+EL7 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-7.rpm
+EL8 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
+EL9 > dnf install -y https://repo.aerisnetwork.com/pub/aeris-release-9.rpm
 ```
 
 Once the repository is configured, you can proceed with installing nginx-more:
@@ -67,12 +67,13 @@ Full output of nginx configure:
 
 ```bash
 > nginx -V
-nginx version: nginx/1.20.2
+nginx version: nginx/1.22.0
 custom build maintained on github.com/karljohns0n/nginx-more
-built by gcc 8.5.0 20210514 (Red Hat 8.5.0-4) (GCC) 
-built with OpenSSL 1.1.1o  3 May 2022
+built by gcc 8.5.0 20210514 (Red Hat 8.5.0-10) (GCC) 
+built with OpenSSL 3.0.5 5 Jul 2022
 TLS SNI support enabled
-configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-1.1.1o --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.2 --add-module=modules/ngx_headers_more-0.33 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20220505 --add-module=modules/ngx_http_geoip2_module-3.3 --add-module=modules/ngx_echo-0.62
+configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_geoip_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -g -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -fexceptions -fstack-protector-strong -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-3.0.5 --with-openssl-opt=enable-ktls --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.3 --add-module=modules/ngx_headers_more-0.34 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_module_vts-0.1.18 --add-module=modules/ngx_pagespeed-1.13.35.2-stable --add-module=modules/ngx_brotli-snap20220505 --add-module=modules/ngx_http_geoip2_module-3.4 --add-module=modules/ngx_echo-0.62
+
 ```
 
 ## Modules
@@ -128,9 +129,10 @@ Example of playbook:
 
 The changelog for all packages is available from the RepoView:
 
-*   [EL 6](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
-*   [EL 7](https://repo.aerisnetwork.com/stable/el/7/x86_64/repoview/nginx-more.html)
-*   [EL 8](https://repo.aerisnetwork.com/stable/el/8/x86_64/repoview/nginx-more.html)
+*   [EL6](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
+*   [EL7](https://repo.aerisnetwork.com/stable/el/7/x86_64/repoview/nginx-more.html)
+*   [EL8](https://repo.aerisnetwork.com/stable/el/8/x86_64/repoview/nginx-more.html)
+*   [EL9](#)
 
 ## Package dependencies
 
