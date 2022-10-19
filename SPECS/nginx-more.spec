@@ -13,7 +13,7 @@
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.34
 %global module_cache_purge	2.3
-%global module_vts			0.1.18
+%global module_vts			0.2.1
 %global module_brotli		snap20220505
 %global module_geoip2		3.4
 %global module_echo			0.62
@@ -24,8 +24,8 @@
 %bcond_with					modsecurity
 
 Name:						nginx-more
-Version:					1.22.0
-Release:					4%{?dist}
+Version:					1.22.1
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -433,6 +433,10 @@ fi
 %endif
 
 %changelog
+* Wed Oct 19 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-1
+- Upgrade nginx to 1.22.1
+- Bump module VTS 0.2.1
+
 * Wed Jul 20 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.0-4
 - Enable kTLS starting with el8
 - Bump module More Headers 0.34
