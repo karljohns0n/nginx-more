@@ -1,7 +1,7 @@
 # Nginx-more
 
 [![Release](https://img.shields.io/badge/release-1.22.1--1-success.svg)](#)
-[![Build](https://img.shields.io/travis/com/karljohns0n/nginx-more/master.svg)](https://app.travis-ci.com/github/karljohns0n/nginx-more)
+[![Build](https://img.shields.io/github/workflow/status/karljohns0n/nginx-more/nginx-more)](#)
 [![Quality Gate Status](https://sonarqube.aerisnetwork.com/api/project_badges/measure?project=nginx-more&metric=alert_status&token=37188c25b9b77cd28dd7cdc7cea818b9be699095)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
@@ -126,10 +126,10 @@ Example of playbook:
 
 The changelog for all packages is available from the RepoView:
 
-*   [EL6](https://repo.aerisnetwork.com/stable/el/6/x86_64/repoview/nginx-more.html)
-*   [EL7](https://repo.aerisnetwork.com/stable/el/7/x86_64/repoview/nginx-more.html)
-*   [EL8](https://repo.aerisnetwork.com/stable/el/8/x86_64/repoview/nginx-more.html)
-*   [EL9](#)
+*   [EL6](https://repo.aerisnetwork.com/stable/el/6/x86_64/)
+*   [EL7](https://repo.aerisnetwork.com/stable/el/7/x86_64/)
+*   [EL8](https://repo.aerisnetwork.com/stable/el/8/x86_64/)
+*   [EL9](https://repo.aerisnetwork.com/stable/el/9/x86_64/)
 
 ## Package dependencies
 
