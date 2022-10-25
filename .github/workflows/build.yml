@@ -1,0 +1,89 @@
+name: nginx-more
+
+on: 
+  push:
+    branches: 
+      - master
+    tags:
+      - '*'
+
+jobs:
+  sonarqube:
+    name: SonarQube analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: SonarQube scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dproject.settings=.sonar-project.properties
+
+  buildrpm:
+    name: Build el${{ matrix.version }} package
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PKG_NAME: nginx-more
+    strategy: 
+      matrix:
+        include:
+          - version: 6
+            OS: karljohns0n/centos
+            PKG_ARCH: x86_64
+            NGX_MODULES: "--without=modsecurity"
+          - version: 7
+            OS: centos
+            PKG_ARCH: x86_64
+            NGX_MODULES: "--with=modsecurity"
+          - version: 8
+            OS: rockylinux
+            PKG_ARCH: x86_64
+            NGX_MODULES: "--with=modsecurity"        
+    steps:
+      - name: Checking out repo
+        uses: actions/checkout@v3
+      - name: Build el${{ matrix.version }} package using mock
+        uses: addnab/docker-run-action@v3
+        with:
+          image: karljohns0n/rpmbuild:8
+          shell: bash
+          options: -v ${{ github.workspace }}:/tmp/${{ env.PKG_NAME }} -v /sys/fs/cgroup:/sys/fs/cgroup:ro --privileged
+          run: |
+              set -x -e
+              cd tmp/"${{ env.PKG_NAME }}"
+              PKG_VERSION=$(grep "Version:" SPECS/${{ env.PKG_NAME }}.spec|awk '{print $2}' )
+              PKG_RELEASE=$(grep "Release:" SPECS/${{ env.PKG_NAME }}.spec|awk '{print $2}'| tr -d "%{?dist}")
+
+              mkdir -p /tmp/"${{ env.PKG_NAME }}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
+              bash /tmp/"${{ env.PKG_NAME }}"/.github/workflows/fetch_sources.sh "${{ secrets.CDNURL }}"
+              mock --isolation=simple -r aeris-"${{ matrix.version }}"-"${{ matrix.PKG_ARCH }}" --spec=/tmp/"${{ env.PKG_NAME }}"/SPECS/"${{ env.PKG_NAME }}".spec --sources=/tmp/"${{ env.PKG_NAME }}"/SOURCES --resultdir=/tmp/"${{ env.PKG_NAME }}"/SRPMS --buildsrpm "${{ matrix.NGX_MODULES }}"
+              mock --isolation=simple --clean -D "dist .el${{ matrix.version }}" -r aeris-"${{ matrix.version }}"-"${{ matrix.PKG_ARCH }}" --resultdir=/tmp/"${{ env.PKG_NAME }}"/RPMS --rebuild /tmp/"${{ env.PKG_NAME }}"/SRPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}".src.rpm "${{ matrix.NGX_MODULES }}"
+              rpm -q -l -p /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}"."${{ matrix.PKG_ARCH }}".rpm --noartifact
+      - name: Test package on el${{ matrix.version }}
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ${{ matrix.OS }}:${{ matrix.version }}
+          shell: bash
+          options: -v ${{ github.workspace }}:/tmp/${{ env.PKG_NAME }} -v /sys/fs/cgroup:/sys/fs/cgroup:ro --privileged
+          run: |
+              set -x -e
+              cd tmp/"${{ env.PKG_NAME }}"
+              PKG_VERSION=$(grep "Version:" SPECS/${{ env.PKG_NAME }}.spec|awk '{print $2}' )
+              PKG_RELEASE=$(grep "Release:" SPECS/${{ env.PKG_NAME }}.spec|awk '{print $2}'| tr -d "%{?dist}")
+
+              yum clean all
+              bash -c '[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm || echo continue'
+              yum install --enablerepo="aeris,aeris-testing" -y /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}"."${{ matrix.PKG_ARCH }}".rpm
+              nginx -V
+              /usr/sbin/nginx -t
+              /usr/sbin/nginx && sleep 5
+              curl -s -I http://127.0.0.1
+              cat /var/log/nginx/error.log
+              yum remove -y nginx-more
