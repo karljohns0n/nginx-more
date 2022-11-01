@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.0.5
+%global openssl_version		3.0.7
 %global module_ps			1.13.35.2-stable
 %global module_headers_more	0.34
 %global module_cache_purge	2.3
@@ -25,7 +25,7 @@
 
 Name:						nginx-more
 Version:					1.22.1
-Release:					1%{?dist}
+Release:					2%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -433,6 +433,9 @@ fi
 %endif
 
 %changelog
+* Tue Nov 1 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-2
+- Bump OpenSSL to 3.0.7
+
 * Wed Oct 19 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-1
 - Upgrade nginx to 1.22.1
 - Bump module VTS 0.2.1
