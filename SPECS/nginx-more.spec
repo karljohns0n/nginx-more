@@ -22,6 +22,7 @@
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 %bcond_with					modsecurity
+%bcond_with					pagespeed
 
 Name:						nginx-more
 Version:					1.22.1
@@ -40,7 +41,7 @@ Source3:					nginx.logrotate
 Source4:					nginx.conf
 Source5:					nginx.upgrade.sh
 Source6:					nginx.check-reload.sh
-
+Source7:					nginx.pagespeed.conf
 
 Source10:					fpm-default.conf
 Source11:					fpm-wordpress-cache.conf
@@ -117,6 +118,10 @@ BuildRequires:				GeoIP-devel
 BuildRequires:				GeoIP-devel perl-Getopt-Long
 %endif
 
+%if 0%{?rhel} == 9
+BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-Getopt-Long perl-IPC-Cmd perl-lib
+%endif
+
 Requires:					gd
 Requires:					%{pcre_version}
 Requires(pre):				shadow-utils
@@ -164,8 +169,10 @@ memory usage.
 
 mkdir modules
 tar -zxvf %{SOURCE100} -C modules/
-tar -zxvf %{SOURCE101} -C modules/
-tar -zxvf %{SOURCE102} -C modules/ngx_pagespeed-%{module_ps}/
+%if %{with pagespeed}
+	tar -zxvf %{SOURCE101} -C modules/
+	tar -zxvf %{SOURCE102} -C modules/ngx_pagespeed-%{module_ps}/
+%endif
 tar -zxvf %{SOURCE103} -C modules/
 tar -zxvf %{SOURCE104} -C modules/
 tar -zxvf %{SOURCE105} -C modules/
@@ -245,10 +252,12 @@ export DESTDIR=%{buildroot}
 	%if %{with modsecurity}
 		--add-dynamic-module=modules/ngx_modsecurity-%{module_modsecurity} \
 	%endif
+	%if %{with pagespeed}
+		--add-module=modules/ngx_pagespeed-%{module_ps} \
+	%endif
 	--add-module=modules/ngx_headers_more-%{module_headers_more} \
 	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
 	--add-module=modules/ngx_module_vts-%{module_vts} \
-	--add-module=modules/ngx_pagespeed-%{module_ps} \
 	--add-module=modules/ngx_brotli-%{module_brotli} \
 	--add-module=modules/ngx_http_geoip2_module-%{module_geoip2} \
 	--add-module=modules/ngx_echo-%{module_echo}
@@ -263,53 +272,52 @@ find %{buildroot} -type f -name perllocal.pod -exec rm -f '{}' \;
 find %{buildroot} -type f -empty -exec rm -f '{}' \;
 find %{buildroot} -type f -iname '*.so' -exec chmod 0755 '{}' \;
 
-%{__mkdir} -p $RPM_BUILD_ROOT%{_libdir}/nginx/modules
-cd $RPM_BUILD_ROOT%{_sysconfdir}/nginx && \
-	%{__ln_s} ../..%{_libdir}/nginx/modules modules && cd -
+%{__mkdir} -p %{buildroot}%{_libdir}/nginx/modules
+cd %{buildroot}%{_sysconfdir}/nginx && %{__ln_s} ../..%{_libdir}/nginx/modules modules && cd -
 
 %if %{use_systemd}
-	install -p -D -m 0644 %{SOURCE1} \
-		%{buildroot}%{_unitdir}/nginx.service
+	install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/nginx.service
 %else
-	install -p -D -m 0755 %{SOURCE2} \
-		%{buildroot}%{_initrddir}/nginx
+	install -p -D -m 0755 %{SOURCE2} %{buildroot}%{_initrddir}/nginx
 %endif
 
 
-install -p -D -m 0644 %{SOURCE3} \
-	%{buildroot}%{_sysconfdir}/logrotate.d/nginx
+install -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/nginx
 
 install -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d
 install -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d/custom
 install -p -d -m 0755 %{buildroot}%{nginx_confdir}/conf.d/vhosts
 install -p -d -m 0700 %{buildroot}%{nginx_home}
 install -p -d -m 0700 %{buildroot}%{nginx_home_cache}
-install -p -d -m 0700 %{buildroot}%{nginx_home_cache}/pagespeed
+%if %{with pagespeed}
+	install -p -d -m 0700 %{buildroot}%{nginx_home_cache}/pagespeed
+%endif
 install -p -d -m 0700 %{buildroot}%{nginx_logdir}
 install -p -d -m 0755 %{buildroot}%{nginx_webroot}
 install -p -d -m 0755 %{buildroot}%{_datadir}/nginx/modules
 
-install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}
+%if %{with pagespeed}
+	install -p -m 0644 %{SOURCE7} %{buildroot}%{nginx_confdir}/nginx.conf
+%else
+	install -p -m 0644 %{SOURCE4} %{buildroot}%{nginx_confdir}/nginx.conf
+%endif
 
-install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33} %{SOURCE34} %{SOURCE35} %{SOURCE36} %{SOURCE37} %{SOURCE38} %{SOURCE39} %{SOURCE40} \
-	%{buildroot}%{nginx_confdir}/conf.d/custom
-install -p -m 0644 %{SOURCE17} \
-	%{buildroot}%{nginx_confdir}/conf.d/vhosts
+install -p -m 0644 %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33} %{SOURCE34} %{SOURCE35} %{SOURCE36} %{SOURCE37} %{SOURCE38} %{SOURCE39} %{SOURCE40} %{buildroot}%{nginx_confdir}/conf.d/custom
+%if %{with pagespeed}
+	install -p -m 0644 %{SOURCE21} %{buildroot}%{nginx_confdir}/conf.d/custom
+%endif
+install -p -m 0644 %{SOURCE17} %{buildroot}%{nginx_confdir}/conf.d/vhosts
 
-install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 \
-	%{buildroot}%{_mandir}/man8/nginx.8
+install -p -D -m 0644 %{_builddir}/nginx-%{version}/man/nginx.8 %{buildroot}%{_mandir}/man8/nginx.8
 
 %if %{use_systemd}
-	%{__mkdir} -p $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx
-%{__install} -m755 %SOURCE5 \
-    $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx/upgrade
-%{__install} -m755 %SOURCE6 \
-    $RPM_BUILD_ROOT%{_libexecdir}/initscripts/legacy-actions/nginx/check-reload
+	%{__mkdir} -p %{buildroot}%{_libexecdir}/initscripts/legacy-actions/nginx
+	%{__install} -m755 %SOURCE5 %{buildroot}%{_libexecdir}/initscripts/legacy-actions/nginx/upgrade
+	%{__install} -m755 %SOURCE6 %{buildroot}%{_libexecdir}/initscripts/legacy-actions/nginx/check-reload
 %endif
 
 %if %{with modsecurity}
-echo 'load_module "%{_libdir}/nginx/modules/ngx_http_modsecurity_module.so";' \
-    > %{buildroot}%{_datadir}/nginx/modules/module-modsecurity.conf
+	echo 'load_module "%{_libdir}/nginx/modules/ngx_http_modsecurity_module.so";' > %{buildroot}%{_datadir}/nginx/modules/module-modsecurity.conf
 %endif
 
 %pre
@@ -339,9 +347,6 @@ if [ $1 -eq 1 ]; then
 
 Thanks for using nginx-more! Feel free to send any feature request 
 with an Issue or Pull Request on github.com/karljohns0n/nginx-more
-
-Installing memcached is highly recommended to let PageSpeed cache in 
-memory instead of disk.
 
 ----------------------------------------------------------------------
 BANNER
@@ -417,7 +422,9 @@ fi
 
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home}
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home_cache}
+%if %{with pagespeed}
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_home_cache}/pagespeed
+%endif
 %attr(700,%{nginx_user},%{nginx_group}) %dir %{nginx_logdir}
 %attr(0755,root,root) %dir %{_libdir}/nginx
 %attr(0755,root,root) %dir %{_libdir}/nginx/modules

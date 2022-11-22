@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - master
+      - test-bcond
     tags:
       - '*'
 
@@ -34,18 +35,22 @@ jobs:
     strategy: 
       matrix:
         include:
-          - version: 6
-            OS: karljohns0n/centos
-            PKG_ARCH: x86_64
-            NGX_MODULES: "--without=modsecurity"
-          - version: 7
-            OS: centos
-            PKG_ARCH: x86_64
-            NGX_MODULES: "--with=modsecurity"
+          # - version: 6
+          #   OS: karljohns0n/centos
+          #   PKG_ARCH: x86_64
+          #   NGX_MODULES: "--without=modsecurity"
+          # - version: 7
+          #   OS: centos
+          #   PKG_ARCH: x86_64
+          #   NGX_MODULES: "--with=modsecurity"
           - version: 8
             OS: rockylinux
             PKG_ARCH: x86_64
-            NGX_MODULES: "--with=modsecurity"        
+            NGX_MODULES: "--with=modsecurity --with=pagespeed"
+          - version: 9
+            OS: rockylinux
+            PKG_ARCH: x86_64
+            NGX_MODULES: "--with=modsecurity"    
     steps:
       - name: Checking out repo
         uses: actions/checkout@v3
