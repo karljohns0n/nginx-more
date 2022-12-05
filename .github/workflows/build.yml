@@ -27,7 +27,7 @@ jobs:
             -Dproject.settings=.sonar-project.properties
 
   buildrpm:
-    name: Build el${{ matrix.version }} package
+    name: Build el${{ matrix.VERSION }} package
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -35,26 +35,26 @@ jobs:
     strategy: 
       matrix:
         include:
-          # - version: 6
-          #   OS: karljohns0n/centos
-          #   PKG_ARCH: x86_64
-          #   NGX_MODULES: "--without=modsecurity"
-          # - version: 7
-          #   OS: centos
-          #   PKG_ARCH: x86_64
-          #   NGX_MODULES: "--with=modsecurity"
-          - version: 8
+          - VERSION: 6
+            OS: karljohns0n/centos
+            PKG_ARCH: x86_64
+            OPT: --with=pagespeed
+          - VERSION: 7
+            OS: centos
+            PKG_ARCH: x86_64
+            OPT: --with=modsecurity --with=pagespeed
+          - VERSION: 8
             OS: rockylinux
             PKG_ARCH: x86_64
-            NGX_MODULES: "--with=modsecurity --with=pagespeed"
-          - version: 9
+            OPT: --with=modsecurity --with=pagespeed
+          - VERSION: 9
             OS: rockylinux
             PKG_ARCH: x86_64
-            NGX_MODULES: "--with=modsecurity"    
+            OPT: --with=modsecurity
     steps:
       - name: Checking out repo
         uses: actions/checkout@v3
-      - name: Build el${{ matrix.version }} package using mock
+      - name: Build el${{ matrix.VERSION }} package using mock
         uses: addnab/docker-run-action@v3
         with:
           image: karljohns0n/rpmbuild:8
@@ -68,13 +68,13 @@ jobs:
 
               mkdir -p /tmp/"${{ env.PKG_NAME }}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
               bash /tmp/"${{ env.PKG_NAME }}"/.github/workflows/fetch_sources.sh "${{ secrets.CDNURL }}"
-              mock --isolation=simple -r aeris-"${{ matrix.version }}"-"${{ matrix.PKG_ARCH }}" --spec=/tmp/"${{ env.PKG_NAME }}"/SPECS/"${{ env.PKG_NAME }}".spec --sources=/tmp/"${{ env.PKG_NAME }}"/SOURCES --resultdir=/tmp/"${{ env.PKG_NAME }}"/SRPMS --buildsrpm "${{ matrix.NGX_MODULES }}"
-              mock --isolation=simple --clean -D "dist .el${{ matrix.version }}" -r aeris-"${{ matrix.version }}"-"${{ matrix.PKG_ARCH }}" --resultdir=/tmp/"${{ env.PKG_NAME }}"/RPMS --rebuild /tmp/"${{ env.PKG_NAME }}"/SRPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}".src.rpm "${{ matrix.NGX_MODULES }}"
-              rpm -q -l -p /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}"."${{ matrix.PKG_ARCH }}".rpm --noartifact
-      - name: Test package on el${{ matrix.version }}
+              mock --isolation=simple -r aeris-"${{ matrix.VERSION }}"-"${{ matrix.PKG_ARCH }}" --spec=/tmp/"${{ env.PKG_NAME }}"/SPECS/"${{ env.PKG_NAME }}".spec --sources=/tmp/"${{ env.PKG_NAME }}"/SOURCES --resultdir=/tmp/"${{ env.PKG_NAME }}"/SRPMS --buildsrpm ${{ matrix.OPT }}
+              mock --isolation=simple --clean -D "dist .el${{ matrix.VERSION }}" -r aeris-"${{ matrix.VERSION }}"-"${{ matrix.PKG_ARCH }}" --resultdir=/tmp/"${{ env.PKG_NAME }}"/RPMS --rebuild /tmp/"${{ env.PKG_NAME }}"/SRPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.VERSION }}".src.rpm ${{ matrix.OPT }}
+              rpm -q -l -p /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.VERSION }}"."${{ matrix.PKG_ARCH }}".rpm --noartifact
+      - name: Test package on el${{ matrix.VERSION }}
         uses: addnab/docker-run-action@v3
         with:
-          image: ${{ matrix.OS }}:${{ matrix.version }}
+          image: ${{ matrix.OS }}:${{ matrix.VERSION }}
           shell: bash
           options: -v ${{ github.workspace }}:/tmp/${{ env.PKG_NAME }} -v /sys/fs/cgroup:/sys/fs/cgroup:ro --privileged
           run: |
@@ -85,7 +85,7 @@ jobs:
 
               yum clean all
               bash -c '[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm || echo continue'
-              yum install --enablerepo="aeris,aeris-testing" -y /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.version }}"."${{ matrix.PKG_ARCH }}".rpm
+              yum install --enablerepo="aeris,aeris-testing" -y /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.VERSION }}"."${{ matrix.PKG_ARCH }}".rpm
               nginx -V
               /usr/sbin/nginx -t
               /usr/sbin/nginx && sleep 5
