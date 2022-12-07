@@ -92,6 +92,7 @@ Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
 Patch2:						ngx_cloudflare_http2_hpack_1015003.patch
 Patch3:						ngx_cloudflare_dynamic_tls_records_1015008.patch
+Patch4:						ngx_cache_purge-fix-compatibility-with-nginx-1.19.3.patch
 
 
 BuildRequires:				libxslt-devel
@@ -184,11 +185,13 @@ tar -zxvf %{SOURCE108} -C modules/
 %endif
 
 %{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH1}
+%{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH4}
 
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 %build
 export DESTDIR=%{buildroot}
@@ -440,6 +443,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 7 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-3
+- Roll in patch to fix cache purge compatibility with nginx 1.19.3+
+
 * Tue Nov 1 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-2
 - Bump OpenSSL to 3.0.7
 

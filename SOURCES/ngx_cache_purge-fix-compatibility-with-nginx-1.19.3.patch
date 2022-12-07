@@ -1,0 +1,17 @@
+From c8ca321b909cb3d9371db4509f1064045d7e0b1c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jakub=20Bie=C5=84kowski?= <jbienkowski311@gmail.com>
+Date: Mon, 24 May 2021 13:23:16 +0200
+Subject: [PATCH] Fix compatibility with nginx 1.19.3+ (#1)
+
+--- modules/ngx_cache_purge-@CACHEPVER@/ngx_cache_purge_module.c
++++ modules/ngx_cache_purge-@CACHEPVER@/ngx_cache_purge_module.c
+@@ -487,6 +487,9 @@ typedef struct {
+     ngx_array_t                   *cookie_domains;
+     ngx_array_t                   *cookie_paths;
+ #  endif /* nginx_version >= 1001015 */
++#  if (nginx_version >= 1019003)
++    ngx_array_t                   *cookie_flags;
++#  endif /* nginx_version >= 1019003 */
+ 
+ #  if (nginx_version < 1007008)
+     ngx_str_t                      body_source;
