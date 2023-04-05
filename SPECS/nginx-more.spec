@@ -10,14 +10,29 @@
 %global gcc_version			8
 %global pcre_version		pcre2
 %global openssl_version		3.0.8
-%global module_ps			1.13.35.2-stable
+%global module_ps_version	1.13.35.2
+%global module_psol			%{module_ps_version}-x64
+%global module_ps			%{module_ps_version}-stable
 %global module_headers_more	0.34
 %global module_cache_purge	2.3
 %global module_vts			0.2.1
-%global module_brotli		snap20220505
+%global module_brotli		1.0.0rc-2-g6e97
+%global module_brotli_deps  1.0.9-35-gf4153a0
 %global module_geoip2		3.4
 %global module_echo			0.62
 %global module_modsecurity	1.0.3
+
+%global module_dir_openssl			openssl-%{openssl_version}
+%global module_dir_pagespeed		ngx_pagespeed-%{module_ps_version}
+%global module_dir_pagespeed_psol	%{module_dir_pagespeed}/psol
+%global module_dir_headers_more		ngx_headers_more-%{module_headers_more}
+%global module_dir_cache_purge		ngx_cache_purge-%{module_cache_purge}
+%global module_dir_brotli			ngx_brotli-%{module_brotli}
+%global module_dir_brotli_deps		ngx_brotli-%{module_brotli}/deps/brotli
+%global module_dir_vts				ngx_module_vts-%{module_vts}
+%global module_dir_http_geoip2 		ngx_http_geoip2_module-%{module_geoip2}
+%global module_dir_echo				ngx_echo-%{module_echo}
+%global module_dir_modsecurity		ngx_modsecurity-%{module_modsecurity}
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
@@ -26,7 +41,7 @@
 
 Name:						nginx-more
 Version:					1.22.1
-Release:					3%{?dist}
+Release:					4%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -76,17 +91,20 @@ Source39:					fpm-wordpress-sub-cache-users.conf
 Source40:					mailgun-tracking.conf
 
 
+# Module sources
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_git_tags
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_troublesome_urls
 Source100:					https://www.openssl.org/source/openssl-%{openssl_version}.tar.gz
-Source101:					ngx_pagespeed-%{module_ps}.tar.gz
-Source102:					psol-%{module_ps}.tar.gz
-Source103:					ngx_headers_more-%{module_headers_more}.tar.gz
-Source104:					ngx_cache_purge-%{module_cache_purge}.tar.gz
-Source105:					ngx_brotli-%{module_brotli}.tar.gz
-Source106:					ngx_module_vts-%{module_vts}.tar.gz
-Source107:					ngx_http_geoip2_module-%{module_geoip2}.tar.gz
-Source108:					ngx_echo-%{module_echo}.tar.gz
-Source109:					ngx_modsecurity-%{module_modsecurity}.tar.gz
-
+Source101:					https://github.com/apache/incubator-pagespeed-ngx/archive/v%{module_ps}/ngx_pagespeed-%{module_ps}.tar.gz
+Source102:					https://dl.google.com/dl/page-speed/psol/%{module_psol}.tar.gz#/psol-%{module_psol}.tar.gz
+Source103:					https://github.com/openresty/headers-more-nginx-module/archive/v%{module_headers_more}/ngx_headers_more-%{module_headers_more}.tar.gz
+Source104:					https://github.com/FRiCKLE/ngx_cache_purge/archive/%{module_cache_purge}/ngx_cache_purge-%{module_cache_purge}.tar.gz
+Source105:					https://github.com/google/ngx_brotli/archive/v%{module_brotli}/ngx_brotli-%{module_brotli}.tar.gz
+Source106:					https://github.com/vozlt/nginx-module-vts/archive/v%{module_vts}/ngx_module_vts-%{module_vts}.tar.gz
+Source107:					https://github.com/leev/ngx_http_geoip2_module/archive/%{module_geoip2}/ngx_http_geoip2_module-%{module_geoip2}.tar.gz
+Source108:					https://github.com/openresty/echo-nginx-module/archive/v%{module_echo}/ngx_echo-%{module_echo}.tar.gz
+Source109:					https://github.com/SpiderLabs/ModSecurity-nginx/archive/v%{module_modsecurity}/ngx_modsecurity-%{module_modsecurity}.tar.gz
+Source110:					https://github.com/google/brotli/archive/v%{module_brotli_deps}/ngx_brotli_deps-%{module_brotli_deps}.tar.gz
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
@@ -105,6 +123,8 @@ BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
 BuildRequires:				perl-IPC-Cmd
 BuildRequires:				perl-Data-Dumper
+BuildRequires:				gcc
+BuildRequires:				make
 
 %if 0%{?rhel} == 6
 BuildRequires:				devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
@@ -138,6 +158,10 @@ Requires(preun):			chkconfig, initscripts
 Requires(postun):			initscripts
 %endif
 
+%if %{with pagespeed}
+BuildRequires:				gcc-c++
+%endif
+
 %if %{with modsecurity}
 %package module-modsecurity
 Summary:					Nginx ModSecurity module
@@ -168,20 +192,24 @@ memory usage.
 %prep
 %setup -q -n %{packagename}-%{version}
 
-mkdir modules
-tar -zxvf %{SOURCE100} -C modules/
+%define source_prepare() (mkdir -p %2 && tar -zxvf %1 --strip-components=1 --no-same-owner -C %2)
+
+%source_prepare %{SOURCE100} modules/%{module_dir_openssl}
+
 %if %{with pagespeed}
-	tar -zxvf %{SOURCE101} -C modules/
-	tar -zxvf %{SOURCE102} -C modules/ngx_pagespeed-%{module_ps}/
+	%source_prepare %{SOURCE101} modules/%{module_dir_pagespeed}
+	%source_prepare %{SOURCE102} modules/%{module_dir_pagespeed_psol}
 %endif
-tar -zxvf %{SOURCE103} -C modules/
-tar -zxvf %{SOURCE104} -C modules/
-tar -zxvf %{SOURCE105} -C modules/
-tar -zxvf %{SOURCE106} -C modules/
-tar -zxvf %{SOURCE107} -C modules/
-tar -zxvf %{SOURCE108} -C modules/
+%source_prepare %{SOURCE103} modules/%{module_dir_headers_more}
+%source_prepare %{SOURCE104} modules/%{module_dir_cache_purge}
+%source_prepare %{SOURCE105} modules/%{module_dir_brotli}
+%source_prepare %{SOURCE110} modules/%{module_dir_brotli_deps}
+%source_prepare %{SOURCE106} modules/%{module_dir_vts}
+%source_prepare %{SOURCE107} modules/%{module_dir_http_geoip2}
+%source_prepare %{SOURCE108} modules/%{module_dir_echo}
+
 %if %{with modsecurity}
-	tar -zxvf %{SOURCE109} -C modules/
+	%source_prepare %{SOURCE109} modules/%{module_dir_modsecurity}
 %endif
 
 %{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH1}
@@ -195,6 +223,10 @@ tar -zxvf %{SOURCE108} -C modules/
 
 %build
 export DESTDIR=%{buildroot}
+
+# As we're using PSOL binary, set PSOL_BUILDTYPE so that nginx build does not trigger the interactive prompt about debugging
+# https://github.com/apache/incubator-pagespeed-ngx/issues/1377#issuecomment-549804871
+export PSOL_BUILDTYPE=Release
 
 ./configure \
 	--prefix=%{nginx_datadir} \
@@ -247,23 +279,23 @@ export DESTDIR=%{buildroot}
 	%if 0%{?rhel} <= 7
 		--with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
 	%endif
-	--with-openssl=modules/openssl-%{openssl_version} \
+	--with-openssl=modules/%{module_dir_openssl} \
 	%if 0%{?rhel} >= 8
 		--with-openssl-opt=enable-ktls \
 	%endif
 	--with-http_v2_hpack_enc \
 	%if %{with modsecurity}
-		--add-dynamic-module=modules/ngx_modsecurity-%{module_modsecurity} \
+		--add-dynamic-module=modules/%{module_dir_modsecurity} \
 	%endif
 	%if %{with pagespeed}
-		--add-module=modules/ngx_pagespeed-%{module_ps} \
+		--add-module=modules/%{module_dir_pagespeed} \
 	%endif
-	--add-module=modules/ngx_headers_more-%{module_headers_more} \
-	--add-module=modules/ngx_cache_purge-%{module_cache_purge} \
-	--add-module=modules/ngx_module_vts-%{module_vts} \
-	--add-module=modules/ngx_brotli-%{module_brotli} \
-	--add-module=modules/ngx_http_geoip2_module-%{module_geoip2} \
-	--add-module=modules/ngx_echo-%{module_echo}
+	--add-module=modules/%{module_dir_headers_more} \
+	--add-module=modules/%{module_dir_cache_purge} \
+	--add-module=modules/%{module_dir_brotli} \
+	--add-module=modules/%{module_dir_vts} \
+	--add-module=modules/%{module_dir_http_geoip2} \
+	--add-module=modules/%{module_dir_echo}
 
 make
 
@@ -443,6 +475,13 @@ fi
 %endif
 
 %changelog
+* Tue Apr 4 2023 Bug Fest <bugfest.dev@pm.me> 1.22.1-4
+- Source code dependencies loaded from their original repositories
+- Add missing build deps: gcc, make
+- Add missing build deps for pagespeed: gcc-c++
+- Add ngx_brotli submodule source
+- Add ngx_pagespeed dependencies: PSOL (pre-compiled)
+
 * Wed Feb 8 2023 Karl Johnson <karljohnson.it@gmail.com> 1.22.1-3
 - Bump OpenSSL to 3.0.8
 - Roll in patch to fix cache purge compatibility with nginx 1.19.3+
