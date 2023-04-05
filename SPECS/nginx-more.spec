@@ -11,27 +11,27 @@
 %global pcre_version		pcre2
 %global openssl_version		3.0.8
 %global module_ps_version	1.13.35.2
-%global module_psol			%{module_ps_version}-x64
-%global module_ps			%{module_ps_version}-stable
+%global module_psol		%{module_ps_version}-x64
+%global module_ps		%{module_ps_version}-stable
 %global module_headers_more	0.34
 %global module_cache_purge	2.3
-%global module_vts			0.2.1
+%global module_vts		0.2.1
 %global module_brotli		1.0.0rc-2-g6e97
-%global module_brotli_deps  1.0.9-35-gf4153a0
+%global module_brotli_deps	1.0.9-35-gf4153a0
 %global module_geoip2		3.4
-%global module_echo			0.62
+%global module_echo		0.62
 %global module_modsecurity	1.0.3
 
-%global module_dir_openssl			openssl-%{openssl_version}
+%global module_dir_openssl		openssl-%{openssl_version}
 %global module_dir_pagespeed		ngx_pagespeed-%{module_ps_version}
 %global module_dir_pagespeed_psol	%{module_dir_pagespeed}/psol
 %global module_dir_headers_more		ngx_headers_more-%{module_headers_more}
 %global module_dir_cache_purge		ngx_cache_purge-%{module_cache_purge}
-%global module_dir_brotli			ngx_brotli-%{module_brotli}
+%global module_dir_brotli		ngx_brotli-%{module_brotli}
 %global module_dir_brotli_deps		ngx_brotli-%{module_brotli}/deps/brotli
-%global module_dir_vts				ngx_module_vts-%{module_vts}
+%global module_dir_vts			ngx_module_vts-%{module_vts}
 %global module_dir_http_geoip2 		ngx_http_geoip2_module-%{module_geoip2}
-%global module_dir_echo				ngx_echo-%{module_echo}
+%global module_dir_echo			ngx_echo-%{module_echo}
 %global module_dir_modsecurity		ngx_modsecurity-%{module_modsecurity}
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
