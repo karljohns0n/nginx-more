@@ -34,10 +34,10 @@ jobs:
     strategy: 
       matrix:
         include:
-          - VERSION: 6
-            OS: karljohns0n/centos
-            PKG_ARCH: x86_64
-            OPT: --with=pagespeed
+          # - VERSION: 6
+          #   OS: karljohns0n/centos
+          #   PKG_ARCH: x86_64
+          #   OPT: --with=pagespeed
           - VERSION: 7
             OS: centos
             PKG_ARCH: x86_64
@@ -66,7 +66,7 @@ jobs:
               PKG_RELEASE=$(grep "Release:" SPECS/${{ env.PKG_NAME }}.spec|awk '{print $2}'| tr -d "%{?dist}")
 
               mkdir -p /tmp/"${{ env.PKG_NAME }}"/{BUILD,RPMS,SPECS,SOURCES,SRPMS}
-              bash /tmp/"${{ env.PKG_NAME }}"/.github/workflows/fetch_sources.sh "${{ secrets.CDNURL }}"
+              spectool -C /tmp/"${{ env.PKG_NAME }}"/SOURCES/ -g <(rpmspec -P /tmp/"${{ env.PKG_NAME }}"/SPECS/"${{ env.PKG_NAME }}".spec)
               mock --isolation=simple -r aeris-"${{ matrix.VERSION }}"-"${{ matrix.PKG_ARCH }}" --spec=/tmp/"${{ env.PKG_NAME }}"/SPECS/"${{ env.PKG_NAME }}".spec --sources=/tmp/"${{ env.PKG_NAME }}"/SOURCES --resultdir=/tmp/"${{ env.PKG_NAME }}"/SRPMS --buildsrpm ${{ matrix.OPT }}
               mock --isolation=simple --clean -D "dist .el${{ matrix.VERSION }}" -r aeris-"${{ matrix.VERSION }}"-"${{ matrix.PKG_ARCH }}" --resultdir=/tmp/"${{ env.PKG_NAME }}"/RPMS --rebuild /tmp/"${{ env.PKG_NAME }}"/SRPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.VERSION }}".src.rpm ${{ matrix.OPT }}
               rpm -q -l -p /tmp/"${{ env.PKG_NAME }}"/RPMS/"${{ env.PKG_NAME }}"-"${PKG_VERSION}"-"${PKG_RELEASE}".el"${{ matrix.VERSION }}"."${{ matrix.PKG_ARCH }}".rpm --noartifact
