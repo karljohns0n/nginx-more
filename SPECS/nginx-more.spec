@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.0.8
+%global openssl_version		3.1.0
 %global module_ps_version	1.13.35.2
 %global module_psol		%{module_ps_version}-x64
 %global module_ps		%{module_ps_version}-stable
@@ -19,7 +19,7 @@
 %global module_brotli		1.0.0rc-2-g6e97
 %global module_brotli_deps	1.0.9-35-gf4153a0
 %global module_geoip2		3.4
-%global module_echo		0.62
+%global module_echo		0.63
 %global module_modsecurity	1.0.3
 
 %global module_dir_openssl		openssl-%{openssl_version}
@@ -40,8 +40,8 @@
 %bcond_with					pagespeed
 
 Name:						nginx-more
-Version:					1.22.1
-Release:					4%{?dist}
+Version:					1.24.0
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -475,6 +475,11 @@ fi
 %endif
 
 %changelog
+* Wed May 3 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-1
+- Upgrade nginx to 1.24.0
+- Bump OpenSSL to 3.1.0
+- Bump module Echo to 0.63
+
 * Tue Apr 4 2023 Bug Fest <bugfest.dev@pm.me> 1.22.1-4
 - Source code dependencies loaded from their original repositories
 - Add missing build deps: gcc, make
