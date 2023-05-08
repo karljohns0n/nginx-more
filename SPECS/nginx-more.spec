@@ -11,8 +11,8 @@
 %global pcre_version		pcre2
 %global openssl_version		3.1.0
 %global module_ps_version	1.13.35.2
+%global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
-%global module_ps		%{module_ps_version}-stable
 %global module_headers_more	0.34
 %global module_cache_purge	2.3
 %global module_vts		0.2.1
@@ -95,7 +95,7 @@ Source40:					mailgun-tracking.conf
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_git_tags
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_troublesome_urls
 Source100:					https://www.openssl.org/source/openssl-%{openssl_version}.tar.gz
-Source101:					https://github.com/apache/incubator-pagespeed-ngx/archive/v%{module_ps}/ngx_pagespeed-%{module_ps}.tar.gz
+Source101:					https://github.com/apache/incubator-pagespeed-ngx/archive/%{module_ps_commit}/ngx_pagespeed-%{module_ps_version}.tar.gz
 Source102:					https://dl.google.com/dl/page-speed/psol/%{module_psol}.tar.gz#/psol-%{module_psol}.tar.gz
 Source103:					https://github.com/openresty/headers-more-nginx-module/archive/v%{module_headers_more}/ngx_headers_more-%{module_headers_more}.tar.gz
 Source104:					https://github.com/FRiCKLE/ngx_cache_purge/archive/%{module_cache_purge}/ngx_cache_purge-%{module_cache_purge}.tar.gz
@@ -479,6 +479,7 @@ fi
 - Upgrade nginx to 1.24.0
 - Bump OpenSSL to 3.1.0
 - Bump module Echo to 0.63
+- Temporary bump PageSpeed to latest commit for 1.24.0 compatibility until PageSpeed support is dropped from nginx-more
 
 * Tue Apr 4 2023 Bug Fest <bugfest.dev@pm.me> 1.22.1-4
 - Source code dependencies loaded from their original repositories
