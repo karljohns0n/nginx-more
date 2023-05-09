@@ -16,14 +16,14 @@ UPGRADEWAITLOOPS=${UPGRADEWAITLOOPS:-5}
 oldbinpidfile=${pidfile}.oldbin
 ${nginx} -t -c ${conffile} -q || return 6
 echo -n $"Starting new master $prog: "
-pkill -F ${pidfile} ${prog} --signal USR2
+pkill -F "${pidfile}" ${prog} --signal USR2
 echo
 
 for i in $(/usr/bin/seq "$UPGRADEWAITLOOPS"); do
     /bin/sleep "$SLEEPSEC"
     if [ -f "${oldbinpidfile}" ] && [ "${pidfile}" ]; then
         echo -n $"Graceful shutdown of old $prog: "
-        pkill -F ${oldbinpidfile} ${prog} --signal QUIT
+        pkill -F "${oldbinpidfile}" ${prog} --signal QUIT
         echo
         exit 0
     fi

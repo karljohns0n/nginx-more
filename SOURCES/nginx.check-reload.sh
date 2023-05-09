@@ -11,7 +11,7 @@ trap '/bin/rm -f $templog' 0
 /usr/bin/tail --pid=$$ -n 0 --follow=name /var/log/nginx/error.log > "$templog" &
 /bin/sleep 1
 /bin/echo -n $"Sending reload signal to $prog: "
-pkill -F ${pidfile} ${prog} --signal HUP
+pkill -F "${pidfile}" ${prog} --signal HUP
 /bin/echo
 /bin/sleep "$CHECKSLEEP"
 /bin/grep -E "\[emerg\]|\[alert\]" "$templog"
