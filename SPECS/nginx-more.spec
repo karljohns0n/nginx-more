@@ -145,6 +145,7 @@ BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-Getopt-Long
 
 Requires:					gd
 Requires:					%{pcre_version}
+Requires:					procps-ng
 Requires(pre):				shadow-utils
 
 %if %{use_systemd}
@@ -475,11 +476,12 @@ fi
 %endif
 
 %changelog
-* Wed May 3 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-1
+* Tue May 9 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-1
 - Upgrade nginx to 1.24.0
 - Bump OpenSSL to 3.1.0
 - Bump module Echo to 0.63
 - Temporary bump PageSpeed to latest commit for 1.24.0 compatibility until PageSpeed support is dropped from nginx-more
+- Don't rely on killproc for legacy scripts
 
 * Tue Apr 4 2023 Bug Fest <bugfest.dev@pm.me> 1.22.1-4
 - Source code dependencies loaded from their original repositories
