@@ -76,7 +76,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 ## Modules
 
 *   [OpenSSL](https://github.com/openssl/openssl)
-*   [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx)
+*   [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx) (removed since el9)
 *   [Brotli](https://github.com/google/ngx_brotli)
 *   [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
 *   [Headers more](https://github.com/openresty/headers-more-nginx-module)
