@@ -12,7 +12,7 @@ Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed,
 
 ## Easy installation for RHEL / CentOS / AlmaLinux / Rocky Linux
 
-There's packages available for EL 6, 7, 8 and 9. The easiest way to install it is using Aeris yum repository:
+There's packages available for Enterprise Linux 6, 7, 8 and 9. The easiest way to install nginx-more is by using Aeris yum repository:
 
 ```bash
 EL6 > yum install -y https://repo.aerisnetwork.com/pub/aeris-release-6.rpm
@@ -73,6 +73,14 @@ TLS SNI support enabled
 configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-3.1.2 --with-openssl-opt=enable-ktls --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.3 --add-module=modules/ngx_headers_more-0.34 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_brotli-1.0.0rc-2-g6e97 --add-module=modules/ngx_module_vts-0.2.2 --add-module=modules/ngx_http_geoip2_module-3.4 --add-module=modules/ngx_echo-0.63
 ```
 
+## Packages
+
+*   EL6 [[x86_64]](https://repo.aerisnetwork.com/stable/el/6/x86_64/)
+*   EL7 [[x86_64]](https://repo.aerisnetwork.com/stable/el/7/x86_64/)
+*   EL8 [[x86_64]](https://repo.aerisnetwork.com/stable/el/8/x86_64/)
+*   EL9 [[x86_64]](https://repo.aerisnetwork.com/stable/el/9/x86_64/) [[aarch64]](https://repo.aerisnetwork.com/stable/el/9/aarch64/)
+
+
 ## Modules
 
 *   [OpenSSL](https://github.com/openssl/openssl)
@@ -121,15 +129,6 @@ Example of playbook:
     roles:
       - { role: karljohns0n.nginx-more }
 ```
-
-## Changelog
-
-The changelog for all packages is available from the RepoView:
-
-*   [EL6](https://repo.aerisnetwork.com/stable/el/6/x86_64/)
-*   [EL7](https://repo.aerisnetwork.com/stable/el/7/x86_64/)
-*   [EL8](https://repo.aerisnetwork.com/stable/el/8/x86_64/)
-*   [EL9](https://repo.aerisnetwork.com/stable/el/9/x86_64/)
 
 ## Package dependencies
 
