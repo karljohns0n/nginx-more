@@ -479,6 +479,7 @@ fi
 * Tue Nov 7 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-4
 - Bump OpenSSL to 3.1.4
 - Bump Headers More to 0.35
+- Refresh bad user-agents from nginx-ultimate-bad-bot-blocker
 
 * Sun Oct 1 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-3
 - Bump OpenSSL to 3.1.3
