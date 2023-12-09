@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.1.4
+%global openssl_version		3.2.0
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -41,7 +41,7 @@
 
 Name:						nginx-more
 Version:					1.24.0
-Release:					4%{?dist}
+Release:					5%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -476,6 +476,9 @@ fi
 %endif
 
 %changelog
+* Sat Dec 9 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
+- Bump OpenSSL to 3.2.0
+
 * Tue Nov 7 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-4
 - Bump OpenSSL to 3.1.4
 - Bump Headers More to 0.35
