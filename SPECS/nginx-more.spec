@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.2.0
+%global openssl_version		3.2.1
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -476,8 +476,8 @@ fi
 %endif
 
 %changelog
-* Sat Dec 9 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
-- Bump OpenSSL to 3.2.0
+* Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
+- Bump OpenSSL to 3.2.1
 
 * Tue Nov 7 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-4
 - Bump OpenSSL to 3.1.4
