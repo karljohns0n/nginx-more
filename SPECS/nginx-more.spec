@@ -13,7 +13,7 @@
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
-%global module_headers_more	0.35
+%global module_headers_more	0.37
 %global module_cache_purge	2.3
 %global module_vts		0.2.2
 %global module_brotli		1.0.0rc-2-g6e97
@@ -103,7 +103,7 @@ Source105:					https://github.com/google/ngx_brotli/archive/v%{module_brotli}/ng
 Source106:					https://github.com/vozlt/nginx-module-vts/archive/v%{module_vts}/ngx_module_vts-%{module_vts}.tar.gz
 Source107:					https://github.com/leev/ngx_http_geoip2_module/archive/%{module_geoip2}/ngx_http_geoip2_module-%{module_geoip2}.tar.gz
 Source108:					https://github.com/openresty/echo-nginx-module/archive/v%{module_echo}/ngx_echo-%{module_echo}.tar.gz
-Source109:					https://github.com/SpiderLabs/ModSecurity-nginx/archive/v%{module_modsecurity}/ngx_modsecurity-%{module_modsecurity}.tar.gz
+Source109:					https://github.com/owasp-modsecurity/ModSecurity-nginx/archive/v%{module_modsecurity}/ngx_modsecurity-%{module_modsecurity}.tar.gz
 Source110:					https://github.com/google/brotli/archive/v%{module_brotli_deps}/ngx_brotli_deps-%{module_brotli_deps}.tar.gz
 
 Patch0:						nginx-version.patch
@@ -478,6 +478,7 @@ fi
 %changelog
 * Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
 - Bump OpenSSL to 3.2.1
+- Bump Headers More to 0.37
 
 * Tue Nov 7 2023 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-4
 - Bump OpenSSL to 3.1.4

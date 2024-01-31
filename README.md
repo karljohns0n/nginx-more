@@ -1,6 +1,6 @@
 # Nginx-more
 
-[![Release](https://img.shields.io/badge/release-1.24.0--4-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.24.0--5-success.svg)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/karljohns0n/nginx-more/build.yml?branch=master)](#)
 [![Quality Gate Status](https://sonarqube.aerisnetwork.com/api/project_badges/measure?project=nginx-more&metric=alert_status&token=37188c25b9b77cd28dd7cdc7cea818b9be699095)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
@@ -67,10 +67,10 @@ Full output of nginx configure:
 > nginx -V
 nginx version: nginx/1.24.0
 custom build maintained on github.com/karljohns0n/nginx-more
-built by gcc 11.3.1 20221121 (Red Hat 11.3.1-4) (GCC) 
-built with OpenSSL 3.1.2 1 Aug 2023
+built by gcc 11.4.1 20230605 (Red Hat 11.4.1-2) (GCC) 
+built with OpenSSL 3.2.1 30 Jan 2024
 TLS SNI support enabled
-configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-3.1.2 --with-openssl-opt=enable-ktls --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.3 --add-module=modules/ngx_headers_more-0.34 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_brotli-1.0.0rc-2-g6e97 --add-module=modules/ngx_module_vts-0.2.2 --add-module=modules/ngx_http_geoip2_module-3.4 --add-module=modules/ngx_echo-0.63
+configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/cache/client_body --http-proxy-temp-path=/var/lib/nginx/cache/proxy --http-fastcgi-temp-path=/var/lib/nginx/cache/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/cache/uwsgi --http-scgi-temp-path=/var/lib/nginx/cache/scgi --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --user=nginx --group=nginx --with-compat --with-file-aio --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-threads --with-stream --with-stream_ssl_module --with-stream_realip_module --with-http_slice_module --with-stream_ssl_preread_module --with-debug --with-cc-opt='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -DTCP_FASTOPEN=23' --with-openssl=modules/openssl-3.2.1 --with-openssl-opt=enable-ktls --with-http_v2_hpack_enc --add-dynamic-module=modules/ngx_modsecurity-1.0.3 --add-module=modules/ngx_headers_more-0.37 --add-module=modules/ngx_cache_purge-2.3 --add-module=modules/ngx_brotli-1.0.0rc-2-g6e97 --add-module=modules/ngx_module_vts-0.2.2 --add-module=modules/ngx_http_geoip2_module-3.4 --add-module=modules/ngx_echo-0.63
 ```
 
 ## Packages
@@ -91,7 +91,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 *   [Cache purge](https://github.com/FRiCKLE/ngx_cache_purge)
 *   [GeoIP2](https://github.com/leev/ngx_http_geoip2_module)
 *   [Echo](https://github.com/openresty/echo-nginx-module)
-*   [ModSecurity](https://github.com/SpiderLabs/ModSecurity-nginx) (dynamic)
+*   [ModSecurity](https://github.com/owasp-modsecurity/ModSecurity-nginx) (dynamic)
 
 ## Patches
 
