@@ -145,7 +145,11 @@ BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-Getopt-Long
 
 Requires:					gd
 Requires:					%{pcre_version}
+%if %{use_systemd}
 Requires:					procps-ng
+%else
+Requires:					procps
+%endif
 Requires(pre):				shadow-utils
 
 %if %{use_systemd}
@@ -193,24 +197,34 @@ memory usage.
 %prep
 %setup -q -n %{packagename}-%{version}
 
-%define source_prepare() (mkdir -p %2 && tar -zxvf %1 --strip-components=1 --no-same-owner -C %2)
+%global source_prepare() ( mkdir -p %2 && tar -zxvf %1 --strip-components=1 --no-same-owner -C %2 )
 
 %source_prepare %{SOURCE100} modules/%{module_dir_openssl}
 
 %if %{with pagespeed}
 	%source_prepare %{SOURCE101} modules/%{module_dir_pagespeed}
+
 	%source_prepare %{SOURCE102} modules/%{module_dir_pagespeed_psol}
+
 %endif
 %source_prepare %{SOURCE103} modules/%{module_dir_headers_more}
+
 %source_prepare %{SOURCE104} modules/%{module_dir_cache_purge}
+
 %source_prepare %{SOURCE105} modules/%{module_dir_brotli}
+
 %source_prepare %{SOURCE110} modules/%{module_dir_brotli_deps}
+
 %source_prepare %{SOURCE106} modules/%{module_dir_vts}
+
 %source_prepare %{SOURCE107} modules/%{module_dir_http_geoip2}
+
 %source_prepare %{SOURCE108} modules/%{module_dir_echo}
+
 
 %if %{with modsecurity}
 	%source_prepare %{SOURCE109} modules/%{module_dir_modsecurity}
+
 %endif
 
 %{__sed} -i 's_@CACHEPVER@_%{module_cache_purge}_' %{PATCH1}
