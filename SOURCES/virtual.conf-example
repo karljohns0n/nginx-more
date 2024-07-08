@@ -10,7 +10,8 @@ server {
 }
 
 server {
-	listen 443 ssl http2;
+	listen 443 ssl;
+	http2 on;
 	server_name example.com www.example.com;
 	root /home/www/example.com/public_html;
 	access_log /var/log/nginx/www.example.com-access_log main;
@@ -22,6 +23,5 @@ server {
 
 	include conf.d/custom/ssl.global.conf;
 	include conf.d/custom/restrictions-users.conf;
-	#include conf.d/custom/pagespeed.conf;
 	include conf.d/custom/fpm-wordpress-users.conf;
 }

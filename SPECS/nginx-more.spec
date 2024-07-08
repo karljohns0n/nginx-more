@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.2.1
+%global openssl_version		3.3.1
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -40,8 +40,8 @@
 %bcond_with					pagespeed
 
 Name:						nginx-more
-Version:					1.24.0
-Release:					5%{?dist}
+Version:					1.26.1
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -109,7 +109,7 @@ Source110:					https://github.com/google/brotli/archive/v%{module_brotli_deps}/n
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
 Patch2:						ngx_cloudflare_http2_hpack_1015003.patch
-Patch3:						ngx_cloudflare_dynamic_tls_records_1015008.patch
+Patch3:						ngx_dynamic-tls-records-1.25.1.patch
 Patch4:						ngx_cache_purge-fix-compatibility-with-nginx-1.19.3.patch
 
 
@@ -218,7 +218,7 @@ memory usage.
 
 %patch0 -p0
 %patch1 -p0
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 %patch4 -p0
 
@@ -267,6 +267,7 @@ export PSOL_BUILDTYPE=Release
 	--with-http_auth_request_module \
 	--with-http_xslt_module \
 	--with-http_v2_module \
+	--with-http_v3_module \
 	--with-mail \
 	--with-mail_ssl_module \
 	--with-threads \
@@ -284,7 +285,6 @@ export PSOL_BUILDTYPE=Release
 	%if 0%{?rhel} >= 8
 		--with-openssl-opt=enable-ktls \
 	%endif
-	--with-http_v2_hpack_enc \
 	%if %{with modsecurity}
 		--add-dynamic-module=modules/%{module_dir_modsecurity} \
 	%endif
@@ -476,6 +476,11 @@ fi
 %endif
 
 %changelog
+* Mon Jul 8 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.1-1
+- Upgrade nginx to 1.26.1
+- Bump OpenSSL to 3.3.1
+- Disable incompatible HPACK patch for now
+
 * Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
 - Bump OpenSSL to 3.2.1
 - Bump Headers More to 0.37
