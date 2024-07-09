@@ -39,7 +39,7 @@ jobs:
           #   PKG_ARCH: x86_64
           #   OPT: --with=pagespeed
           - VERSION: 7
-            OS: centos
+            OS: karljohns0n/centos
             PKG_ARCH: x86_64
             OPT: --with=modsecurity --with=pagespeed
           - VERSION: 8

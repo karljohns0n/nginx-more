@@ -108,7 +108,6 @@ Source110:					https://github.com/google/brotli/archive/v%{module_brotli_deps}/n
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
-Patch2:						ngx_cloudflare_http2_hpack_1015003.patch
 Patch3:						ngx_dynamic-tls-records-1.25.1.patch
 Patch4:						ngx_cache_purge-fix-compatibility-with-nginx-1.19.3.patch
 
@@ -218,7 +217,6 @@ memory usage.
 
 %patch0 -p0
 %patch1 -p0
-#%patch2 -p1
 %patch3 -p1
 %patch4 -p0
 
@@ -479,7 +477,9 @@ fi
 * Mon Jul 8 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.1-1
 - Upgrade nginx to 1.26.1
 - Bump OpenSSL to 3.3.1
+- Enable HTTP/3
 - Disable incompatible HPACK patch for now
+- Always use realpath_root
 
 * Wed Jan 31 2024 Karl Johnson <karljohnson.it@gmail.com> 1.24.0-5
 - Bump OpenSSL to 3.2.1

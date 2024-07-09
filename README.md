@@ -8,7 +8,7 @@
 
 ## Synopsis
 
-Nginx-more is a build of Nginx with additional modules such as HTTP2, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousand of servers.
+Nginx-more is a build of Nginx with additional modules such as HTTP/2, HTTP/3, PageSpeed, Brotli, More Headers, Cache Purge, VTS, GeoIP2, Echo and ModSecurity. It's compiled using recent GCC version and latest OpenSSL sources. It also includes some built-in configurations such as WordPress and Laravel php-fpm setup. More information about this package can be found [here](https://medium.com/@karljohnson/nginx-more-get-http-2-with-alpn-pagespeed-modsecurity-and-much-more-in-one-single-package-7d28a44d1854) however this post is be a bit outdated at this time. Nginx-more is supported since 2014 and used on a thousand of servers.
 
 ## Easy installation for RHEL / CentOS / AlmaLinux / Rocky Linux
 
@@ -84,7 +84,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 ## Modules
 
 *   [OpenSSL](https://github.com/openssl/openssl)
-*   [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx) (removed since el9)
+*   [PageSpeed](https://github.com/apache/incubator-pagespeed-ngx) (removed ≥ el9)
 *   [Brotli](https://github.com/google/ngx_brotli)
 *   [Virtual host traffic status](https://github.com/vozlt/nginx-module-vts)
 *   [Headers more](https://github.com/openresty/headers-more-nginx-module)
@@ -96,7 +96,7 @@ configure arguments: --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --mod
 ## Patches
 
 *   [Cloudflare TLS Dynamic Record](https://blog.cloudflare.com/optimizing-tls-over-tcp-to-reduce-latency/)
-*   [Cloudflare full HPACK implementation](https://blog.cloudflare.com/hpack-the-silent-killer-feature-of-http-2/)
+*   [Cloudflare full HPACK implementation](https://blog.cloudflare.com/hpack-the-silent-killer-feature-of-http-2/) (removed ≥ nginx 1.26.0)
 
 ## SELinux
 
