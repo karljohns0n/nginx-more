@@ -1,6 +1,6 @@
 # Nginx-more
 
-[![Release](https://img.shields.io/badge/release-1.26.1--1-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.26.2--1-success.svg)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/karljohns0n/nginx-more/build.yml?branch=master)](#)
 [![Quality Gate Status](https://sonarqube.aerisnetwork.com/api/project_badges/measure?project=nginx-more&metric=alert_status&token=37188c25b9b77cd28dd7cdc7cea818b9be699095)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
@@ -65,7 +65,7 @@ Full output of nginx configure:
 
 ```bash
 > nginx -V
-nginx version: nginx/1.26.1
+nginx version: nginx/1.26.2
 custom build maintained on github.com/karljohns0n/nginx-more
 built by gcc 11.4.1 20231218 (Red Hat 11.4.1-3) (GCC) 
 built with OpenSSL 3.3.1 4 Jun 2024
