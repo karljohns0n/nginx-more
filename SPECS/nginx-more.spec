@@ -94,7 +94,7 @@ Source40:					mailgun-tracking.conf
 # Module sources
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_git_tags
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/SourceURL/#_troublesome_urls
-Source100:					https://www.openssl.org/source/openssl-%{openssl_version}.tar.gz
+Source100:					https://github.com/openssl/openssl/releases/download/openssl-%{openssl_version}/openssl-%{openssl_version}.tar.gz
 Source101:					https://github.com/apache/incubator-pagespeed-ngx/archive/%{module_ps_commit}/ngx_pagespeed-%{module_ps_version}.tar.gz
 Source102:					https://dl.google.com/dl/page-speed/psol/%{module_psol}.tar.gz#/psol-%{module_psol}.tar.gz
 Source103:					https://github.com/openresty/headers-more-nginx-module/archive/v%{module_headers_more}/ngx_headers_more-%{module_headers_more}.tar.gz
