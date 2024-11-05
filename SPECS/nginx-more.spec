@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.3.2
+%global openssl_version		3.4.0
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -474,8 +474,8 @@ fi
 %endif
 
 %changelog
-* Wed Sep 4 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.2-2
-- Bump OpenSSL to 3.3.2
+* Tue Nov 5 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.2-2
+- Bump OpenSSL to 3.4.0
 
 * Thu Aug 22 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.2-1
 - Upgrade nginx to 1.26.2
