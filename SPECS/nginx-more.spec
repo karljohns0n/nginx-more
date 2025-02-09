@@ -13,9 +13,9 @@
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
-%global module_headers_more	0.37
+%global module_headers_more	0.38
 %global module_cache_purge	2.3
-%global module_vts		0.2.2
+%global module_vts		0.2.3
 %global module_brotli		1.0.0rc-2-g6e97
 %global module_brotli_deps	1.0.9-35-gf4153a0
 %global module_geoip2		3.4
@@ -40,8 +40,8 @@
 %bcond_with					pagespeed
 
 Name:						nginx-more
-Version:					1.26.2
-Release:					2%{?dist}
+Version:					1.26.3
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -474,6 +474,11 @@ fi
 %endif
 
 %changelog
+* Sun Feb 9 2025 Karl Johnson <karljohnson.it@gmail.com> 1.26.3-1
+- Upgrade nginx to 1.26.3
+- Bump Headers More to 0.38
+- Bump VTS to 0.2.3
+
 * Tue Nov 5 2024 Karl Johnson <karljohnson.it@gmail.com> 1.26.2-2
 - Bump OpenSSL to 3.4.0
 
