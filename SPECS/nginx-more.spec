@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.4.0
+%global openssl_version		3.4.1
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -474,8 +474,9 @@ fi
 %endif
 
 %changelog
-* Sun Feb 9 2025 Karl Johnson <karljohnson.it@gmail.com> 1.26.3-1
+* Wed Feb 12 2025 Karl Johnson <karljohnson.it@gmail.com> 1.26.3-1
 - Upgrade nginx to 1.26.3
+- Bump OpenSSL to 3.4.1
 - Bump Headers More to 0.38
 - Bump VTS to 0.2.3
 
