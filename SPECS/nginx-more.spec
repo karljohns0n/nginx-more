@@ -9,13 +9,13 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.4.1
+%global openssl_version		3.5.0
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
 %global module_headers_more	0.38
 %global module_cache_purge	2.3
-%global module_vts		0.2.3
+%global module_vts		0.2.4
 %global module_brotli		1.0.0rc-2-g6e97
 %global module_brotli_deps	1.0.9-35-gf4153a0
 %global module_geoip2		3.4
@@ -40,7 +40,7 @@
 %bcond_with					pagespeed
 
 Name:						nginx-more
-Version:					1.26.3
+Version:					1.28.0
 Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
@@ -108,7 +108,7 @@ Source110:					https://github.com/google/brotli/archive/v%{module_brotli_deps}/n
 
 Patch0:						nginx-version.patch
 Patch1:						ngx_cache_purge-fix-compatibility-with-nginx-1.11.6.patch
-Patch3:						ngx_dynamic-tls-records-1.25.1.patch
+Patch3:						ngx_dynamic-tls-records-1.27.5.patch
 Patch4:						ngx_cache_purge-fix-compatibility-with-nginx-1.19.3.patch
 
 
@@ -417,7 +417,7 @@ fi
 
 
 %files
-%doc LICENSE CHANGES README
+%doc LICENSE
 %dir %{_datadir}/nginx
 %dir %{_datadir}/nginx/html
 %{_datadir}/nginx/html/*
@@ -474,6 +474,13 @@ fi
 %endif
 
 %changelog
+* Thu Apr 24 2025 Karl Johnson <karljohnson.it@gmail.com> 1.28.0-1
+- Upgrade nginx to 1.28.0
+- Bump OpenSSL to 3.5.0
+- Bump VTS to 0.2.4
+- Upgrade Dynamic TLS patch from kn007 for compatibility
+- Remove old CHANGES and README
+
 * Wed Feb 12 2025 Karl Johnson <karljohnson.it@gmail.com> 1.26.3-1
 - Upgrade nginx to 1.26.3
 - Bump OpenSSL to 3.4.1
