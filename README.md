@@ -2,7 +2,6 @@
 
 [![Release](https://img.shields.io/badge/release-1.28.0--1-success.svg)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/karljohns0n/nginx-more/build.yml?branch=master)](#)
-[![Quality Gate Status](https://sonarqube.aerisnetwork.com/api/project_badges/measure?project=nginx-more&metric=alert_status&token=37188c25b9b77cd28dd7cdc7cea818b9be699095)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 

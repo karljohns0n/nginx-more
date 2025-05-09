@@ -8,23 +8,6 @@ on:
       - '*'
 
 jobs:
-  sonarqube:
-    name: SonarQube analysis
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checking out repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: SonarQube scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dproject.settings=.sonar-project.properties
-
   buildrpm:
     name: Build el${{ matrix.VERSION }} package
     runs-on: ubuntu-latest
