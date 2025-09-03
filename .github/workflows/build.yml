@@ -11,10 +11,11 @@ jobs:
   buildrpm:
     name: Build el${{ matrix.VERSION }} package
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       PKG_NAME: nginx-more
     strategy: 
+      fail-fast: false
       matrix:
         include:
           # - VERSION: 6
@@ -33,9 +34,13 @@ jobs:
             OS: rockylinux
             PKG_ARCH: x86_64
             OPT: --with=modsecurity
+          - VERSION: 10
+            OS: rockylinux
+            PKG_ARCH: x86_64
+            OPT: --with=modsecurity
     steps:
       - name: Checking out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build el${{ matrix.VERSION }} package using mock
         uses: addnab/docker-run-action@v3
         with:
