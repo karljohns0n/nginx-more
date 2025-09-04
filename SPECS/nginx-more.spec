@@ -40,8 +40,8 @@
 %bcond_with					pagespeed
 
 Name:						nginx-more
-Version:					1.28.0
-Release:					2%{?dist}
+Version:					1.29.1
+Release:					1%{?dist}
 
 Summary:					A high performance web server and reverse proxy server
 Group:						System Environment/Daemons
@@ -478,6 +478,10 @@ fi
 %endif
 
 %changelog
+* Thu Sep 4 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
+- Upgrade nginx to 1.29.1
+- Refactor CI
+
 * Tue Sep 2 2025 Karl Johnson <karljohnson.it@gmail.com> 1.28.0-2
 - Add el10 support
 - Bump OpenSSL to 3.5.2
