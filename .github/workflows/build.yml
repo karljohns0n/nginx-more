@@ -11,9 +11,10 @@ jobs:
   buildrpm:
     name: Build el${{ matrix.VERSION }} ${{ matrix.PKG_ARCH }} rpm
     runs-on: ${{ matrix.RUNNER }}
-    timeout-minutes: 90
+    timeout-minutes: 180
     env:
       PKG_NAME: nginx-more
+      DOCKER_DEFAULT_PLATFORM: ${{ matrix.PKG_ARCH == 'x86_64' && 'linux/amd64' || 'linux/arm64' }}
       DOCKER_OPTS: >-
         --rm --privileged --user 0:0
         --cap-add=SYS_ADMIN
@@ -49,16 +50,16 @@ jobs:
             PKG_ARCH: aarch64
             RUNNER: ubuntu-24.04-arm
             OPT: --with=modsecurity
-          # - VERSION: 10
-          #   OS: rockylinux/rockylinux
-          #   PKG_ARCH: x86_64
-          #   RUNNER: ubuntu-24.04
-          #   OPT: --with=modsecurity
-          # - VERSION: 10
-          #   OS: rockylinux/rockylinux
-          #   PKG_ARCH: aarch64
-          #   RUNNER: ubuntu-24.04-arm
-          #   OPT: --with=modsecurity
+          - VERSION: 10
+            OS: rockylinux/rockylinux
+            PKG_ARCH: x86_64
+            RUNNER: ubuntu-24.04
+            OPT: --with=modsecurity
+          - VERSION: 10
+            OS: rockylinux/rockylinux
+            PKG_ARCH: aarch64
+            RUNNER: ubuntu-24.04-arm
+            OPT: --with=modsecurity
 
     steps:
       - uses: actions/checkout@v4
@@ -144,5 +145,5 @@ jobs:
             !${{ github.workspace }}/RPMS/*debug*.rpm
             !${{ github.workspace }}/RPMS/*.src.rpm
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 90
           compression-level: 9
