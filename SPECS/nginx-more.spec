@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.5.2
+%global openssl_version		3.5.3
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -33,6 +33,8 @@
 %global module_dir_http_geoip2 		ngx_http_geoip2_module-%{module_geoip2}
 %global module_dir_echo			ngx_echo-%{module_echo}
 %global module_dir_modsecurity		ngx_modsecurity-%{module_modsecurity}
+
+%global debug_package %{nil}
 
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
@@ -120,8 +122,10 @@ BuildRequires:				gd-devel
 BuildRequires:				httpd-devel
 BuildRequires:				libuuid-devel
 BuildRequires:				libmaxminddb-devel
-BuildRequires:				perl-IPC-Cmd
 BuildRequires:				perl-Data-Dumper
+BuildRequires:				perl-IPC-Cmd
+BuildRequires:				perl-Time-Piece
+BuildRequires:				perl-Getopt-Long
 BuildRequires:				gcc
 BuildRequires:				make
 
@@ -135,15 +139,15 @@ BuildRequires:				GeoIP-devel
 %endif
 
 %if 0%{?rhel} == 8
-BuildRequires:				GeoIP-devel perl-Getopt-Long
+BuildRequires:				GeoIP-devel
 %endif
 
 %if 0%{?rhel} == 9
-BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-Getopt-Long perl-IPC-Cmd perl-lib
+BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-lib
 %endif
 
 %if 0%{?rhel} == 10
-BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-Getopt-Long perl-IPC-Cmd perl-lib
+BuildRequires:				perl-File-Compare perl-File-Copy perl-FindBin perl-lib
 %endif
 
 Requires:					gd
@@ -280,12 +284,13 @@ export PSOL_BUILDTYPE=Release
 	--with-stream_ssl_preread_module \
 	--with-debug \
 	--with-cc-opt="%{optflags} $(%{pcre_version}-config --cflags) -DTCP_FASTOPEN=23" \
+	--with-ld-opt="$RPM_LD_FLAGS -Wl,-E -O2" \
 	%if 0%{?rhel} <= 7
 		--with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
 	%endif
 	--with-openssl=modules/%{module_dir_openssl} \
 	%if 0%{?rhel} >= 8
-		--with-openssl-opt=enable-ktls \
+		--with-openssl-opt="-fno-lto -fPIC enable-ktls" \
 	%endif
 	%if %{with modsecurity}
 		--add-dynamic-module=modules/%{module_dir_modsecurity} \
@@ -478,9 +483,13 @@ fi
 %endif
 
 %changelog
-* Thu Sep 4 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
+* Wed Sep 17 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
 - Upgrade nginx to 1.29.1
+- Bump OpenSSL to 3.5.3
+- Add ld-opts to nginx configure
+- Disable LTO when building OpenSSL
 - Refactor CI
+- Remove debug packages
 
 * Tue Sep 2 2025 Karl Johnson <karljohnson.it@gmail.com> 1.28.0-2
 - Add el10 support
