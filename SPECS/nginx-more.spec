@@ -483,13 +483,13 @@ fi
 %endif
 
 %changelog
-* Wed Sep 17 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
+* Mon Sep 22 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
 - Upgrade nginx to 1.29.1
 - Bump OpenSSL to 3.5.3
 - Add ld-opts to nginx configure
 - Disable LTO when building OpenSSL
-- Refactor CI
-- Remove debug packages
+- Refactor Github Actions
+- Remove nginx debug packages
 
 * Tue Sep 2 2025 Karl Johnson <karljohnson.it@gmail.com> 1.28.0-2
 - Add el10 support
