@@ -9,7 +9,7 @@
 %global nginx_webroot		%{nginx_datadir}/html
 %global gcc_version			8
 %global pcre_version		pcre2
-%global openssl_version		3.5.3
+%global openssl_version		3.5.4
 %global module_ps_version	1.13.35.2
 %global module_ps_commit		13bee9d
 %global module_psol		%{module_ps_version}-x64
@@ -483,9 +483,9 @@ fi
 %endif
 
 %changelog
-* Mon Sep 22 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
+* Wed Oct 1 2025 Karl Johnson <karljohnson.it@gmail.com> 1.29.1-1
 - Upgrade nginx to 1.29.1
-- Bump OpenSSL to 3.5.3
+- Bump OpenSSL to 3.5.4
 - Add ld-opts to nginx configure
 - Disable LTO when building OpenSSL
 - Refactor Github Actions
