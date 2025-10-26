@@ -6,15 +6,19 @@ on:
       - master
     tags:
       - '*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   buildrpm:
     name: Build el${{ matrix.VERSION }} ${{ matrix.PKG_ARCH }} rpm
     runs-on: ${{ matrix.RUNNER }}
-    timeout-minutes: 180
+    timeout-minutes: 60
     env:
       PKG_NAME: nginx-more
-      DOCKER_DEFAULT_PLATFORM: ${{ matrix.PKG_ARCH == 'x86_64' && 'linux/amd64' || 'linux/arm64' }}
+      RPMBUILD_IMAGE: docker.io/karljohns0n/rpmbuild:9
+      DOCKER_DEFAULT_PLATFORM: ${{ matrix.PKG_ARCH == 'x86_64' && 'linux/amd64' || matrix.PKG_ARCH == 'aarch64' && 'linux/arm64' }}
       DOCKER_OPTS: >-
         --rm --privileged --user 0:0
         --cap-add=SYS_ADMIN
@@ -76,7 +80,7 @@ jobs:
           docker run ${DOCKER_OPTS} \
             -e PKG_NAME="${PKG_NAME}" \
             -v "${GITHUB_WORKSPACE}:/tmp/${PKG_NAME}" \
-            karljohns0n/rpmbuild:9 \
+            ${RPMBUILD_IMAGE} \
             bash -lc '
               set -euo pipefail
 
@@ -136,6 +140,7 @@ jobs:
             '
 
       - name: Upload RPMs
+        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME }}-el${{ matrix.VERSION }}-${{ matrix.PKG_ARCH }}
