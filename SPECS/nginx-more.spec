@@ -36,7 +36,7 @@
 
 %global debug_package %{nil}
 
-%define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
+%global use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7)
 
 %bcond_with                         modsecurity
 %bcond_with                         pagespeed
@@ -46,10 +46,8 @@ Version:                            1.29.4
 Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
-Group:                              System Environment/Daemons
-License:                            2-clause BSD-like license
-URL:                                http://nginx.org/
-BuildRoot:                          %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+License:                            BSD-2-Clause
+URL:                                https://nginx.org/
 
 Source0:                            https://nginx.org/download/nginx-%{version}.tar.gz
 Source1:                            nginx.service
@@ -297,10 +295,10 @@ export PSOL_BUILDTYPE=Release
     --add-module=modules/%{module_dir_http_geoip2} \
     --add-module=modules/%{module_dir_echo}
 
-make
+%make_build
 
 %install
-make install DESTDIR=%{buildroot} INSTALLDIRS=vendor
+%make_install INSTALLDIRS=vendor
 
 find %{buildroot} -type f -name .packlist -exec rm -f '{}' \;
 find %{buildroot} -type f -name perllocal.pod -exec rm -f '{}' \;
@@ -418,7 +416,7 @@ fi
 
 
 %files
-%doc LICENSE
+%license LICENSE
 %dir %{_datadir}/nginx
 %dir %{_datadir}/nginx/html
 %{_datadir}/nginx/html/*
@@ -464,9 +462,9 @@ fi
 %attr(0755,root,root) %dir %{_libdir}/nginx
 %attr(0755,root,root) %dir %{_libdir}/nginx/modules
 %attr(0755,root,root) %dir %{_datadir}/nginx/modules
-/etc/nginx/conf.d/vhosts/*-example
-/etc/nginx/conf.d/custom/*-example
-/etc/nginx/conf.d/custom/aerisnetwork-ips
+%{nginx_confdir}/conf.d/vhosts/*-example
+%{nginx_confdir}/conf.d/custom/*-example
+%{nginx_confdir}/conf.d/custom/aerisnetwork-ips
 
 %if %{with modsecurity}
 %files module-modsecurity
@@ -567,69 +565,69 @@ fi
 - Enable kTLS starting with el8
 - Bump module More Headers 0.34
 
-* Wed Jul 6 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-3
+* Wed Jul 6 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.0-3
 - Bump OpenSSL to 3.0.5
 - Bump GeoIP2 to 3.4
 
-* Tue Jun 21 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-2
+* Tue Jun 21 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.0-2
 - Bump OpenSSL to 3.0.4
 
-* Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.22.0-1
+* Wed Jun 15 2022 Karl Johnson <karljohnson.it@gmail.com> 1.22.0-1
 - Rebase on nginx 1.22.0
 - Use PCRE2
 - Bump ModSecurity connector to 1.0.3
 
-* Thu May 19 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-4
+* Thu May 19 2022 Karl Johnson <karljohnson.it@gmail.com> 1.20.2-4
 - Bump OpenSSL to 1.1.1o
 - Bump Brotli to dev-f4153a0
 
-* Wed Mar 16 2022 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-3
+* Wed Mar 16 2022 Karl Johnson <karljohnson.it@gmail.com> 1.20.2-3
 - Bump OpenSSL to 1.1.1n
 
-* Tue Dec 28 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-2
+* Tue Dec 28 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.2-2
 - Bump OpenSSL to 1.1.1m
 
-* Wed Nov 17 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.2-1
+* Wed Nov 17 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.2-1
 - Bump nginx to 1.20.2
 
-* Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-4
+* Mon Nov 15 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.1-4
 - Support AlmaLinux 8 and Rocky Linux 8
 - Rebuild nginx-more on latest libs
 - Bump modudle Echo to 0.62
 
-* Sun Aug 29 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-3
+* Sun Aug 29 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.1-3
 - Bump OpenSSL to 1.1.1l
 
-* Wed Jun 9 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-2
+* Wed Jun 9 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.1-2
 - Bump ModSecurity module to 1.0.2
 - Enhance WordPress caching with Woocommerce
 
-* Wed May 26 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.1-1
+* Wed May 26 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.1-1
 - Bump Nginx to 1.20.1
 
-* Fri Apr 23 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.20.0-1
+* Fri Apr 23 2021 Karl Johnson <karljohnson.it@gmail.com> 1.20.0-1
 - Bump Nginx to 1.20.0
 - Update Cloudflare IPs
 - Fix Cloudflare dynamic tls patch with fuzz=0
 
-* Thu Mar 25 2021 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-4
+* Thu Mar 25 2021 Karl Johnson <karljohnson.it@gmail.com> 1.18.0-4
 - Bump OpenSSL to 1.1.1k
 
-* Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-3
+* Wed Dec 9 2020 Karl Johnson <karljohnson.it@gmail.com> 1.18.0-3
 - Bump OpenSSL to 1.1.1i
 - Bump Brotli to 1.0.9
 - Add xmlrpc.php to brute force protection and relax r/m
 
-* Mon Sep 28 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-2
+* Mon Sep 28 2020 Karl Johnson <karljohnson.it@gmail.com> 1.18.0-2
 - Bump OpenSSL to 1.1.1h
 - Skip cache on WooCommerce pages
 
-* Wed May 6 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.18.0-1
+* Wed May 6 2020 Karl Johnson <karljohnson.it@gmail.com> 1.18.0-1
 - Bump Nginx to 1.18.0
 - Bump OpenSSL to 1.1.1g
 - Bump Brotli to git snapshot 2020-05-06
 
-* Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-4
+* Thu Mar 5 2020 Karl Johnson <karljohnson.it@gmail.com> 1.16.1-4
 - Add CentOS 8 support
 - Bump GCC version from 7 to 8
 - Add dynamic module ModSecurity Nginx connector 1.0.1 (el7 and el8)
@@ -638,132 +636,132 @@ fi
 - Roll in Cloudflare dynamic tls records patch
 - Add Mailgun link tracking proxypass
 
-* Mon Nov 18 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-2
+* Mon Nov 18 2019 Karl Johnson <karljohnson.it@gmail.com> 1.16.1-2
 - Bump OpenSSL to 1.1.1d
 - Bump GeoIP2 to 3.3
 - Bump Brotli to git snapshot 2019-11-18
 - Set expire on woff2 files
 - Add caching php-fpm option (20 minutes) for all WordPress configs
 
-* Tue Aug 13 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.1-1
+* Tue Aug 13 2019 Karl Johnson <karljohnson.it@gmail.com> 1.16.1-1
 - Bump Nginx to 1.16.1
 - Bump OpenSSL to 1.1.1c
 - Bump Brotli to 1.0.7
 
-* Wed May 15 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.16.0-2
+* Wed May 15 2019 Karl Johnson <karljohnson.it@gmail.com> 1.16.0-2
 - Bump to Nginx 1.16.0
 - Remove obsolete "--with-ipv6" and "ssl on"
 - Refresh bad user-agents list
 - Add 1.1.1.1 as resolver
 - Make restrictions.conf compatible with multiple fpm users
 
-* Thu Mar 7 2019 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-3
+* Thu Mar 7 2019 Karl Johnson <karljohnson.it@gmail.com> 1.14.2-3
 - Bump OpenSSL 1.1.1b, Brotli 1.0.4
 - Add new module ngx_echo
 - Add patch1 to fix module ngx_cache_purge on recent nginx
 
-* Fri Dec 14 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-2
+* Fri Dec 14 2018 Karl Johnson <karljohnson.it@gmail.com> 1.14.2-2
 - Add module geoip2 3.2 with latest libmaxminddb 1.3.2
 
-* Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.2-1
+* Wed Dec 12 2018 Karl Johnson <karljohnson.it@gmail.com> 1.14.2-1
 - Bump to Nginx 1.14.2, OpenSSL 1.1.1a
 - Increase ciphers strength per default, disable TLS 1.0 and 1.1
 - Switch RapidSSL to Lets Encrypt in SSL example configuration
 
-* Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.1-1
+* Tue Nov 6 2018 Karl Johnson <karljohnson.it@gmail.com> 1.14.1-1
 - Bump to Nginx 1.14.1, module VTS 0.1.18
 
-* Mon Oct 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-2
+* Mon Oct 22 2018 Karl Johnson <karljohnson.it@gmail.com> 1.14.0-2
 - Restrictions cleanup and more FCGI params added by default
 
-* Thu Sep 20 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.14.0-1
+* Thu Sep 20 2018 Karl Johnson <karljohnson.it@gmail.com> 1.14.0-1
 - Bump to Nginx 1.14.0, OpenSSL 1.1.1
 - Rolled in TLS 1.3 configuration
 
-* Tue May 22 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-5
+* Tue May 22 2018 Karl Johnson <karljohnson.it@gmail.com> 1.12.2-5
 - Bump OpenSSL 1.1.0h, module VTS 0.1.16, module More Headers 0.33
 - Allow .well-known access
 
-* Fri Mar 2 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-4
+* Fri Mar 2 2018 Karl Johnson <karljohnson.it@gmail.com> 1.12.2-4
 - Move nginx-more version in ngx_show_configure
 - Enable TCP_FASTOPEN
 - Bump GCC to 7.2
 
-* Fri Feb 23 2018 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-3
+* Fri Feb 23 2018 Karl Johnson <karljohnson.it@gmail.com> 1.12.2-3
 - Bump Pagespeed to 1.13.35.2, Brotli snapshot 20180222
 
-* Fri Nov 17 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-2
+* Fri Nov 17 2017 Karl Johnson <karljohnson.it@gmail.com> 1.12.2-2
 - Add module ngx_brotli from Github master snapshot, bump Pagespeed to 1.12.34.3
 
-* Thu Nov 2 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.2-1
+* Thu Nov 2 2017 Karl Johnson <karljohnson.it@gmail.com> 1.12.2-1
 - Bump to Nginx 1.12.2, OpenSSL 1.1.0g, Cloudflare IPs added
 
-* Thu Jul 13 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.1-1
+* Thu Jul 13 2017 Karl Johnson <karljohnson.it@gmail.com> 1.12.1-1
 - Bump to Nginx 1.12.1, OpenSSL 1.1.0f, PageSpeed 1.12.34.2, nginx vts 0.1.15
 
-* Tue Apr 18 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.12.0-1
+* Tue Apr 18 2017 Karl Johnson <karljohnson.it@gmail.com> 1.12.0-1
 - Bump to Nginx 1.12.0, OpenSSL 1.1.0e, nginx vts 0.1.14, user agents blacklist updated
 - Important: Removal of old ModSecurity nginx add-on, might be replaced later by ModSecurity-nginx
 
-* Wed Mar 1 2017 Karl Johnson <karljohnson.it@gmail.com> - 1.10.3-1
+* Wed Mar 1 2017 Karl Johnson <karljohnson.it@gmail.com> 1.10.3-1
 - Bump to Nginx 1.10.3, OpenSSL 1.0.2k, nginx vts 0.1.12
 - Add user agents blacklist
 
-* Mon Nov 7 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.2-1
+* Mon Nov 7 2016 Karl Johnson <karljohnson.it@gmail.com> 1.10.2-1
 - Bump to Nginx 1.10.2, More Headers 0.32
 
-* Mon Sep 26 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.1-2
+* Mon Sep 26 2016 Karl Johnson <karljohnson.it@gmail.com> 1.10.1-2
 - Bump to OpenSSL 1.0.2j, PageSpeed 1.11.33.4, More Headers 0.30, nginx vts 0.1.10
 
-* Tue May 31 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.1-1
+* Tue May 31 2016 Karl Johnson <karljohnson.it@gmail.com> 1.10.1-1
 - Bump to Nginx 1.10.1 (CVE-2016-4450)
 
-* Fri May 20 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.10.0-1
+* Fri May 20 2016 Karl Johnson <karljohnson.it@gmail.com> 1.10.0-1
 - Bump to Nginx 1.10.0 with threads pools
 - Important: SPDY replaced by HTTP2
 
-* Tue May 17 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-6
+* Tue May 17 2016 Karl Johnson <karljohnson.it@gmail.com> 1.8.1-6
 - Switch to GCC 5.2.1
 - Remove EPEL dep
 - Bump PageSpeed 1.11.33.2, More Headers 0.30
 
-* Fri Apr 29 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-5
+* Fri Apr 29 2016 Karl Johnson <karljohnson.it@gmail.com> 1.8.1-5
 - Bump OpenSSL 1.0.2h, PageSpeed 1.11.33.1, ModSecurity 2.9.1
 - Add nginx vts 0.1.9
 
-* Mon Mar 7 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-4
+* Mon Mar 7 2016 Karl Johnson <karljohnson.it@gmail.com> 1.8.1-4
 - Bump PageSpeed 1.10.33.6, OpenSSL 1.0.2g
 
-* Thu Feb 18 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-3
+* Thu Feb 18 2016 Karl Johnson <karljohnson.it@gmail.com> 1.8.1-3
 - Build with GCC 4.8 on el6
 - Bump PageSpeed 1.10.33.5
 
-* Fri Jan 29 2016 Karl Johnson <karljohnson.it@gmail.com> - 1.8.1-1
+* Fri Jan 29 2016 Karl Johnson <karljohnson.it@gmail.com> 1.8.1-1
 - Bump Nginx 1.8.1, PageSpeed 1.9.32.10, OpenSSL 1.0.2f, More-Headers 0.29
 
-* Fri Aug 14 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-4
+* Fri Aug 14 2015 Karl Johnson <karljohnson.it@gmail.com> 1.8.0-4
 - Bump PageSpeed to 1.9.32.6
 - Increase fcgi buffer for php-fpm
 
-* Fri Jul 17 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-3
+* Fri Jul 17 2015 Karl Johnson <karljohnson.it@gmail.com> 1.8.0-3
 - Changes in rpm upgrade process 
 - Add install banner
 
-* Wed Jul 15 2015 Karl Johnson <karljohnson.it@gmail.com> - 1.8.0-2
+* Wed Jul 15 2015 Karl Johnson <karljohnson.it@gmail.com> 1.8.0-2
 - Bump module OpenSSL 1.0.2d and PageSpeed 1.9.32.4
 - Few configurations updates
 
-* Tue May 12 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.8.0-1
+* Tue May 12 2015 Karl Johnson <kjohnson@aerisnetwork.com> 1.8.0-1
 - Bump Nginx to 1.8.0 and module More Headers 0.26
 
-* Wed Apr 8 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.3-1
+* Wed Apr 8 2015 Karl Johnson <kjohnson@aerisnetwork.com> 1.6.3-1
 - Bump Nginx to 1.6.3 and module OpenSSL 1.0.2a
 
-* Fri Mar 6 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-3
+* Fri Mar 6 2015 Karl Johnson <kjohnson@aerisnetwork.com> 1.6.2-3
 - El7 support added
 
-* Tue Feb 17 2015 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-2
+* Tue Feb 17 2015 Karl Johnson <kjohnson@aerisnetwork.com> 1.6.2-2
 - Bump modules ModSecurity 2.9.0, PageSpeed 1.9.32.3, Cache Purge 2.3, OpenSSL 1.0.1l
 
-* Wed Nov 12 2014 Karl Johnson <kjohnson@aerisnetwork.com> - 1.6.2-1
+* Wed Nov 12 2014 Karl Johnson <kjohnson@aerisnetwork.com> 1.6.2-1
 - First build based on Nginx 1.6.2, OpenSSL 1.0.1j, Pagespeed 1.9.32.2, Cache Purge 2.1, More Headers 0.25
