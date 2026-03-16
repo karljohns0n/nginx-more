@@ -9,15 +9,15 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.5.5
+%global openssl_version             3.6.1
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
 %global module_headers_more         0.39
 %global module_cache_purge          2.5.3
 %global module_vts                  0.2.5
-%global module_brotli               1.0.0rc-2-g6e97
-%global module_brotli_deps          1.0.9-35-gf4153a0
+%global module_brotli               1.0.0rc-12-ga71f931
+%global module_brotli_deps          1.2.0
 %global module_geoip2               3.4
 %global module_echo                 0.63
 %global module_modsecurity          1.0.4
@@ -42,7 +42,7 @@
 %bcond_with                         pagespeed
 
 Name:                               nginx-more
-Version:                            1.29.4
+Version:                            1.29.6
 Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
@@ -473,6 +473,11 @@ fi
 %endif
 
 %changelog
+* Mon Mar 16 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.6-1
+- Upgrade nginx to 1.29.6
+- Bump OpenSSL to 3.6.1
+- Bump Brotli to 1.2.0
+
 * Wed Jan 28 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.4-1
 - Upgrade nginx to 1.29.4
 - Bump OpenSSL to 3.5.5
