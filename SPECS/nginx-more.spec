@@ -16,8 +16,8 @@
 %global module_headers_more         0.39
 %global module_cache_purge          2.5.3
 %global module_vts                  0.2.5
-%global module_brotli               1.0.0rc-2-g6e97
-%global module_brotli_deps          1.0.9-35-gf4153a0
+%global module_brotli               1.0.0rc-12-ga71f931
+%global module_brotli_deps          1.2.0
 %global module_geoip2               3.4
 %global module_echo                 0.63
 %global module_modsecurity          1.0.4
@@ -43,7 +43,7 @@
 
 Name:                               nginx-more
 Version:                            1.29.7
-Release:                            1%{?dist}
+Release:                            2%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -120,6 +120,7 @@ BuildRequires:                      perl-IPC-Cmd
 BuildRequires:                      perl-Time-Piece
 BuildRequires:                      perl-Getopt-Long
 BuildRequires:                      gcc
+BuildRequires:                      cmake
 BuildRequires:                      make
 
 %if 0%{?rhel} == 6
@@ -129,6 +130,7 @@ BuildRequires:                      devtoolset-%{gcc_version}-gcc-c++ devtoolset
 %if 0%{?rhel} == 7
 BuildRequires:                      devtoolset-%{gcc_version}-gcc-c++ devtoolset-%{gcc_version}-binutils
 BuildRequires:                      GeoIP-devel
+BuildRequires:                      cmake3
 %endif
 
 %if 0%{?rhel} == 8
@@ -221,10 +223,24 @@ memory usage.
 %build
 export DESTDIR=%{buildroot}
 
-# As we're using PSOL binary, set PSOL_BUILDTYPE so that nginx build does not trigger the interactive prompt about debugging
+# PageSpeed: set PSOL_BUILDTYPE so that nginx build does not trigger the interactive prompt about debugging
 # https://github.com/apache/incubator-pagespeed-ngx/issues/1377#issuecomment-549804871
 export PSOL_BUILDTYPE=Release
 
+# Building Brolti
+cd modules/%{module_dir_brotli_deps}
+mkdir out && cd out
+%if 0%{?rhel} <= 7
+cmake3 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=./installed \
+    -DCMAKE_C_COMPILER=/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc ..
+cmake3 --build . --config Release --target install
+%else
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=./installed ..
+cmake --build . --config Release --target install
+%endif
+cd %{_builddir}/%{packagename}-%{version}
+
+# Bulding Nginx
 ./configure \
     --prefix=%{nginx_datadir} \
     --sbin-path=%{_sbindir}/nginx \
@@ -473,6 +489,9 @@ fi
 %endif
 
 %changelog
+* Sat Mar 28 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
+- Bump Brotli to 1.2.0 as a static library
+
 * Tue Mar 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-1
 - Upgrade nginx to 1.29.7
 
