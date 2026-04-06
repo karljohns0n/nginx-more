@@ -295,6 +295,9 @@ cd %{_builddir}/%{packagename}-%{version}
         --with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
     %endif
     --with-openssl=modules/%{module_dir_openssl} \
+    %if 0%{?rhel} <= 7
+        --with-openssl-opt="CC=/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
+    %endif
     %if 0%{?rhel} >= 8
         --with-openssl-opt="-fno-lto -fPIC enable-ktls" \
     %endif
@@ -489,7 +492,7 @@ fi
 %endif
 
 %changelog
-* Sat Apr 4 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
+* Mon Apr 6 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
 - Bump Brotli to 1.2.0 as a static library
 - Bump OpenSSL to 3.6.1
 
