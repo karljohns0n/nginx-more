@@ -42,8 +42,8 @@
 %bcond_with                         pagespeed
 
 Name:                               nginx-more
-Version:                            1.29.7
-Release:                            2%{?dist}
+Version:                            1.29.8
+Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -492,7 +492,8 @@ fi
 %endif
 
 %changelog
-* Mon Apr 6 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
+* Tue Apr 7 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.8-1
+- Upgrade nginx to 1.29.8
 - Bump Brotli to 1.2.0 as a static library
 - Bump OpenSSL to 3.6.1
 
