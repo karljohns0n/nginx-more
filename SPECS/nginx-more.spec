@@ -9,7 +9,7 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.5.5
+%global openssl_version             3.6.1
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
@@ -295,6 +295,9 @@ cd %{_builddir}/%{packagename}-%{version}
         --with-cc="/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
     %endif
     --with-openssl=modules/%{module_dir_openssl} \
+    %if 0%{?rhel} <= 7
+        --with-openssl-opt="CC=/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
+    %endif
     %if 0%{?rhel} >= 8
         --with-openssl-opt="-fno-lto -fPIC enable-ktls" \
     %endif
@@ -489,8 +492,9 @@ fi
 %endif
 
 %changelog
-* Sat Mar 28 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
+* Mon Apr 6 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-2
 - Bump Brotli to 1.2.0 as a static library
+- Bump OpenSSL to 3.6.1
 
 * Tue Mar 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.7-1
 - Upgrade nginx to 1.29.7
