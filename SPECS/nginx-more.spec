@@ -9,7 +9,7 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.6.1
+%global openssl_version             3.6.2
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
@@ -43,7 +43,7 @@
 
 Name:                               nginx-more
 Version:                            1.29.8
-Release:                            1%{?dist}
+Release:                            2%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -492,6 +492,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 10 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.8-2
+- Bump OpenSSL to 3.6.2
+
 * Tue Apr 7 2026 Karl Johnson <karljohnson.it@gmail.com> 1.29.8-1
 - Upgrade nginx to 1.29.8
 - Bump Brotli to 1.2.0 as a static library
