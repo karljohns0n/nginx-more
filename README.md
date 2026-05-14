@@ -1,6 +1,6 @@
 # Nginx-more
 
-[![Release](https://img.shields.io/badge/release-1.29.8--2-success.svg)](#)
+[![Release](https://img.shields.io/badge/release-1.30.1--1-success.svg)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/karljohns0n/nginx-more/build.yml?branch=master)](#)
 [![Installs](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=installs&query=installs&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
 [![Downloads](https://img.shields.io/badge/dynamic/yaml?color=brightgreen&label=downloads&query=downloads&url=https%3A%2F%2Frepo.aerisnetwork.com%2Farchive%2Fnginx-more-stats.yaml)](#)
