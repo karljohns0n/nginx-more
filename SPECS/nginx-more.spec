@@ -9,7 +9,7 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.6.2
+%global openssl_version             3.6.3
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
@@ -42,7 +42,7 @@
 %bcond_with                         pagespeed
 
 Name:                               nginx-more
-Version:                            1.30.2
+Version:                            1.30.3
 Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
@@ -492,6 +492,10 @@ fi
 %endif
 
 %changelog
+* Wed Jun 17 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.3-1
+- Upgrade nginx to 1.30.3
+- Bump OpenSSL to 3.6.3
+
 * Fri May 22 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.2-1
 - Upgrade nginx to 1.30.2
 
