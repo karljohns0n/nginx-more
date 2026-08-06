@@ -66,7 +66,7 @@ jobs:
             OPT: --with=modsecurity
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Sanity — show host arch and Docker info
         run: |
