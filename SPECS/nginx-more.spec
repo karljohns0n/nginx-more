@@ -495,6 +495,8 @@ fi
 * Mon Aug 31 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.4-2
 - Bump OpenSSL to 3.6.4
 - Bump VTS to 0.2.7
+- Config: fall back robots.txt to php
+- Config: laravel php fallback for css/js and images
 
 * Wed Jul 15 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.4-1
 - Upgrade nginx to 1.30.4
