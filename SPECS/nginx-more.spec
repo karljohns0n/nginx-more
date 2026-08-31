@@ -9,13 +9,13 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.6.3
+%global openssl_version             3.6.4
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
 %global module_headers_more         0.40
 %global module_cache_purge          2.5.3
-%global module_vts                  0.2.5
+%global module_vts                  0.2.7
 %global module_brotli               1.0.0rc-12-ga71f931
 %global module_brotli_deps          1.2.0
 %global module_geoip2               3.4
@@ -43,7 +43,7 @@
 
 Name:                               nginx-more
 Version:                            1.30.4
-Release:                            1%{?dist}
+Release:                            2%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -492,6 +492,12 @@ fi
 %endif
 
 %changelog
+* Mon Aug 31 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.4-2
+- Bump OpenSSL to 3.6.4
+- Bump VTS to 0.2.7
+- Config: fall back robots.txt to php
+- Config: laravel php fallback for css/js and images
+
 * Wed Jul 15 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.4-1
 - Upgrade nginx to 1.30.4
 - Bump module Echo to 0.65
