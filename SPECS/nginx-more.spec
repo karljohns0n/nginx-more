@@ -42,7 +42,7 @@
 %bcond_with                         pagespeed
 
 Name:                               nginx-more
-Version:                            1.30.5
+Version:                            1.30.6
 Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
@@ -492,6 +492,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 14 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-1
+- Upgrade nginx to 1.30.6
+
 * Thu Oct 1 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.5-1
 - Upgrade nginx to 1.30.5
 - Bump OpenSSL to 3.6.5
