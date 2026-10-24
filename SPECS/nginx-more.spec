@@ -44,7 +44,7 @@
 
 Name:                               nginx-more
 Version:                            1.30.6
-Release:                            2%{?dist}
+Release:                            3%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -241,6 +241,7 @@ cmake --build . --config Release --target install
 %endif
 cd %{_builddir}/%{packagename}-%{version}
 
+# Keep explicit legacy TLS curve lists compatible with OpenSSL 4 upgrades.
 # Bulding Nginx
 ./configure \
     --prefix=%{nginx_datadir} \
@@ -297,10 +298,10 @@ cd %{_builddir}/%{packagename}-%{version}
     %endif
     --with-openssl=modules/%{module_dir_openssl} \
     %if 0%{?rhel} <= 7
-        --with-openssl-opt="CC=/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc" \
+        --with-openssl-opt="CC=/opt/rh/devtoolset-%{gcc_version}/root/usr/bin/gcc enable-tls-deprecated-ec" \
     %endif
     %if 0%{?rhel} >= 8
-        --with-openssl-opt="-fno-lto -fPIC enable-ktls" \
+        --with-openssl-opt="-fno-lto -fPIC enable-ktls enable-tls-deprecated-ec" \
     %endif
     %if %{with modsecurity}
         --add-dynamic-module=modules/%{module_dir_modsecurity} \
@@ -493,6 +494,13 @@ fi
 %endif
 
 %changelog
+* Sat Oct 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-3
+- Restore explicit legacy TLS curve support for in-place OpenSSL 4 upgrades
+- Stop binary upgrades when configuration validation fails
+- Refresh SSL example curves, AEAD ciphers and dynamic TLS records
+- Add upgrade and full SSL example regression checks
+- Document migration away from deprecated TLS curves
+
 * Sat Oct 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-2
 - Bump OpenSSL to 4.0.3
 - Bump Brotli to 1.2.1 for CVE-2026-111497

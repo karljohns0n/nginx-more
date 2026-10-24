@@ -2,6 +2,28 @@
 
 ## OpenSSL
 
+### Remove deprecated TLS curves
+
+Start removing `P-224` (also named `secp224r1`) from existing `ssl_ecdh_curve` lists. Check active SSL include files and virtual hosts, including configurations copied from older nginx-more examples.
+
+OpenSSL 4 [disables deprecated TLS EC groups by default](https://github.com/openssl/openssl/blob/openssl-4.0.3/CHANGES.md). Version 1.30.6-2 therefore rejects lists containing P-224. Version 1.30.6-3 restores support for explicitly configured legacy groups so existing configurations can survive an in-place update. Treat this as temporary compatibility support: future releases may remove it. Migrate existing configurations now to avoid another failed update.
+
+For the curve list used in older examples, replace:
+
+```nginx
+ssl_ecdh_curve X25519:P-256:P-384:P-224:P-521;
+```
+
+with:
+
+```nginx
+ssl_ecdh_curve X25519:P-256:P-384:P-521;
+```
+
+Run `nginx -t` after editing. If the test passes and nginx is running, reload the configuration. A reload does not replace a running binary after a failed RPM binary upgrade; check the service state before completing that recovery.
+
+Version 1.30.6-3 also stops the binary upgrade helper when configuration validation fails and requires both PID files before retiring the old master. Existing configurations are preserved. The updated SSL example uses `ssl_ecdh_curve auto;` to follow OpenSSL's built-in group list.
+
 ### TLS 1.3
 
 Nginx-more has always been compiled with latest OpenSSL version for all CentOS (6,7,8), thus it supports all recent TLS protocols and ciphers such as TLS 1.3. OpenSSL can be used to confirm TLS 1.3:
