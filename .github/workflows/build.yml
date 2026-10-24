@@ -86,6 +86,8 @@ jobs:
 
               cd /tmp/${PKG_NAME}
 
+              python3 tests/test-upgrade-guards.py
+
               PKG_VERSION=$(awk "/^Version:/{print \$2}" SPECS/${PKG_NAME}.spec)
               PKG_RELEASE=$(awk "/^Release:/{print \$2}" SPECS/${PKG_NAME}.spec | tr -d "%{?dist}")
 
@@ -129,10 +131,11 @@ jobs:
 
               yum clean all || true
               bash -lc "[[ ! -f /etc/yum.repos.d/aeris.repo ]] && yum -y install https://repo.aerisnetwork.com/pub/aeris-release-$(rpm -E %{rhel}).rpm || echo continue"
-              yum install --enablerepo="aeris,aeris-testing" -y "RPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.${{ matrix.PKG_ARCH }}.rpm"
+              yum install --enablerepo="aeris,aeris-testing" -y "RPMS/${PKG_NAME}-${PKG_VERSION}-${PKG_RELEASE}.el${{ matrix.VERSION }}.${{ matrix.PKG_ARCH }}.rpm" openssl
 
               nginx -V
               /usr/sbin/nginx -t
+              bash tests/ssl-curves.sh
               /usr/sbin/nginx && sleep 5
               curl -s -I http://127.0.0.1 | tee /tmp/curl.txt
               cat /var/log/nginx/error.log || true
