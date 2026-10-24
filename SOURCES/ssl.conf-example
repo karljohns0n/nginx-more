@@ -6,22 +6,14 @@ ssl_session_tickets off;
 ssl_protocols TLSv1.2 TLSv1.3;
 ssl_prefer_server_ciphers off;
 ssl_ecdh_curve auto;
-# nginx-more dynamic records start small and grow for sustained transfers.
 ssl_buffer_size 16k;
 ssl_dyn_rec_enable on;
-# Requires OpenSSL built with a certificate compression codec enabled.
-#ssl_certificate_compression on;
-# Keep KTLS disabled on nginx 1.30.6: https://github.com/nginx/nginx/issues/651
 ssl_stapling off;
 ssl_stapling_verify off;
 ssl_trusted_certificate /etc/letsencrypt/live/domain/chain.pem;
 resolver 1.1.1.1 8.8.8.8 valid=300s;
 resolver_timeout 5s;
 add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
-#add_header X-Frame-Options SAMEORIGIN;
 add_header X-Content-Type-Options nosniff;
 
-# TLS 1.2: forward-secret AEAD suites for RSA and ECDSA certificates.
-# https://docs.tlsref.org/server-side-tls.html#intermediate-compatibility-recommended
 ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;
-# TLS 1.3 uses OpenSSL's default cipher suites.
