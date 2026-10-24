@@ -9,17 +9,18 @@
 %global nginx_webroot               %{nginx_datadir}/html
 %global gcc_version                 8
 %global pcre_version                pcre2
-%global openssl_version             3.6.5
+%global openssl_version             4.0.3
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
 %global module_headers_more         0.40
 %global module_cache_purge          2.5.6
 %global module_vts                  0.2.7
-%global module_brotli               1.0.0rc-12-ga71f931
-%global module_brotli_deps          1.2.0
+%global module_brotli               1.0.0rc-10-g53e0fb5
+%global module_brotli_commit        53e0fb55f250f48fe80c0ddbf6c0f7103cdbaae1
+%global module_brotli_deps          1.2.1
 %global module_geoip2               3.4
-%global module_echo                 0.65
+%global module_echo                 0.66
 %global module_modsecurity          1.0.4
 
 %global module_dir_openssl          openssl-%{openssl_version}
@@ -43,7 +44,7 @@
 
 Name:                               nginx-more
 Version:                            1.30.6
-Release:                            1%{?dist}
+Release:                            2%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -96,7 +97,7 @@ Source101:                          https://github.com/apache/incubator-pagespee
 Source102:                          https://dl.google.com/dl/page-speed/psol/%{module_psol}.tar.gz#/psol-%{module_psol}.tar.gz
 Source103:                          https://github.com/openresty/headers-more-nginx-module/archive/v%{module_headers_more}/ngx_headers_more-%{module_headers_more}.tar.gz
 Source104:                          https://github.com/nginx-modules/ngx_cache_purge/archive/%{module_cache_purge}/ngx_cache_purge-%{module_cache_purge}.tar.gz
-Source105:                          https://github.com/google/ngx_brotli/archive/v%{module_brotli}/ngx_brotli-%{module_brotli}.tar.gz
+Source105:                          https://github.com/google/ngx_brotli/archive/%{module_brotli_commit}/ngx_brotli-%{module_brotli}.tar.gz
 Source106:                          https://github.com/vozlt/nginx-module-vts/archive/v%{module_vts}/ngx_module_vts-%{module_vts}.tar.gz
 Source107:                          https://github.com/leev/ngx_http_geoip2_module/archive/%{module_geoip2}/ngx_http_geoip2_module-%{module_geoip2}.tar.gz
 Source108:                          https://github.com/openresty/echo-nginx-module/archive/v%{module_echo}/ngx_echo-%{module_echo}.tar.gz
@@ -492,6 +493,12 @@ fi
 %endif
 
 %changelog
+* Sat Oct 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-2
+- Bump OpenSSL to 4.0.3
+- Bump Brotli to 1.2.1 for CVE-2026-111497
+- Update Brotli module to upstream commit 53e0fb5 and pin its source archive
+- Bump Echo to 0.66
+
 * Wed Oct 14 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-1
 - Upgrade nginx to 1.30.6
 
