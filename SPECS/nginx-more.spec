@@ -13,7 +13,7 @@
 %global module_ps_version           1.13.35.2
 %global module_ps_commit            13bee9d
 %global module_psol                 %{module_ps_version}-x64
-%global module_headers_more         0.40
+%global module_headers_more         0.41
 %global module_cache_purge          2.5.6
 %global module_vts                  0.2.7
 %global module_brotli               1.0.0rc-10-g53e0fb5
@@ -43,8 +43,8 @@
 %bcond_with                         pagespeed
 
 Name:                               nginx-more
-Version:                            1.30.6
-Release:                            3%{?dist}
+Version:                            1.30.7
+Release:                            1%{?dist}
 
 Summary:                            A high performance web server and reverse proxy server
 License:                            BSD-2-Clause
@@ -494,6 +494,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 18 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.7-1
+- Upgrade nginx to 1.30.7 for upstream security fixes
+- Bump module Headers More to 0.41
+
 * Sat Oct 24 2026 Karl Johnson <karljohnson.it@gmail.com> 1.30.6-3
 - Restore explicit legacy TLS curve support for in-place OpenSSL 4 upgrades
 - Stop binary upgrades when configuration validation fails
